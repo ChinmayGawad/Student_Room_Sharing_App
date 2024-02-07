@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="@drawable/main">
+
+    <LinearLayout
+        android:id="@+id/pg"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_marginTop="184dp"
+        android:background="@drawable/main_activity_box_background"
+        android:gravity="center"
+        android:onClick="Pg"
+        android:padding="8dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="7dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+
+            android:text="@string/paying_guest"
+            android:textColor="#212121"
+            android:textSize="18sp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/rent"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/main_activity_box_background"
+        android:gravity="center"
+        android:onClick="Rent"
+        android:padding="8dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        app:layout_constraintTop_toBottomOf="@+id/pg"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/rent"
+
+            android:textColor="#212121"
+            android:textSize="18sp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/owner"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/main_activity_box_background"
+        android:gravity="center"
+        android:onClick="Owner"
+        android:padding="8dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        app:layout_constraintTop_toBottomOf="@+id/rent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="-27dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/Owner"
+
+            android:textColor="#212121"
+            android:textSize="18sp" />
+
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

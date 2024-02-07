@@ -1,0 +1,31 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Student PG App</string>
+    <string name="username">Username</string>
+    <string name="userimage">UserImage</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="create_account">Create_account</string>
+    <string name="name">Name</string>
+    <string name="email_id">Email_id\n</string>
+    <string name="phone_number">Phone No</string>
+    <string name="aadhar_card_no">Aadhar_card_no</string>
+    <string name="re_enter_password">Re_enter_password</string>
+    <string name="register">Register\n</string>
+    <string name="paying_guest">Paying Guest</string>
+    <string name="rent">Rent</string>
+    <string name="Owner">Owner</string>
+    <string name="room_rentals">PG Room Rent</string>
+    <string name="search_for_rooms" tools:ignore="TypographyEllipsis">Search for rooms...</string>
+    <string name="room_name">Room Name</string>
+    <string name="location">Location</string>
+    <string name="price">Price</string>
+    <string name="add_room">Add Room</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="search">Search</string>
+    <string name="description">Description</string>
+    <string name="save">Save</string>
+    <string name="select_photos">Select Photos</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="gender">Gender</string>
+</resources>
