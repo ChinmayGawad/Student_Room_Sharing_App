@@ -1,14 +1,24 @@
 package com.pgshare.studentroomsharingapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Profile_Page extends AppCompatActivity {
 
-    TextView ProfileUserName, ProfileEmailId, ProfilePhoneNo, ProfileAadharNo, ProfileGender;
+    private TextView ProfileUserName, ProfileEmailId, ProfilePhoneNo, ProfileAadharNo, ProfileGender;
+    private String Profile_email, Profile_name, Profile_phoneNo, Profile_aadhar, Profile_gender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,30 +32,51 @@ public class Profile_Page extends AppCompatActivity {
         ProfileAadharNo = findViewById(R.id.ProfileAadharNo);
         ProfileGender = findViewById(R.id.ProfileGender);
 
+        FirebaseAuth authProfile = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = authProfile.getCurrentUser();
 
-        showProfile();
-
-
+        if (firebaseUser == null) {
+            Toast.makeText(this, "Something went wrong! User not found", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            showProfile(firebaseUser);
+        }
 
     }
 
-    private void showProfile() {
+    private void showProfile(FirebaseUser firebaseUser) {
+        String uid = firebaseUser.getUid();
 
-        Intent intent = getIntent();
+        //Extract User's Data
+        DatabaseReference refrenceProfile = FirebaseDatabase.getInstance().getReference("Users");
+        refrenceProfile.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
 
-        String Profile_email = intent.getStringExtra("email");
-        String Profile_name = intent.getStringExtra("name");
-        String Profile_phoneNo = intent.getStringExtra("phoneNo");
-        String Profile_aadhar = intent.getStringExtra("aadhar");
-        String Profile_gender = intent.getStringExtra("gender");
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                UserHelper FetchUser = snapshot.getValue(UserHelper.class);
+                //Display User's Data
+                if (FetchUser != null) {
+                    //Extract User's Data
+                    Profile_email = FetchUser.getEmail();
+                    Profile_name = FetchUser.getName();
+                    Profile_phoneNo = FetchUser.getPhoneNo();
+                    Profile_aadhar = FetchUser.getAadhar();
+                    Profile_gender = FetchUser.getGender();
 
+                    //Display User's Data
+                    ProfileUserName.setText(Profile_name);
+                    ProfileEmailId.setText(Profile_email);
+                    ProfilePhoneNo.setText(Profile_phoneNo);
+                    ProfileAadharNo.setText(Profile_aadhar);
+                    ProfileGender.setText(Profile_gender);
+                }
+            }
 
-        ProfileUserName.setText(Profile_name);
-        ProfileEmailId.setText(Profile_email);
-        ProfilePhoneNo.setText(Profile_phoneNo);
-        ProfileAadharNo.setText(Profile_aadhar);
-        ProfileGender.setText(Profile_gender);
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(Profile_Page.this, "Something went wrong", Toast.LENGTH_SHORT).show();
 
-
+            }
+        });
     }
 }
