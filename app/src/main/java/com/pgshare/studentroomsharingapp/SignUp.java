@@ -6,6 +6,7 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -17,6 +18,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Objects;
+
 public class SignUp extends AppCompatActivity {
 
     private EditText editTextName,editTextEmail,editTextPhoneNo,editTextAadhar,editTextPassword,editTextConfirmPassword;
@@ -24,6 +27,7 @@ public class SignUp extends AppCompatActivity {
     private RadioButton radioButtonSelected;
     private FirebaseUser firebaseUser;
     private DatabaseReference reference;
+    private ProgressBar SignUp_progressBar;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +39,7 @@ public class SignUp extends AppCompatActivity {
         editTextAadhar=findViewById(R.id.editTextAadhar);
         editTextPassword=findViewById(R.id.passwordEditText);
         editTextConfirmPassword=findViewById(R.id.editTextConfirmPassword);
+        SignUp_progressBar = findViewById(R.id.SignUpProgressBar);
 
         radioGroupGender = findViewById(R.id.radioGroup_Gender);
         radioGroupGender.clearCheck();
@@ -69,11 +74,11 @@ public class SignUp extends AppCompatActivity {
         }
         else {
             String Gender = radioButtonSelected.getText().toString();
+            SignUp_progressBar.setVisibility(View.VISIBLE);
             FirebaseAuth auth = FirebaseAuth.getInstance();
             // Pass the App Check token to createUserWithEmailAndPassword
             auth.createUserWithEmailAndPassword(Email, password).addOnCompleteListener(SignUp.this, task -> {
                 if (task.isSuccessful()) {
-
 
                     //add user to database
                     firebaseUser = auth.getCurrentUser();
@@ -98,13 +103,11 @@ public class SignUp extends AppCompatActivity {
 
 
                         }else {
-                            String errorMessage = task1.getException().getMessage();
+                            String errorMessage = Objects.requireNonNull(task1.getException()).getMessage();
                             Toast.makeText(SignUp.this, errorMessage, Toast.LENGTH_LONG).show();
                         }
 
-                    }).addOnFailureListener(e -> {
-                        Log.e("Firebase", "Failed to store user data:", e);
-                    });
+                    }).addOnFailureListener(e -> Log.e("Firebase", "Failed to store user data:", e));
 
                 }
 

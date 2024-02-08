@@ -4,71 +4,114 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfilePage"
+    tools:context=".Profile_Page"
     android:background="@drawable/prof">
 
     <TextView
         android:id="@+id/ProfileName"
-        android:layout_width="272dp"
-        android:layout_height="54dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginLeft="45dp"
-        android:layout_marginRight="45dp"
-        android:hint="Your Profile"
-        android:textSize="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        android:padding="4dp"
+        android:text="@string/profile"
+        android:textColor="@color/black"
+        android:textSize="48sp"
+        app:layout_constraintBottom_toTopOf="@+id/ProfileUserName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="72dp" />
+        app:layout_constraintVertical_bias="0.1"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/ProfileUserName"
         android:layout_width="272dp"
         android:layout_height="54dp"
+        android:layout_marginStart="69dp"
         android:layout_marginTop="184dp"
+        android:layout_marginEnd="69dp"
+        android:layout_marginBottom="4dp"
         android:hint="@string/name"
+        app:layout_constraintBottom_toTopOf="@+id/ProfileEmailId"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="72dp" />
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/ProfileEmailId"
         android:layout_width="273dp"
         android:layout_height="45dp"
-        android:layout_marginTop="35dp"
+        android:layout_marginStart="69dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="69dp"
+        android:layout_marginBottom="4dp"
         android:hint="@string/email_id"
+        app:layout_constraintBottom_toTopOf="@+id/ProfilePhoneNo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ProfileUserName"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="69dp" />
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/ProfilePhoneNo"
         android:layout_width="273dp"
         android:layout_height="45dp"
-        android:layout_marginTop="35dp"
+        android:layout_marginStart="69dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="69dp"
+        android:layout_marginBottom="4dp"
         android:hint="@string/phone_number"
+        app:layout_constraintBottom_toTopOf="@+id/ProfileAadharNo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ProfileEmailId"
-        tools:layout_editor_absoluteX="71dp"
         tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/ProfileAadharNo"
         android:layout_width="273dp"
         android:layout_height="45dp"
-        android:layout_marginTop="35dp"
+        android:layout_marginStart="69dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="69dp"
+        android:layout_marginBottom="4dp"
         android:hint="@string/aadhar_card_no"
+        app:layout_constraintBottom_toTopOf="@+id/ProfileGender"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ProfilePhoneNo"
-        tools:layout_editor_absoluteX="69dp"
         tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/ProfileGender"
         android:layout_width="273dp"
         android:layout_height="45dp"
-        android:layout_marginTop="35dp"
+        android:layout_marginStart="69dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="69dp"
+        android:layout_marginBottom="175dp"
         android:hint="@string/gender"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ProfileAadharNo"
-        tools:layout_editor_absoluteX="71dp"
         tools:ignore="MissingConstraints" />
+
+    <ProgressBar
+        android:id="@+id/ProfileProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

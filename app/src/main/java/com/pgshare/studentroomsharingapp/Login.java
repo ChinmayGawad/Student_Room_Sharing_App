@@ -85,9 +85,17 @@ public class Login extends AppCompatActivity {
             return true;
         }
     }
-
-
-
-
-
+    //Check if user is Already logged in
+/*    @Override
+    protected void onStart() {
+        super.onStart();
+        if (authLogin.getCurrentUser() != null) {
+            Intent intent = new Intent(Login.this, Profile_Page.class);
+            startActivity(intent);
+            finish();
+        }
+        else {
+            Toast.makeText(this, "You Can Login Now", Toast.LENGTH_SHORT).show();
+        }
+    }*/
 }
