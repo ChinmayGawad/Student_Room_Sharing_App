@@ -7,27 +7,41 @@
     tools:context=".Login"
     android:background="@drawable/loginpage">
 
+    <ImageView
+        android:id="@+id/UserImg"
+        android:layout_width="99dp"
+        android:layout_height="71dp"
+        android:layout_marginTop="120dp"
+        android:src="@drawable/ic_launcher_foreground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars"
+        android:contentDescription="@string/userimage" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/UsernameLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
+        android:layout_marginTop="40dp"
         android:layout_marginRight="40dp"
-        android:paddingTop="12dp"
         android:hint="@string/username"
         android:inputType="textEmailAddress"
-        android:textColorHint="@color/Black"
-        app:boxStrokeColor="@color/Black"
+        app:layout_constraintTop_toBottomOf="@id/UserImg"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="231dp">
+        tools:layout_editor_absoluteX="0dp"
+        android:textColorHint="@color/black"
+        app:boxStrokeColor="@color/black">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/UsernameEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableEnd="@drawable/ic_user"
-            tools:ignore="VisualLintTextFieldSize,TextContrastCheck" />
+
+
+            tools:ignore="VisualLintTextFieldSize,TextContrastCheck"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -38,20 +52,18 @@
         android:layout_marginRight="40dp"
         android:hint="@string/password"
         android:inputType="textPassword"
-        android:paddingTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/UsernameLayout"
         app:passwordToggleEnabled="true"
         tools:ignore="UnknownId"
-        android:textColorHint="@color/Black"
-        app:boxStrokeColor="@color/Black">
+        android:textColorHint="@color/black"
+        app:boxStrokeColor="@color/black">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/PasswordEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             tools:ignore="VisualLintTextFieldSize,TextContrastCheck" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -63,7 +75,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="76dp"
-        android:background="#222222"
+        android:background="#E91E63"
         android:text="@string/login"
         android:textColor="#E9EAEB"
         app:layout_constraintEnd_toEndOf="parent"
@@ -79,10 +91,10 @@
         android:layout_marginTop="16dp"
         android:clickable="true"
         android:minHeight="100dp"
-        android:text="Create_account"
+        android:text="@string/create_account"
         android:textAlignment="center"
         android:textColorHint="#08090B"
-        android:textColor="@color/Black"
+        android:textColor="@color/black"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -96,7 +108,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/forgot_password"
-        android:textColor="@color/Black"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.835"
         app:layout_constraintStart_toStartOf="parent"
