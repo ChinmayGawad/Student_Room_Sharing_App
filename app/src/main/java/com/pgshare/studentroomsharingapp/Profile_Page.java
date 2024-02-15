@@ -1,6 +1,8 @@
 package com.pgshare.studentroomsharingapp;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +21,7 @@ public class Profile_Page extends AppCompatActivity {
 
     private TextView ProfileUserName, ProfileEmailId, ProfilePhoneNo, ProfileAadharNo, ProfileGender;
     private String Profile_email, Profile_name, Profile_phoneNo, Profile_aadhar, Profile_gender;
+    private ProgressBar Profile_ProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,8 @@ public class Profile_Page extends AppCompatActivity {
         ProfileAadharNo = findViewById(R.id.ProfileAadharNo);
         ProfileGender = findViewById(R.id.ProfileGender);
 
+        Profile_ProgressBar = findViewById(R.id.ProfileProgressBar);
+
         FirebaseAuth authProfile = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = authProfile.getCurrentUser();
 
@@ -39,6 +44,8 @@ public class Profile_Page extends AppCompatActivity {
             Toast.makeText(this, "Something went wrong! User not found", Toast.LENGTH_SHORT).show();
         }
         else {
+            Profile_ProgressBar.setVisibility(View.VISIBLE);
+            //Display User's Data
             showProfile(firebaseUser);
         }
 
@@ -70,11 +77,13 @@ public class Profile_Page extends AppCompatActivity {
                     ProfileAadharNo.setText(Profile_aadhar);
                     ProfileGender.setText(Profile_gender);
                 }
+                Profile_ProgressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(Profile_Page.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                Profile_ProgressBar.setVisibility(View.GONE);
 
             }
         });
