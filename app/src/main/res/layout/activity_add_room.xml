@@ -1,0 +1,67 @@
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".Add_Room">
+
+
+    <EditText
+        android:id="@+id/editTextRoomName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:autofillHints="@string/room_name"
+        android:hint="@string/room_name"
+        android:minHeight="48dp"
+        tools:ignore="TextFields" />
+
+    <EditText
+        android:id="@+id/editTextLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="@string/location"
+        android:hint="@string/location"
+        android:minHeight="48dp"
+        android:layout_marginTop="15dp"
+        tools:ignore="TextFields" />
+
+    <EditText
+        android:id="@+id/editTextDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:autofillHints="@string/description"
+        android:hint="@string/description"
+        android:minHeight="48dp"
+        tools:ignore="TextFields" />
+
+    <EditText
+        android:id="@+id/editTextPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:hint="@string/price"
+        android:layout_marginTop="15dp"
+        android:minHeight="48dp"
+        android:autofillHints="@string/price" />
+
+    <!-- Add ImageView or ImagePicker for handling images -->
+
+    <Button
+        android:id="@+id/buttonSelectImages"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/select_photos" />
+
+
+    <Button
+        android:id="@+id/buttonSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/save" />
+</LinearLayout>
