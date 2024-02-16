@@ -4,48 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Login"
     android:background="@drawable/loginpage"
-    tools:ignore="ExtraText">
-
-    <ImageView
-        android:id="@+id/UserImg"
-        android:layout_width="99dp"
-        android:layout_height="71dp"
-        android:layout_marginTop="120dp"
-        android:src="@drawable/ic_launcher_foreground"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars"
-        android:contentDescription="@string/userimage" />
+    tools:context=".Login">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/UsernameLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="40dp"
         android:hint="@string/username"
         android:inputType="textEmailAddress"
-        android:textColor="@color/Snow"
-        android:textColorHint="@color/Snow"
-        app:boxStrokeColor="@color/Snow"
-        app:layout_constraintBottom_toTopOf="@+id/passwordTextInputLayout1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/UserImg"
-        >
+        android:textColorHint="@color/black"
+        app:boxStrokeColor="@color/black"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="40dp"
+        tools:layout_editor_absoluteY="231dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/UsernameEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableEnd="@drawable/ic_user"
-            tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+
+
+            tools:ignore="VisualLintTextFieldSize,TextContrastCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -53,23 +36,22 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
-        android:layout_marginTop="40dp"
         android:layout_marginRight="40dp"
         android:hint="@string/password"
         android:inputType="textPassword"
-        android:textColorHint="@color/Snow"
-        android:textColor="@color/Snow"
-        app:boxStrokeColor="@color/Snow"
+        android:textColorHint="@color/black"
+        app:boxStrokeColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/UsernameLayout"
-        app:passwordToggleEnabled="true">
+        app:passwordToggleEnabled="true"
+        tools:ignore="UnknownId">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/PasswordEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+            tools:ignore="VisualLintTextFieldSize,TextContrastCheck" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -80,9 +62,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="76dp"
-        android:background="@color/MediumPurple"
+        android:background="#222222"
         android:text="@string/login"
-        android:textColor="@color/Snow"
+        android:textColor="#E9EAEB"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -94,20 +76,18 @@
         android:layout_width="132dp"
         android:layout_height="48dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="147dp"
         android:clickable="true"
         android:minHeight="100dp"
         android:text="@string/create_account"
         android:textAlignment="center"
-        android:textColor="@color/Snow"
+        android:textColor="@color/black"
         android:textColorHint="#08090B"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonLogin"
-        tools:ignore="TextSizeCheck,TextContrastCheck" />
+        tools:ignore="MissingConstraints,TextSizeCheck" />
 
     <TextView
         android:id="@+id/forgetPassword"
@@ -115,22 +95,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/forgot_password"
-        android:textColor="@color/Snow"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.835"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordTextInputLayout1" />
-
-    <ProgressBar
-        android:id="@+id/LoginProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone"/>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
