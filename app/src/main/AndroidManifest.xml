@@ -15,6 +15,9 @@
         android:theme="@style/Theme.StudentRoomSharingApp"
         tools:targetApi="31">
         <activity
+            android:name=".Add_Room"
+            android:exported="false" />
+        <activity
             android:name=".Profile_Page"
             android:exported="false" />
         <activity
