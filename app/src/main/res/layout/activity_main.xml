@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@drawable/main">
+    android:background="@drawable/mainbackground">
 
     <LinearLayout
         android:id="@+id/pg"
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:layout_marginTop="184dp"
-        android:background="@drawable/main_activity_box_background"
+        android:background="@color/White"
         android:gravity="center"
         android:onClick="Pg"
         android:padding="8dp"
@@ -39,7 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:layout_marginTop="60dp"
-        android:background="@drawable/main_activity_box_background"
+        android:background="@color/White"
         android:gravity="center"
         android:onClick="Rent"
         android:padding="8dp"
@@ -66,7 +66,7 @@
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:layout_marginTop="60dp"
-        android:background="@drawable/main_activity_box_background"
+        android:background="@color/White"
         android:gravity="center"
         android:onClick="Owner"
         android:padding="8dp"
