@@ -13,21 +13,19 @@
         android:layout_height="wrap_content"
         android:hint="@string/username"
         android:inputType="textEmailAddress"
-        android:textColorHint="@color/black"
-        app:boxStrokeColor="@color/black"
-        tools:ignore="MissingConstraints"
+        app:boxStrokeColor="#0C0C0C"
+        app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="231dp"
         android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp">
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="250dp"
+        app:counterTextColor="#0C0B0B">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/UsernameEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableEnd="@drawable/ic_user"
-
-
             tools:ignore="VisualLintTextFieldSize,TextContrastCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -39,8 +37,7 @@
         android:layout_marginRight="40dp"
         android:hint="@string/password"
         android:inputType="textPassword"
-        android:textColorHint="@color/black"
-        app:boxStrokeColor="@color/black"
+        app:boxStrokeColor="#0E0D0D"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/UsernameLayout"
@@ -80,7 +77,7 @@
         android:minHeight="100dp"
         android:text="@string/create_account"
         android:textAlignment="center"
-        android:textColor="@color/black"
+        android:textColor="#0B0A0A"
         android:textColorHint="#08090B"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -95,7 +92,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/forgot_password"
-        android:textColor="@color/black"
+        android:textColor="#040303"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.835"
         app:layout_constraintStart_toStartOf="parent"
