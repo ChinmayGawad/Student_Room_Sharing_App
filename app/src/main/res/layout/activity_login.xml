@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/username"
         android:inputType="textEmailAddress"
-        app:boxStrokeColor="#222222"
+        app:boxStrokeColor="#0C0C0C"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="40dp"
         android:layout_marginLeft="40dp"
