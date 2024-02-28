@@ -18,7 +18,8 @@
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="69dp">
+        tools:layout_editor_absoluteY="69dp"
+        app:boxStrokeColor="@color/black">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextName"
@@ -41,7 +42,8 @@
         android:layout_marginRight="40dp"
         app:layout_constraintTop_toBottomOf="@id/NameLayout"
         tools:ignore="DuplicateIds,MissingConstraints"
-        tools:layout_editor_absoluteX="40dp">
+        tools:layout_editor_absoluteX="40dp"
+        app:boxStrokeColor="@color/black">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextEmail"
@@ -62,7 +64,8 @@
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         app:layout_constraintTop_toBottomOf="@id/EmailLayout"
-        tools:layout_editor_absoluteX="40dp">
+        tools:layout_editor_absoluteX="40dp"
+        app:boxStrokeColor="@color/black">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextPhone"
@@ -83,7 +86,8 @@
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         app:layout_constraintTop_toBottomOf="@id/PhoneLayout"
-        tools:layout_editor_absoluteX="40dp">
+        tools:layout_editor_absoluteX="40dp"
+        app:boxStrokeColor="@color/black">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextAadhar"
@@ -159,6 +163,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="@string/male"
+            app:boxStrokeColor="@color/black"
             tools:layout_editor_absoluteX="67dp" />
 
         <RadioButton
@@ -168,6 +173,7 @@
             android:layout_marginStart="36dp"
             android:layout_marginTop="20dp"
             android:text="@string/female"
+            app:boxStrokeColor="@color/black"
             app:layout_constraintStart_toEndOf="@+id/radioButton_male" />
 
     </RadioGroup>
