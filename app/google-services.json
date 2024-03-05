@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "540786284383",
-    "project_id": "student-room-sharing-app",
-    "storage_bucket": "student-room-sharing-app.appspot.com"
+    "project_number": "35896156778",
+    "project_id": "student-room-sharing",
+    "storage_bucket": "student-room-sharing.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:540786284383:android:41a8ab213371cef36208ea",
+        "mobilesdk_app_id": "1:35896156778:android:4b67b81c8c8b0415876013",
         "android_client_info": {
           "package_name": "com.pgshare.studentroomsharingapp"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDMEwUP-_OGePzT0wv8CKNVF4DPC0b9D9o"
+          "current_key": "AIzaSyDR-lwunKrEhrGgqk16-5UK_se1BulYrVI"
         }
       ],
       "services": {
