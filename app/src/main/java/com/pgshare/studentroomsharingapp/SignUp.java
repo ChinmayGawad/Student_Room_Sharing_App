@@ -2,19 +2,16 @@ package com.pgshare.studentroomsharingapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.util.Patterns;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -22,204 +19,115 @@ import java.util.Objects;
 
 public class SignUp extends AppCompatActivity {
 
-    private EditText editTextName,editTextEmail,editTextPhoneNo,editTextAadhar,editTextPassword,editTextConfirmPassword;
-    private RadioGroup radioGroupGender;
-    private RadioButton radioButtonSelected;
-    private FirebaseUser firebaseUser;
-    private DatabaseReference reference;
-    private ProgressBar SignUp_progressBar;
+    private static final String TAG = "SignUpActivity";
 
+    private TextInputLayout emailLayout, passwordLayout, confirmPasswordLayout;
+    private EditText editTextEmail, passwordEditText, editTextConfirmPassword;
+    private Button buttonNext;
+    private ProgressBar progressBar;
+    private DatabaseReference userRef;
+    private FirebaseDatabase database;
+    private FirebaseAuth auth;
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        editTextName=findViewById(R.id.editTextName);
-        editTextEmail=findViewById(R.id.editTextEmail);
-        editTextPhoneNo=findViewById(R.id.editTextPhone);
-        editTextAadhar=findViewById(R.id.editTextAadhar);
-        editTextPassword=findViewById(R.id.passwordEditText);
-        editTextConfirmPassword=findViewById(R.id.editTextConfirmPassword);
-        SignUp_progressBar = findViewById(R.id.SignUpProgressBar);
+        // Initialize Firebase
+        database = FirebaseDatabase.getInstance();
+        auth = FirebaseAuth.getInstance();
 
-        radioGroupGender = findViewById(R.id.radioGroup_Gender);
-        radioGroupGender.clearCheck();
 
+        // Find views
+        emailLayout = findViewById(R.id.EmailLayout);
+        passwordLayout = findViewById(R.id.PasswordLayout);
+        confirmPasswordLayout = findViewById(R.id.ConfirmPasswordLayout);
+
+        editTextEmail = findViewById(R.id.editTextEmail);
+        passwordEditText = findViewById(R.id.passwordEditText);
+        editTextConfirmPassword = findViewById(R.id.editTextConfirmPassword);
+
+        buttonNext = findViewById(R.id.buttonNext);
+        progressBar = findViewById(R.id.SignUpProgressBar);
+
+        // Button click listener
+        buttonNext.setOnClickListener(v -> onRegisterBtnClick());
     }
 
+    private void onRegisterBtnClick() {
+        String email = editTextEmail.getText().toString().trim();
+        String password = passwordEditText.getText().toString().trim();
+        String confirmPassword = editTextConfirmPassword.getText().toString().trim();
 
-    public void RegisterBtn(View view) {
-        int selectedGenderId = radioGroupGender.getCheckedRadioButtonId();
-        radioButtonSelected = findViewById(selectedGenderId);
+        // Input validation
+        if (isValidInput(email, password, confirmPassword)) {
+            // Show progress bar
+            progressBar.setVisibility(View.VISIBLE);
 
-        //Get Values from User
-        String Name = editTextName.getText().toString();
-        String Email = editTextEmail.getText().toString();
-        String PhoneNo = editTextPhoneNo.getText().toString();
-        String Aadhar = editTextAadhar.getText().toString();
-        String password = editTextPassword.getText().toString();
-        String confirmPassword = editTextConfirmPassword.getText().toString();
+            auth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, task -> {
+                        if (task.isSuccessful()) {
+                            // User registration success
+                            String userId = auth.getCurrentUser().getUid();
 
 
-        //Validate Data
-        if (!validateName() | !validateEmail() | !validatePhone() | !validateAadhar() | !validatePassword() |  !validateGender()) {
-            return;
-        }
-        else if (!password.equals(confirmPassword)) {
-            editTextConfirmPassword.setError("Password does not match");
-            editTextConfirmPassword.requestFocus();
-            //clear the entered Password fields
-            editTextPassword.clearComposingText();
-            editTextConfirmPassword.clearComposingText();
-            return;
-        }
-        else {
-            String Gender = radioButtonSelected.getText().toString();
-            SignUp_progressBar.setVisibility(View.VISIBLE);
-            FirebaseAuth auth = FirebaseAuth.getInstance();
-            // Pass the App Check token to createUserWithEmailAndPassword
-            auth.createUserWithEmailAndPassword(Email, password).addOnCompleteListener(SignUp.this, task -> {
-                if (task.isSuccessful()) {
+                            // Now, add user data to the Realtime Database
+                            userRef = database.getReference("Users").child(userId);
 
-                    //add user to database
-                    firebaseUser = auth.getCurrentUser();
+                            // Replace "users" with the desired node name
+                            userRef.child("email").setValue(email);
 
-                    //Extract Data
-                    reference = FirebaseDatabase.getInstance().getReference("Users");
-                    //enter User Data into  Real-time database
-                    UserHelper userHelper=new UserHelper(Name,Email,PhoneNo,Aadhar,Gender);
 
-                    reference.child(firebaseUser.getUid()).setValue(userHelper).addOnCompleteListener(task1 -> {
+                            // You can add more data if needed, such as name, etc.
+                            // database.getReference("users").child(userId).child("name").setValue(userName);
 
-                        if (task1.isSuccessful()) {
-                            //send email verification
-                            firebaseUser.sendEmailVerification();
-                            Toast.makeText(SignUp.this, "Registration Successful. Please verify your email", Toast.LENGTH_SHORT).show();
-
-                            //redirect to profile page
-                            Intent intent = new Intent(SignUp.this, Login.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            // Hide progress bar
+                            progressBar.setVisibility(View.GONE);
+                            // Navigate to the next screen
+                            Intent intent = new Intent(SignUp.this, RegisterUserDetails.class);
                             startActivity(intent);
-                            finish(); //finish current activity
 
-
-                        }else {
-                            String errorMessage = Objects.requireNonNull(task1.getException()).getMessage();
-                            Toast.makeText(SignUp.this, errorMessage, Toast.LENGTH_LONG).show();
+                        } else {
+                            // User registration failed
+                            // Handle the failure, display an error message, etc.
+                            // You can check task.getException().getMessage() for the error message.
+                            Objects.requireNonNull(task.getException()).getMessage();
+                            // Hide progress bar
+                            progressBar.setVisibility(View.GONE);
                         }
-
-                    }).addOnFailureListener(e -> Log.e("Firebase", "Failed to store user data:", e));
-
-                }
-
-            });
+                    });
 
         }
-
-
     }
 
-    private boolean validateGender() {
-        if (radioGroupGender.getCheckedRadioButtonId() == -1) {
-            Toast.makeText(this, "Please select Gender", Toast.LENGTH_SHORT).show();
-            radioButtonSelected.setError("Please select Gender");
-            radioButtonSelected.requestFocus();
+    private boolean isValidInput(String email, String password, String confirmPassword) {
+        boolean valid = true;
 
-            return false;
+        // Check if email is valid
+        if (TextUtils.isEmpty(email) || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            emailLayout.setError("Invalid email address");
+            valid = false;
         } else {
-            return true;
+            emailLayout.setError(null);
         }
-    }
 
-
-    private boolean validateName() {
-        String val = editTextName.getText().toString();
-        String noWhitespace = "\\S+";
-        if (val.isEmpty()) {
-            editTextName.setError("Field can not be empty");
-            return false;
-        } else if (val.length() > 20) {
-            editTextName.setError("Field can not be Greater than 20 characters");
-            return false;
-        } else if (!val.matches(noWhitespace)) {
-            editTextName.setError("Field can not contain only whitespaces");
-            return false;
+        // Check if password is empty or meets minimum length
+        if (TextUtils.isEmpty(password) || password.length() < 6) {
+            passwordLayout.setError("Password must be at least 6 characters");
+            valid = false;
         } else {
-            editTextName.setError(null);
-            editTextName.setEnabled(true);
-            return true;
+            passwordLayout.setError(null);
         }
-    }
 
-    private boolean validateEmail() {
-        String val = editTextEmail.getText().toString();
-        if (val.isEmpty()) {
-            editTextEmail.setError("Field can not be empty");
-            return false;
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(val).matches()) {
-            editTextEmail.setError("Invalid Email");
-            return false;
-
+        // Check if passwords match
+        if (!password.equals(confirmPassword)) {
+            confirmPasswordLayout.setError("Passwords do not match");
+            valid = false;
         } else {
-            editTextEmail.setError(null);
-            editTextEmail.setEnabled(true);
-            return true;
+            confirmPasswordLayout.setError(null);
         }
+
+        return valid;
     }
-
-    private boolean validatePhone() {
-        String val = editTextPhoneNo.getText().toString();
-        if (val.isEmpty()) {
-            editTextPhoneNo.setError("Field can not be empty");
-            return false;
-        } else if (val.length() != 10) {
-            editTextPhoneNo.setError("Invalid Mobile Number");
-            return false;
-        }
-        else {
-            editTextPhoneNo.setError(null);
-            editTextPhoneNo.setEnabled(true);
-            return true;
-        }
-    }
-
-    private boolean validateAadhar() {
-        String val = editTextAadhar.getText().toString();
-        if (val.isEmpty()) {
-            editTextAadhar.setError("Field can not be empty");
-            return false;
-        } else if (val.length() != 12) {
-            editTextAadhar.setError("Invalid Aadhar Number");
-            return false;
-
-        }else {
-            editTextAadhar.setError(null);
-            editTextAadhar.setEnabled(true);
-            return true;
-        }
-    }
-
-    private boolean validatePassword() {
-        String val = editTextPassword.getText().toString();
-//        String passwordVal = "^" + // start of string
-//               // "(?=.*[a-z])" + // at least 1 lower case letter
-//               // "(?=.*[A-Z])" + // at least 1 upper case letter
-//                //"(?=.*[0-9])" + // at least 1 digit
-//                "(?=.*[!@#&()–[{}]:;',?/*~$^+=<>])" // at least 1 special character
-//                + ".{8,20}" // at least 8 characters
-//                + "$";// end of string
-        if (val.isEmpty()) {
-            editTextPassword.setError("Field can not be empty");
-            return false;
-        }
-//        else if(!val.matches(passwordVal)) {
-//            editTextPassword.setError("Password is too weak");
-//            return false;
-//        }
-        else {
-            editTextPassword.setError(null);
-            editTextPassword.setEnabled(true);
-            return true;
-        }
-    }
-
 }

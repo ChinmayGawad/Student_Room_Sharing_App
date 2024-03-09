@@ -67,7 +67,7 @@ public class Profile_Page extends AppCompatActivity {
                     Profile_email = FetchUser.getEmail();
                     Profile_name = FetchUser.getName();
                     Profile_phoneNo = FetchUser.getPhoneNo();
-                    Profile_aadhar = FetchUser.getAadhar();
+                    Profile_aadhar = FetchUser.getAadharCard();
                     Profile_gender = FetchUser.getGender();
 
                     //Display User's Data

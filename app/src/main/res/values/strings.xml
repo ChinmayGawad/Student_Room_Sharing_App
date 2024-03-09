@@ -29,4 +29,5 @@
     <string name="female">Female</string>
     <string name="gender">Gender</string>
     <string name="profile">Profile</string>
+    <string name="rent_format">rent_format</string>
 </resources>
