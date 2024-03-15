@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void Pg(View view) {
-        startActivity(new Intent(MainActivity.this, Add_Room.class));
+        startActivity(new Intent(MainActivity.this, RegisterUserDetails.class));
     }
 
     public void Owner(View view) {
