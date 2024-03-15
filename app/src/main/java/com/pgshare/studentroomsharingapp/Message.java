@@ -1,5 +1,4 @@
 package com.pgshare.studentroomsharingapp;
-
 import java.util.Date;
 
 public class Message {

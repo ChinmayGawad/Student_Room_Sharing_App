@@ -1,5 +1,4 @@
 package com.pgshare.studentroomsharingapp;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,11 +10,11 @@ import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 
-class MessageAdapter extends ArrayAdapter<Message> {
+class MessageAdapt extends ArrayAdapter<Message> {
     private final Context mContext;
     private final ArrayList<Message> mMessages;
 
-    public MessageAdapter(Context context, ArrayList<Message> messages) {
+    public MessageAdapt(Context context, ArrayList<Message> messages) {
         super(context, 0, messages);
         mContext = context;
         mMessages = messages;
