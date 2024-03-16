@@ -33,7 +33,6 @@
         android:id="@+id/textInputLayoutPhone"
         android:layout_width="310dp"
         android:layout_height="75dp"
-
         android:layout_marginStart="48dp"
         android:layout_marginEnd="48dp"
         android:layout_marginBottom="5dp"
@@ -104,6 +103,7 @@
         android:layout_height="65dp"
         android:layout_marginTop="40dp"
         android:text="Register"
+        android:textSize="20dp"
         android:background="#E23B3B"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.474"

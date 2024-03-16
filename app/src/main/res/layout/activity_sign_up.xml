@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/sig_nimage"
+    android:background="@drawable/signp"
     tools:context=".SignUp">
 
     <ProgressBar
@@ -21,18 +21,23 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/EmailLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="40dp"
+        android:layout_width="318dp"
+        android:layout_height="63dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="355dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="32dp"
         app:boxStrokeColor="@color/black"
-        tools:ignore="DuplicateIds,MissingConstraints"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="166dp">
+        app:layout_constraintBottom_toTopOf="@+id/PasswordLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="DuplicateIds,MissingConstraints">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="308dp"
+            android:layout_height="match_parent"
             android:drawableEnd="@drawable/bg_mail"
             android:hint="@string/email_id"
             android:inputType="textEmailAddress"
@@ -41,21 +46,22 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/PasswordLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginRight="40dp"
+        android:layout_width="317dp"
+        android:layout_height="63dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/ConfirmPasswordLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/EmailLayout"
+        app:layout_constraintTop_toBottomOf="@+id/EmailLayout"
         app:passwordToggleEnabled="true"
         tools:ignore="DuplicateIds">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="51dp"
             android:hint="@string/password"
             android:inputType="textPassword"
             tools:ignore="TextContrastCheck,VisualLintTextFieldSize,DuplicateIds" />
@@ -63,21 +69,22 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/ConfirmPasswordLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginRight="40dp"
+        android:layout_width="313dp"
+        android:layout_height="81dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="45dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonNext"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintHorizontal_bias="0.529"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/PasswordLayout"
         app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextConfirmPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="317dp"
+            android:layout_height="53dp"
             android:hint="@string/re_enter_password"
             android:inputType="textPassword"
             tools:ignore="TextContrastCheck,VisualLintTextFieldSize" />
@@ -85,14 +92,17 @@
 
     <Button
         android:id="@+id/buttonNext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="76dp"
-        android:text="next"
+        android:layout_width="312dp"
+        android:layout_height="69dp"
+        android:layout_marginBottom="164dp"
+        android:background="#E13B3B"
+        android:text="Next"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ConfirmPasswordLayout"
+        app:layout_constraintTop_toBottomOf="@+id/ConfirmPasswordLayout"
+        app:layout_constraintVertical_bias="0.9"
         tools:ignore="MissingConstraints,OnClick" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
