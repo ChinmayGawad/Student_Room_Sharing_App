@@ -16,7 +16,6 @@ import java.util.Objects;
 
 public class Login extends AppCompatActivity {
 
-
     private TextInputEditText LoginMail, LoginPass;
     private FirebaseAuth authLogin;
 
@@ -86,7 +85,7 @@ public class Login extends AppCompatActivity {
         }
     }
     //Check if user is Already logged in
-/*    @Override
+    @Override
     protected void onStart() {
         super.onStart();
         if (authLogin.getCurrentUser() != null) {
@@ -97,5 +96,5 @@ public class Login extends AppCompatActivity {
         else {
             Toast.makeText(this, "You Can Login Now", Toast.LENGTH_SHORT).show();
         }
-    }*/
+    }
 }

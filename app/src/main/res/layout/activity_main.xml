@@ -30,7 +30,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:background="@drawable/rentp"
-            android:onClick="Rent"/>
+            android:contentDescription="@string/rent"
+            android:onClick="Rent" />
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
@@ -55,6 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:background="@drawable/key"
-            android:onClick="Owner"/>
+            android:onClick="Owner"
+            android:contentDescription="Owner" />
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
