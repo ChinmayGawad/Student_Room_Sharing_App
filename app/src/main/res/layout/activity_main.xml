@@ -5,88 +5,56 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@drawable/mainbackground">
+    android:background="@drawable/main">
 
-    <LinearLayout
-        android:id="@+id/pg"
-        android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:layout_marginTop="184dp"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView2"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="396dp"
         android:background="@color/White"
-        android:gravity="center"
-        android:onClick="Pg"
-        android:padding="8dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="7dp">
+        app:layout_constraintVertical_bias="1.0">
 
-        <TextView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_margin="15dp"
+            android:background="@drawable/rentp"
+            android:onClick="Rent"/>
+    </androidx.cardview.widget.CardView>
 
-            android:text="@string/paying_guest"
-            android:textColor="#212121"
-            android:textSize="30sp" />
+    <androidx.cardview.widget.CardView
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="142dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="254dp"
+        android:background="#ffffff"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView2"
+        app:layout_constraintVertical_bias="0.511">
 
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/rent"
-        android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:layout_marginTop="60dp"
-        android:background="@color/White"
-        android:gravity="center"
-        android:onClick="Rent"
-        android:padding="8dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        app:layout_constraintTop_toBottomOf="@+id/pg"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp">
-
-        <TextView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/rent"
-
-            android:textColor="#212121"
-            android:textSize="30sp" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/owner"
-        android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:layout_marginTop="60dp"
-        android:background="@color/White"
-        android:gravity="center"
-        android:onClick="Owner"
-        android:padding="8dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        app:layout_constraintTop_toBottomOf="@+id/rent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="-27dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/Owner"
-
-            android:textColor="#212121"
-            android:textSize="30sp" />
-
-
-    </LinearLayout>
-
-
+            android:layout_margin="15dp"
+            android:background="@drawable/key"
+            android:onClick="Owner"/>
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
