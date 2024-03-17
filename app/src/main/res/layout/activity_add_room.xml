@@ -6,12 +6,25 @@
     android:padding="16dp"
     tools:context=".Add_Room">
 
+    <!-- LinearLayout to hold multiple selected images -->
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <LinearLayout
+            android:id="@+id/linear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
+
+    </androidx.viewpager.widget.ViewPager>
 
     <EditText
         android:id="@+id/editTextRoomName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:autofillHints="@string/room_name"
         android:hint="@string/room_name"
         android:minHeight="48dp"
@@ -25,6 +38,7 @@
         android:autofillHints="@string/location"
         android:hint="@string/location"
         android:minHeight="48dp"
+        android:textColorHint="#546E7A"
         tools:ignore="TextFields" />
 
     <EditText
@@ -47,14 +61,13 @@
         android:inputType="numberDecimal"
         android:minHeight="48dp" />
 
-    <!-- Add ImageView or ImagePicker for handling images -->
-
     <Button
-        android:id="@+id/buttonSelectImages"
+        android:id="@+id/BtnGallery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:text="@string/select_photos" />
+        android:text="@string/select_form_gallery" />
+
 
 
     <Button
@@ -63,4 +76,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:text="@string/save" />
+
+
+
+
 </LinearLayout>

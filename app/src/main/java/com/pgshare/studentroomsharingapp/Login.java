@@ -31,7 +31,7 @@ public class Login extends AppCompatActivity {
         TextView create_acc = findViewById(R.id.CreateAccount);
 
         create_acc.setOnClickListener(v -> {
-            Intent SignUpIntent = new Intent(Login.this, SignUp.class);
+            Intent SignUpIntent = new Intent(Login.this, RegisterUserDetails.class);
             startActivity(SignUpIntent);
         });
         authLogin = FirebaseAuth.getInstance();
@@ -85,7 +85,7 @@ public class Login extends AppCompatActivity {
         }
     }
     //Check if user is Already logged in
-   /*@Override
+  /* @Override
     protected void onStart() {
         super.onStart();
         if (authLogin.getCurrentUser() != null) {

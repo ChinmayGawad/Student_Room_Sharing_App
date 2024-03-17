@@ -19,7 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterUserDetails extends AppCompatActivity {
 
-    private EditText editTextName, editTextPhone, editTextAdharCard;
+    private EditText editTextName, editTextPhone;
     private RadioGroup radioGroupGender;
     private RadioButton radioButtonMale, radioButtonFemale;
     private Button registerBtn;
@@ -38,7 +38,6 @@ public class RegisterUserDetails extends AppCompatActivity {
         // Find views
         editTextName = findViewById(R.id.editTextName);
         editTextPhone = findViewById(R.id.editTextPhone);
-        editTextAdharCard = findViewById(R.id.editTextAadharCard);
         registerBtn = findViewById(R.id.buttonRegister);
         radioGroupGender = findViewById(R.id.radioGroupGender);
         radioButtonMale = findViewById(R.id.radioButtonMale);
@@ -53,10 +52,9 @@ public class RegisterUserDetails extends AppCompatActivity {
         String name = editTextName.getText().toString().trim();
         String phone = editTextPhone.getText().toString().trim();
         String gender = getSelectedGender();
-        String adharCard = editTextAdharCard.getText().toString().trim();
 
         // Input validation
-        if (isValidInput(name, phone, gender, adharCard)) {
+        if (isValidInput(name, phone, gender)) {
             // Show progress bar
             progressBar.setVisibility(View.VISIBLE);
 
@@ -70,7 +68,6 @@ public class RegisterUserDetails extends AppCompatActivity {
             usersRef.child("name").setValue(name);
             usersRef.child("phone").setValue(phone);
             usersRef.child("gender").setValue(gender);
-            usersRef.child("adharCard").setValue(adharCard);
 
             // Add more details as needed
 
@@ -97,7 +94,7 @@ public class RegisterUserDetails extends AppCompatActivity {
         }
     }
 
-    private boolean isValidInput(String name, String phone, String gender, String adharCard) {
+    private boolean isValidInput(String name, String phone, String gender) {
         if (TextUtils.isEmpty(name)) {
             Toast.makeText(this, "Please enter your name.", Toast.LENGTH_SHORT).show();
             return false;
@@ -110,11 +107,6 @@ public class RegisterUserDetails extends AppCompatActivity {
 
         if (gender.isEmpty()) {
             Toast.makeText(this, "Please select your gender.", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        if (TextUtils.isEmpty(adharCard)) {
-            Toast.makeText(this, "Please enter your aadhar card number.", Toast.LENGTH_SHORT).show();
             return false;
         }
 

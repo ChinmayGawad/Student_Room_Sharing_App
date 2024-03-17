@@ -90,20 +90,20 @@
             tools:ignore="TextContrastCheck,VisualLintTextFieldSize" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
+     <Button
         android:id="@+id/buttonNext"
         android:layout_width="312dp"
         android:layout_height="69dp"
         android:layout_marginBottom="164dp"
         android:background="#E13B3B"
         android:text="Next"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ConfirmPasswordLayout"
         app:layout_constraintVertical_bias="0.9"
-        tools:ignore="MissingConstraints,OnClick" />
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

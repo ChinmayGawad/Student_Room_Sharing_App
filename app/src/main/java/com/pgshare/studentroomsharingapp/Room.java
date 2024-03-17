@@ -17,23 +17,26 @@ public class Room implements Parcelable {
         }
     };
 
-    private String id, roomName, location, description, price, imageUrl;
+    private String id;
+    private String roomName;
+    private String location;
+    private String description;
+    private String price;
+    private String imageUrl;
+    private int imageResourceId;
 
     // Default constructor with no arguments (required by Firebase)
     public Room() {
     }
 
-    public Room(String id, String roomName, String location, String description, String price, String imageUrl) {
+    public Room(String id, String roomName, String location, String description, String price, String imageUrl, int imageResourceId) {
         this.id = id;
         this.roomName = roomName;
         this.location = location;
         this.description = description;
         this.price = price;
         this.imageUrl = imageUrl;
-    }
-
-    public Room(String id, String roomName, String location, String description, String price) {
-        this(id, roomName, location, description, price, null); // Assign null to imageUrl for the simpler constructor
+        this.imageResourceId = imageResourceId;
     }
 
     @Override
@@ -48,7 +51,8 @@ public class Room implements Parcelable {
         out.writeString(location);
         out.writeString(description);
         out.writeString(price);
-        out.writeString(imageUrl); // Include imageUrl if necessary
+        out.writeString(imageUrl);
+        out.writeInt(imageResourceId);
     }
 
     protected Room(Parcel in) {
@@ -57,10 +61,39 @@ public class Room implements Parcelable {
         location = in.readString();
         description = in.readString();
         price = in.readString();
-        imageUrl = in.readString(); // Read imageUrl if necessary
+        imageUrl = in.readString();
+        imageResourceId = in.readInt();
     }
 
     // Getters and setters remain the same
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public void setImageResourceId(int imageResourceId) {
+        this.imageResourceId = imageResourceId;
+    }
 
     public String getId() {
         return id;
@@ -79,10 +112,15 @@ public class Room implements Parcelable {
     }
 
     public String getPrice() {
+        price = "₹" + price;
         return price;
     }
 
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public int getImageResourceId() {
+        return imageResourceId;
     }
 }

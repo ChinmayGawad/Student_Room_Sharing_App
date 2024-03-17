@@ -1,8 +1,11 @@
-package com.pgshare.studentroomsharingapp;// Import statements...
+package com.pgshare.studentroomsharingapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.widget.ProgressBar;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,37 +21,47 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Display_Room extends AppCompatActivity {
+public class Display_Room extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference roomRef;
     private RecyclerView roomList;
     private RoomListAdapter adapter;
+    private SearchView searchView;
+    private ProgressBar DisplayProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_display_room); // Replace with your actual layout
+        setContentView(R.layout.activity_display_room);
 
-        roomList = findViewById(R.id.roomList); // Replace with your RecyclerView ID
-        roomList.setLayoutManager(new LinearLayoutManager(this)); // Set layout manager
+        // Set up SearchView
+        searchView = findViewById(R.id.RoomSearchView);
+        searchView.clearFocus();
+        searchView.setOnQueryTextListener(this);
+
+        // Set up RecyclerView
+        roomList = findViewById(R.id.roomList);
+        roomList.setLayoutManager(new LinearLayoutManager(this));
+
+        // Set up ProgressBar
+        DisplayProgressBar = findViewById(R.id.DisplayRoomProgressBar);
 
         // Create the adapter with an empty list initially
         adapter = new RoomListAdapter(new ArrayList<>(), Display_Room.this, room -> {
-            // Handle room click event
             Intent intent = new Intent(Display_Room.this, RoomDetailsActivity.class);
-            // Pass the room object to the RoomDetailsActivity
             intent.putExtra("Rooms", room);
             startActivity(intent);
         });
-        roomList.setAdapter(adapter); // Set the adapter to the RecyclerView
+        roomList.setAdapter(adapter);
 
         // Fetch room data from Firebase
-        roomRef = database.getReference("Rooms"); // Replace "rooms" with your actual data path
+        roomRef = database.getReference("Rooms");
         fetchRoomDataFromFirebase();
     }
 
     private void fetchRoomDataFromFirebase() {
+        DisplayProgressBar.setVisibility(ProgressBar.VISIBLE);
         Log.d("Display_Room", "Fetching room data from Firebase");
         roomRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -63,10 +76,16 @@ public class Display_Room extends AppCompatActivity {
                         }
                     }
                     // Update adapter with retrieved data
+
                     adapter.updateData(roomData);
+
+                    // Hide progress bar
+                    DisplayProgressBar.setVisibility(ProgressBar.GONE);
+                    Log.d("Display_Room", "Room data retrieved successfully: " + roomData);
                 } else {
                     // Handle case when there is no data
                     Toast.makeText(Display_Room.this, "No rooms found", Toast.LENGTH_SHORT).show();
+                    DisplayProgressBar.setVisibility(ProgressBar.GONE);
                 }
             }
 
@@ -78,5 +97,30 @@ public class Display_Room extends AppCompatActivity {
                 Log.w("Display_Room", "Error fetching rooms: ", error.toException());
             }
         });
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        filter(newText);
+        return true;
+    }
+
+    private void filter(String searchText) {
+        List<Room> filteredList = new ArrayList<>();
+        for (Room room : adapter.roomData) {
+            if (TextUtils.isEmpty(searchText) || roomContainsQuery(room, searchText)) {
+                filteredList.add(room);
+            }
+        }
+        adapter.updateData(filteredList);
+    }
+
+    private boolean roomContainsQuery(Room room, String query) {
+        return room.getRoomName().toLowerCase().contains(query.toLowerCase());
     }
 }

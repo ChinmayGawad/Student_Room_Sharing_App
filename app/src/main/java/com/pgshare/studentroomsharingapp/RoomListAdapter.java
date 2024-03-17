@@ -11,11 +11,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.RoomViewHolder> {
 
-    private final List<Room> roomData;
+    protected final List<Room> roomData;
     private final Context context;
     private final OnItemClickListener listener;
 
@@ -40,27 +42,15 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.RoomVi
 
         // Bind common fields (ensure these fields exist in your Room class)
         holder.roomTitle.setText(room.getRoomName());
-        holder.roomRent.setText(context.getString(R.string.rent_format, room.getPrice()));
-        holder.roomDescription.setText(room.getDescription());
+        holder.roomRent.setText((room.getPrice()));
+        holder.roomLocation.setText(room.getLocation());
 
-       /* // Bind additional fields (replace with your actual field names and view IDs)
-        if (room.hasAddress()) { // Assuming address is an optional field
-            holder.roomAddress.setText(room.getAddress());
-        } else {
-            // Hide or handle the address view if address is not available
-        }
-
-        if (room.hasAmenities()) { // Assuming amenities is a list of strings
-            holder.roomAmenities.setText(room.getAmenitiesAsString()); // Use a suitable method to format amenities
-        } else {
-            // Hide or handle the amenities view if amenities are not available
-        }
-
-        // ... (bind any other fields as needed)
-
-        // Set image (replace with your image loading logic)
-        // Glide or Picasso can be used for efficient image loading
-        // holder.roomImage.setImageURI(...);*/
+        // Download and display image using Glide
+        Glide.with(context)
+                .load(room.getImageUrl()) // Load image from URL stored in room object
+                .placeholder(R.drawable.imageplaceholder) // Placeholder image while loading
+                .error(R.drawable.imageplaceholder) // Image to show on errors
+                .into(holder.roomImage);
 
         // Set click listener
         holder.itemView.setOnClickListener(v -> {
@@ -90,15 +80,15 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.RoomVi
 
         private final TextView roomTitle;
         private final TextView roomRent;
-        private final TextView roomDescription;
         private final ImageView roomImage;
+        private final TextView roomLocation;
 
         public RoomViewHolder(View itemView) {
             super(itemView);
             roomTitle = itemView.findViewById(R.id.room_title);
             roomRent = itemView.findViewById(R.id.room_rent);
-            roomDescription = itemView.findViewById(R.id.room_description);
             roomImage = itemView.findViewById(R.id.room_image);
+            roomLocation = itemView.findViewById(R.id.roomAddress);
         }
     }
 }

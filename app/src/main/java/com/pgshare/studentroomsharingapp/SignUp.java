@@ -19,8 +19,6 @@ import java.util.Objects;
 
 public class SignUp extends AppCompatActivity {
 
-    private static final String TAG = "SignUpActivity";
-
     private TextInputLayout emailLayout, passwordLayout, confirmPasswordLayout;
     private EditText editTextEmail, passwordEditText, editTextConfirmPassword;
     private Button buttonNext;

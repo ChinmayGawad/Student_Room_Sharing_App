@@ -24,10 +24,14 @@
     <string name="search">Search</string>
     <string name="description">Description</string>
     <string name="save">Save</string>
-    <string name="select_photos">Select Photos</string>
+
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="gender">Gender</string>
     <string name="profile">Profile</string>
-    <string name="rent_format">rent_format</string>
+    <string name="room_price_format">₹ %d</string>
+    <string name="upload_from_camara">Upload From Camara</string>
+    <string name="select_form_gallery">Select Form Gallery</string>
+    <string name="enter_otp">Enter OTP</string>
+
 </resources>
