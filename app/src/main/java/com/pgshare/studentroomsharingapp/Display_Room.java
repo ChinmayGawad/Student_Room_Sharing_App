@@ -2,7 +2,6 @@ package com.pgshare.studentroomsharingapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
@@ -29,6 +28,7 @@ public class Display_Room extends AppCompatActivity implements SearchView.OnQuer
     private RoomListAdapter adapter;
     private SearchView searchView;
     private ProgressBar DisplayProgressBar;
+    List<Room> roomData = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +46,7 @@ public class Display_Room extends AppCompatActivity implements SearchView.OnQuer
 
         // Set up ProgressBar
         DisplayProgressBar = findViewById(R.id.DisplayRoomProgressBar);
+
 
         // Create the adapter with an empty list initially
         adapter = new RoomListAdapter(new ArrayList<>(), Display_Room.this, room -> {
@@ -67,7 +68,8 @@ public class Display_Room extends AppCompatActivity implements SearchView.OnQuer
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 Log.d("Display_Room", "Data changed");
-                List<Room> roomData = new ArrayList<>();
+                roomData.clear();
+
                 if (snapshot.exists()) {
                     for (DataSnapshot roomSnapshot : snapshot.getChildren()) {
                         Room room = roomSnapshot.getValue(Room.class);
@@ -84,7 +86,7 @@ public class Display_Room extends AppCompatActivity implements SearchView.OnQuer
                     Log.d("Display_Room", "Room data retrieved successfully: " + roomData);
                 } else {
                     // Handle case when there is no data
-                    Toast.makeText(Display_Room.this, "No rooms found", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Display_Room.this, "No rooms found", Toast.LENGTH_LONG).show();
                     DisplayProgressBar.setVisibility(ProgressBar.GONE);
                 }
             }
@@ -106,21 +108,24 @@ public class Display_Room extends AppCompatActivity implements SearchView.OnQuer
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        filter(newText);
+        filterList(newText);
         return true;
     }
 
-    private void filter(String searchText) {
+    private void filterList(String searchText) {
         List<Room> filteredList = new ArrayList<>();
-        for (Room room : adapter.roomData) {
-            if (TextUtils.isEmpty(searchText) || roomContainsQuery(room, searchText)) {
+        for(Room room :roomData) {
+            if (room.getLocation().toLowerCase().contains(searchText.toLowerCase())) {
                 filteredList.add(room);
             }
         }
-        adapter.updateData(filteredList);
+        if (filteredList.isEmpty()) {
+            // Handle case when no results
+            Log.d("Display_Room", "No results found for search query: " + searchText);
+            Toast.makeText(this, "No rooms found", Toast.LENGTH_SHORT).show();
+        } else {
+            adapter.setFilteredList(filteredList);
+        }
     }
 
-    private boolean roomContainsQuery(Room room, String query) {
-        return room.getRoomName().toLowerCase().contains(query.toLowerCase());
-    }
 }

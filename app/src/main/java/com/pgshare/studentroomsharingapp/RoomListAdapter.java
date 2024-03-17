@@ -17,9 +17,14 @@ import java.util.List;
 
 public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.RoomViewHolder> {
 
-    protected final List<Room> roomData;
+    protected List<Room> roomData;
     private final Context context;
     private final OnItemClickListener listener;
+
+    public void setFilteredList(List<Room> filteredList) {
+       this.roomData = filteredList;
+       notifyDataSetChanged();
+    }
 
     public RoomListAdapter(List<Room> roomData, Context context, OnItemClickListener listener) {
         this.roomData = roomData;
