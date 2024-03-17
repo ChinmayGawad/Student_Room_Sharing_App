@@ -19,8 +19,8 @@ import com.google.firebase.database.ValueEventListener;
 
 public class Profile_Page extends AppCompatActivity {
 
-    private TextView ProfileUserName, ProfileEmailId, ProfilePhoneNo, ProfileAadharNo, ProfileGender;
-    private String Profile_email, Profile_name, Profile_phoneNo, Profile_aadhar, Profile_gender;
+    private TextView ProfileUserName, ProfileEmailId, ProfilePhoneNo, ProfileGender;
+    private String Profile_email, Profile_name, Profile_phoneNo, Profile_gender;
     private ProgressBar Profile_ProgressBar;
 
     @Override
@@ -32,7 +32,6 @@ public class Profile_Page extends AppCompatActivity {
         ProfileUserName = findViewById(R.id.ProfileUserName);
         ProfileEmailId = findViewById(R.id.ProfileEmailId);
         ProfilePhoneNo = findViewById(R.id.ProfilePhoneNo);
-        ProfileAadharNo = findViewById(R.id.ProfileAadharNo);
         ProfileGender = findViewById(R.id.ProfileGender);
 
         Profile_ProgressBar = findViewById(R.id.ProfileProgressBar);
@@ -67,14 +66,12 @@ public class Profile_Page extends AppCompatActivity {
                     Profile_email = FetchUser.getEmail();
                     Profile_name = FetchUser.getName();
                     Profile_phoneNo = FetchUser.getPhoneNo();
-                    Profile_aadhar = FetchUser.getAadharCard();
                     Profile_gender = FetchUser.getGender();
 
                     //Display User's Data
                     ProfileUserName.setText(Profile_name);
                     ProfileEmailId.setText(Profile_email);
                     ProfilePhoneNo.setText(Profile_phoneNo);
-                    ProfileAadharNo.setText(Profile_aadhar);
                     ProfileGender.setText(Profile_gender);
                 }
                 Profile_ProgressBar.setVisibility(View.GONE);

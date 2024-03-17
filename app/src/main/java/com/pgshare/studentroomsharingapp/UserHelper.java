@@ -1,23 +1,17 @@
 package com.pgshare.studentroomsharingapp;
 
 public class UserHelper {
-    private String userId;
-    private String name;
-    private String email;
-    private String phoneNo;
-    private String aadharCard;
-    private String gender;
+    private String userId, name, email, phoneNo, gender;
 
     // Required default constructor
     public UserHelper() {
     }
 
-    public UserHelper(String userId, String name, String email, String phoneNo, String aadharCard, String gender) {
+    public UserHelper(String userId, String name, String email, String phoneNo, String gender) {
         this.userId = userId;
         this.name = name;
         this.email = email;
         this.phoneNo = phoneNo;
-        this.aadharCard = aadharCard;
         this.gender = gender;
     }
 
@@ -55,13 +49,6 @@ public class UserHelper {
         this.phoneNo = phoneNo;
     }
 
-    public String getAadharCard() {
-        return aadharCard;
-    }
-
-    public void setAadharCard(String aadharCard) {
-        this.aadharCard = aadharCard;
-    }
 
     public String getGender() {
         return gender;
