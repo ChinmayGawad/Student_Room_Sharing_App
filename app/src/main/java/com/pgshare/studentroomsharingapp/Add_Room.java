@@ -16,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -32,6 +34,7 @@ public class Add_Room extends AppCompatActivity {
     private ArrayList<Uri> imageList;
 
     private DatabaseReference databaseReference;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,7 @@ public class Add_Room extends AppCompatActivity {
         imageList = new ArrayList<>();
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Rooms");
+        firebaseAuth = FirebaseAuth.getInstance();
 
 
         BtnGallery.setOnClickListener(view -> {
@@ -58,7 +62,19 @@ public class Add_Room extends AppCompatActivity {
             pickImageFromGallery();
         });
 
-        SaveRoom.setOnClickListener(view -> saveToDatabase());
+        SaveRoom.setOnClickListener(view -> {
+            // Check if the user is logged in
+            FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+            if (currentUser != null) {
+                saveToDatabase();
+            } else {
+                // Handle case where user is not logged in
+                Toast.makeText(this, "Please log in to save the room", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Add_Room.this, Login.class);
+                startActivity(intent);
+            }
+
+        });
 
 
 
@@ -84,13 +100,14 @@ public class Add_Room extends AppCompatActivity {
 
         if (roomId != null) {
             // Save room details to the database
-            Room room = new Room(roomId, roomName, location, description, price, "", 0); // Set imageUrl and imageResourceId as needed
+            Room room = new Room(roomId, roomName, location, description, price, new ArrayList<>(), 0); // Set imageUrl and imageResourceId as needed
             databaseReference.child(roomId).setValue(room);
 
             // Upload images to Firebase Storage and save their URLs in the database
-            for (Uri imageUri : imageList) {
-                StorageReference storageReference = FirebaseStorage.getInstance().getReference(); ;
-                StorageReference fileReference = storageReference.child("RoomImages/" + roomId + "/" + System.currentTimeMillis() + "." + getFileExtension(imageUri));
+            for (int i = 0; i < imageList.size(); i++) {
+                Uri imageUri = imageList.get(i);
+                StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+                StorageReference fileReference = storageReference.child("RoomImages/" + roomId + "/" + i + "." + getFileExtension(imageUri));
                 fileReference.putFile(imageUri)
                         .addOnSuccessListener(taskSnapshot -> {
                             // Image uploaded successfully, get download URL
@@ -98,7 +115,11 @@ public class Add_Room extends AppCompatActivity {
                                 String imageUrl = uri.toString();
 
                                 // Update the Room object with the image URL
-                                room.setImageUrl(imageUrl);
+                                if (room.getImageUrls() == null) {
+                                    room.setImageUrls(new ArrayList<>());
+                                }
+                                room.getImageUrls().add(imageUrl);
+
 
                                 // Save the updated Room object to the database
                                 databaseReference.child(roomId).setValue(room);
@@ -119,6 +140,7 @@ public class Add_Room extends AppCompatActivity {
             imageList.clear();
         }
     }
+
 
     private String getFileExtension(Uri imageUri) {
         ContentResolver contentResolver = getContentResolver();
