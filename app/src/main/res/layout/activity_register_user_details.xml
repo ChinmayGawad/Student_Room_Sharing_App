@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/regis">
+    android:background="@drawable/reges">
 
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayoutName"
-        android:layout_width="303dp"
-        android:layout_height="75dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="280dp"
-        android:layout_marginEnd="48dp"
+        android:layout_width="297dp"
+        android:layout_height="79dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="296dp"
+        android:layout_marginEnd="88dp"
         android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayoutPhone"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,8 +23,8 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextName"
-            android:layout_width="304dp"
-            android:layout_height="68dp"
+            android:layout_width="279dp"
+            android:layout_height="52dp"
             android:hint="Name"
             android:inputType="textPersonName" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -33,16 +33,16 @@
         android:id="@+id/textInputLayoutPhone"
         android:layout_width="310dp"
         android:layout_height="75dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginEnd="48dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="80dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayoutName">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextPhone"
-            android:layout_width="match_parent"
+            android:layout_width="292dp"
             android:layout_height="58dp"
             android:hint="Phone Number"
             android:inputType="number" />
@@ -54,7 +54,7 @@
         android:layout_width="217dp"
         android:layout_height="58dp"
         android:layout_marginStart="52dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPhone">
@@ -78,14 +78,15 @@
         android:id="@+id/buttonRegister"
         android:layout_width="324dp"
         android:layout_height="60dp"
-        android:layout_marginTop="86dp"
+        android:layout_marginTop="44dp"
         android:background="@drawable/button_curve"
         android:text="Register"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.551"
+
+
         app:layout_constraintStart_toStartOf="parent"
-
-
         app:layout_constraintTop_toBottomOf="@+id/radioGroupGender" />
 
     <ProgressBar
