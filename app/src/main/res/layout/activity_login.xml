@@ -60,8 +60,8 @@
         android:id="@+id/buttonLogin"
         android:layout_width="258dp"
         android:layout_height="wrap_content"
-        android:layout_x="77dp"
-        android:layout_y="588dp"
+        android:layout_x="78dp"
+        android:layout_y="581dp"
         android:background="@drawable/button_curve"
         android:text="@string/login" />
 
@@ -69,8 +69,8 @@
         android:id="@+id/CreateAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_x="103dp"
-        android:layout_y="644dp"
+        android:layout_x="101dp"
+        android:layout_y="641dp"
         android:text="@string/create_account"
         android:textColor="@color/black" />
 
