@@ -4,13 +4,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".Add_Room">
+    tools:context=".Add_Room"
+    android:background="#D33333">
 
     <!-- LinearLayout to hold multiple selected images -->
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="200dp"
+        android:background="#E6E1E1">
 
         <LinearLayout
             android:id="@+id/linear"
@@ -25,16 +27,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:background="#E6E1E1"
         android:autofillHints="@string/room_name"
         android:hint="@string/room_name"
         android:minHeight="48dp"
-        tools:ignore="TextFields" />
+        tools:ignore="TextFields"
+        />
 
     <EditText
         android:id="@+id/editTextLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:background="#E6E1E1"
         android:autofillHints="@string/location"
         android:hint="@string/location"
         android:minHeight="48dp"
@@ -46,6 +55,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:background="#E6E1E1"
         android:autofillHints="@string/description"
         android:hint="@string/description"
         android:minHeight="48dp"
@@ -56,6 +68,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:background="#E6E1E1"
         android:autofillHints="@string/price"
         android:hint="@string/price"
         android:inputType="numberDecimal"
@@ -66,6 +81,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
+        android:layout_marginStart="40dp"
+        android:background="#E6E1E1"
         android:text="@string/select_form_gallery" />
 
 
@@ -75,6 +92,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
+        android:layout_marginStart="150dp"
+        android:background="#E6E1E1"
         android:text="@string/save" />
 
 
