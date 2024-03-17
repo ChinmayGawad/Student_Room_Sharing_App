@@ -31,7 +31,7 @@ public class Login extends AppCompatActivity {
         TextView create_acc = findViewById(R.id.CreateAccount);
 
         create_acc.setOnClickListener(v -> {
-            Intent SignUpIntent = new Intent(Login.this, RegisterUserDetails.class);
+            Intent SignUpIntent = new Intent(Login.this, SignUp.class);
             startActivity(SignUpIntent);
         });
         authLogin = FirebaseAuth.getInstance();
@@ -61,7 +61,7 @@ public class Login extends AppCompatActivity {
     private Boolean validateEmail() {
         String val = Objects.requireNonNull(LoginMail.getText()).toString();
         if (val.isEmpty()) {
-            LoginMail.setError("Field can not be empty");
+            LoginMail.setError("Field Can Not be Empty");
             return false;
         }  else if (!Patterns.EMAIL_ADDRESS.matcher(val).matches()) {
             LoginMail.setError("Invalid Email Address");
