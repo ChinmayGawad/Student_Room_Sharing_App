@@ -10,7 +10,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/UsernameLayout"
-        android:layout_width="251dp"
+        android:layout_width="297dp"
         android:layout_height="69dp"
         android:layout_x="55dp"
         android:layout_y="420dp"
@@ -20,17 +20,17 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/UsernameEt"
-            android:layout_width="248dp"
+            android:layout_width="match_parent"
             android:layout_height="57dp"
             android:drawableEnd="@drawable/ic_user" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/passwordTextInputLayout1"
-        android:layout_width="258dp"
-        android:layout_height="78dp"
+        android:layout_width="297dp"
+        android:layout_height="69dp"
         android:layout_x="55dp"
-        android:layout_y="481dp"
+        android:layout_y="480dp"
         android:hint="@string/password"
         android:inputType="textPassword"
         app:passwordToggleEnabled="false"
@@ -38,8 +38,8 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/PasswordEt"
-            android:layout_width="248dp"
-            android:layout_height="58dp"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
             tools:ignore="VisualLintTextFieldSize,TextContrastCheck" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -48,17 +48,17 @@
         android:id="@+id/forgetPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_x="192dp"
-        android:layout_y="554dp"
         android:text="@string/forgot_password"
+        android:layout_x="235dp"
+        android:layout_y="550dp"
         android:textColor="#040303" />
 
     <Button
         android:id="@+id/buttonLogin"
-        android:layout_width="246dp"
-        android:layout_height="58dp"
+        android:layout_width="300dp"
+        android:layout_height="55dp"
         android:layout_x="56dp"
-        android:layout_y="587dp"
+        android:layout_y="590dp"
         android:background="@drawable/button_curve"
         android:text="@string/login" />
 
@@ -66,9 +66,9 @@
         android:id="@+id/CreateAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_x="133dp"
-        android:layout_y="663dp"
-        android:text="create_account"
+        android:layout_x="75dp"
+        android:layout_y="660dp"
+        android:text="@string/create_account"
         android:textColor="@color/black" />
 
 

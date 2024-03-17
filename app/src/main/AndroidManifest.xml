@@ -20,11 +20,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.StudentRoomSharingApp"
+        android:theme="@style/Theme.MaterialComponents"
         tools:targetApi="31">
-        <activity
-            android:name=".VerificationOTP"
-            android:exported="false" />
         <activity
             android:name=".ChatActivity"
             android:exported="false" />
