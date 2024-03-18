@@ -18,6 +18,7 @@ public class Login extends AppCompatActivity {
 
     private TextInputEditText LoginMail, LoginPass;
     private FirebaseAuth authLogin;
+    private TextView ForgetPass;
 
 
     @Override
@@ -27,6 +28,14 @@ public class Login extends AppCompatActivity {
 
         LoginMail = findViewById(R.id.UsernameEt);
         LoginPass = findViewById(R.id.PasswordEt);
+
+        ForgetPass = findViewById(R.id.forgetPassword);
+
+        ForgetPass.setOnClickListener(v -> {
+            Intent intent = new Intent(Login.this, ForgetPassword.class);
+            startActivity(intent);
+        });
+
 
         TextView create_acc = findViewById(R.id.CreateAccount);
 

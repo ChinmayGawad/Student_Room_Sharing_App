@@ -47,9 +47,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/priceTextView"
-        android:layout_marginTop="16dp"
-        android:orientation="vertical"/>
+        android:layout_marginTop="16dp"/>
 
+    <Button
+        android:id="@+id/ChatWithRoomMate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageRecyclerView"
+        android:layout_marginTop="26dp"
+        android:text="Chat Room Mate"
+        android:textSize="15sp"
+        android:background="@drawable/button_curve"
+        android:backgroundTint="@color/MediumPurple"
+        android:layout_marginLeft="230dp"/>
 
 
 </RelativeLayout>

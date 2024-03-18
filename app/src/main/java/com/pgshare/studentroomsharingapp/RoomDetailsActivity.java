@@ -1,11 +1,12 @@
 package com.pgshare.studentroomsharingapp;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pgshare.studentroomsharingapp.Adapter.ImageAdapter;
@@ -20,6 +21,7 @@ public class RoomDetailsActivity extends AppCompatActivity {
     private TextView priceTextView;
     private RecyclerView recyclerView;
     private ImageAdapter imageAdapter;
+    private Button ChatWithRoomMate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +34,13 @@ public class RoomDetailsActivity extends AppCompatActivity {
         descriptionTextView = findViewById(R.id.descriptionTextView);
         priceTextView = findViewById(R.id.priceTextView);
         recyclerView = findViewById(R.id.imageRecyclerView);
+        ChatWithRoomMate = findViewById(R.id.ChatWithRoomMate);
 
-        // Set up RecyclerView
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        //Intent to ChatActivity
+        ChatWithRoomMate.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ChatActivity.class);
+            startActivity(intent);
+        });
 
         imageAdapter = new ImageAdapter();
         recyclerView.setAdapter(imageAdapter);

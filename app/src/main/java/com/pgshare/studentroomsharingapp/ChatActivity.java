@@ -1,10 +1,10 @@
 package com.pgshare.studentroomsharingapp;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -71,12 +71,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendMessage();
-            }
-        });
+        sendButton.setOnClickListener(v -> sendMessage());
     }
 
     private void sendMessage() {
