@@ -1,16 +1,18 @@
 package com.pgshare.studentroomsharingapp;
-import java.util.Date;
+import java.io.Serializable;
 
-public class Message {
+public class Message implements Serializable {
     private String message;
-    private boolean sentByUser;
-    private String timestamp;
+    private boolean sentByUser; // Indicates whether the message was sent by the user or received
+    // Add other fields like timestamp if needed
+
+    // Empty constructor required for Firebase deserialization
+    public Message() {
+    }
 
     public Message(String message, boolean sentByUser) {
         this.message = message;
         this.sentByUser = sentByUser;
-        // Set timestamp when the message is created
-        this.timestamp = getTimestamp(); // Example timestamp, you can use your own logic to set the timestamp
     }
 
     public String getMessage() {
@@ -19,9 +21,5 @@ public class Message {
 
     public boolean isSentByUser() {
         return sentByUser;
-    }
-
-    public String getTimestamp() {
-        return timestamp != null ? timestamp : "";
     }
 }
