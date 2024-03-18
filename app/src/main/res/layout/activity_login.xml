@@ -66,21 +66,21 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/passwordTextInputLayout1"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="255dp"
+            android:layout_width="252dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="48dp"
             android:layout_marginTop="110dp"
             android:background="#E6E1E1"
             android:hint="@string/password"
-            android:textColorHint="@color/black"
             android:inputType="textPassword"
+            android:textColorHint="@color/black"
             app:passwordToggleEnabled="false"
             tools:ignore="UnknownId">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/PasswordEt"
                 android:layout_width="match_parent"
-                android:layout_height="46dp"
+                android:layout_height="58dp"
                 tools:ignore="VisualLintTextFieldSize,TextContrastCheck" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -90,7 +90,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="190dp"
-            android:layout_marginTop="170dp"
+            android:layout_marginTop="180dp"
             android:text="@string/forgot_password"
             android:textColor="#040303" />
 

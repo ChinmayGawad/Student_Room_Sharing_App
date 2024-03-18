@@ -21,7 +21,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="28dp"
             android:layout_marginTop="100dp"
-            android:background="@color/White"
             android:textColorHint="@color/black"
             android:paddingTop="10dp"
             android:hint="Name">
@@ -30,7 +29,7 @@
                 android:id="@+id/editTextName"
                 android:layout_width="match_parent"
                 android:layout_height="58dp"
-                android:background="@color/White"
+                android:background="#E6E1E1"
                 android:inputType="textPersonName" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -48,7 +47,7 @@
                 android:id="@+id/editTextPhone"
                 android:layout_width="match_parent"
                 android:layout_height="75dp"
-                android:background="@color/White"
+                android:background="#E6E1E1"
                 android:inputType="number" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -59,7 +58,7 @@
             android:layout_height="58dp"
             android:layout_marginLeft="28dp"
             android:layout_marginTop="280dp"
-            android:background="@color/White"
+            android:background="#E6E1E1"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPhone">
@@ -113,7 +112,7 @@
         android:layout_height="wrap_content"
         android:layout_x="37dp"
         android:layout_y="33dp"
-        android:text="CREATE ACCOUNT"
+        android:text="Regester Account "
         android:textColor="#D33333"
         android:textSize="50dp"
         android:textStyle="bold" />

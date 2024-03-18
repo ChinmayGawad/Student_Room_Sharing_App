@@ -1,11 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/signp"
-    tools:context=".SignUp">
+    android:background="#E6E1E1"
+   >
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="37dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="7dp"
+        android:layout_x="39dp"
+        android:layout_y="54dp"
+        android:text="Sign Up"
+        android:textColor="#D33333"
+        android:textSize="50dp"
+        android:textStyle="bold" />
 
     <ProgressBar
         android:id="@+id/SignUpProgressBar"
@@ -17,99 +32,108 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="350dp"
+        android:layout_height="512dp"
+        android:layout_x="30dp"
+        android:layout_y="160dp"
+        android:backgroundTint="#D33333"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="15dp">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/EmailLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="282dp"
-        android:layout_height="64dp"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="300dp"
-        android:layout_marginEnd="35dp"
-        android:layout_marginBottom="32dp"
-        android:background="#E6E1E1"
-        app:boxStrokeColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/PasswordLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="DuplicateIds,MissingConstraints">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextEmail"
-            android:layout_width="264dp"
-            android:layout_height="match_parent"
-            android:drawableEnd="@drawable/bg_mail"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/EmailLayout"
+            android:layout_width="297dp"
+            android:layout_height="64dp"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="100dp"
+            android:background="#E6E1E1"
             android:hint="@string/email_id"
-            android:inputType="textEmailAddress"
             android:textColorHint="@color/black"
-            tools:ignore="TextContrastCheck,VisualLintTextFieldSize" />
-    </com.google.android.material.textfield.TextInputLayout>
+            app:boxStrokeColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/PasswordLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="DuplicateIds,MissingConstraints">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/PasswordLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="282dp"
-        android:layout_height="49dp"
-        android:layout_marginStart="55dp"
-        android:layout_marginEnd="65dp"
-        android:layout_marginBottom="24dp"
-        android:background="#E6E1E1"
-        app:layout_constraintBottom_toTopOf="@+id/ConfirmPasswordLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EmailLayout"
-        app:passwordToggleEnabled="true"
-        tools:ignore="DuplicateIds">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextEmail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:backgroundTint="#E6E1E1"
+                android:drawableEnd="@drawable/bg_mail"
+                android:inputType="textEmailAddress"
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/passwordEditText"
-            android:layout_width="267dp"
-            android:layout_height="51dp"
+                tools:ignore="TextContrastCheck,VisualLintTextFieldSize" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/PasswordLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="297dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="180dp"
+            android:background="#E6E1E1"
             android:hint="@string/password"
-            android:inputType="textPassword"
-            tools:ignore="TextContrastCheck,VisualLintTextFieldSize,DuplicateIds" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:textColorHint="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/ConfirmPasswordLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/EmailLayout"
+            app:passwordToggleEnabled="true"
+            tools:ignore="DuplicateIds">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/ConfirmPasswordLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="273dp"
-        android:layout_height="49dp"
-        android:layout_marginStart="55dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="35dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonNext"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.529"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/PasswordLayout"
-        app:passwordToggleEnabled="true">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordEditText"
+                android:layout_width="match_parent"
+                android:layout_height="61dp"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextConfirmPassword"
-            android:layout_width="273dp"
-            android:layout_height="53dp"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/ConfirmPasswordLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="296dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="260dp"
+            android:background="#E6E1E1"
             android:hint="@string/re_enter_password"
-            android:inputType="textPassword"
-            tools:ignore="TextContrastCheck,VisualLintTextFieldSize" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:textColorHint="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/buttonNext"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.529"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/PasswordLayout"
+            app:passwordToggleEnabled="true">
 
-     <Button
-        android:id="@+id/buttonNext"
-        android:layout_width="312dp"
-        android:layout_height="69dp"
-        android:layout_marginBottom="164dp"
-        android:background="#E13B3B"
-        android:text="Next"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ConfirmPasswordLayout"
-        app:layout_constraintVertical_bias="0.9"
-        tools:ignore="MissingConstraints" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextConfirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:inputType="textPassword"
+                tools:ignore="TextContrastCheck,VisualLintTextFieldSize" />
+        </com.google.android.material.textfield.TextInputLayout>
 
+        <Button
+            android:id="@+id/buttonNext"
+            android:layout_width="297dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="380dp"
+            android:background="#E13B3B"
+            android:text="Next"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ConfirmPasswordLayout"
+            app:layout_constraintVertical_bias="0.9"
+            tools:ignore="MissingConstraints" />
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
 
