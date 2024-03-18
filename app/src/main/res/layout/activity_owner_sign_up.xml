@@ -2,13 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="#E6E1E1">
 
     <EditText
         android:id="@+id/editTextOwnerName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Owner Name" />
+        android:hint="Owner Name"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"/>
 
     <EditText
         android:id="@+id/editTextOwnerEmail"
@@ -16,6 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/editTextOwnerName"
         android:layout_marginTop="8dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         android:hint="Email" />
 
     <EditText
@@ -25,6 +30,8 @@
         android:layout_below="@id/editTextOwnerEmail"
         android:layout_marginTop="8dp"
         android:hint="Phone"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         android:inputType="number"
         />
 
@@ -35,6 +42,8 @@
         android:layout_below="@id/editTextOwnerPhone"
         android:layout_marginTop="8dp"
         android:hint="Password"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         android:inputType="textPassword" />
 
     <EditText
@@ -43,6 +52,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/editTextOwnerPassword"
         android:layout_marginTop="8dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         android:hint="Confirm Password"
         android:inputType="textPassword" />
 
