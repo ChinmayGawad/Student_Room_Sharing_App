@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/editTextOwnerName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Owner Name" />
+
+    <EditText
+        android:id="@+id/editTextOwnerEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextOwnerName"
+        android:layout_marginTop="8dp"
+        android:hint="Email" />
+
+    <EditText
+        android:id="@+id/editTextOwnerPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextOwnerEmail"
+        android:layout_marginTop="8dp"
+        android:hint="Phone"
+        android:inputType="number"
+        />
+
+    <EditText
+        android:id="@+id/editTextOwnerPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextOwnerPhone"
+        android:layout_marginTop="8dp"
+        android:hint="Password"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/editTextOwnerConfirmPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextOwnerPassword"
+        android:layout_marginTop="8dp"
+        android:hint="Confirm Password"
+        android:inputType="textPassword" />
+
+    <ImageView
+        android:id="@+id/NOCDocument"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@id/editTextOwnerConfirmPassword"
+        />
+
+
+
+    <Button
+        android:id="@+id/buttonRegisterOwner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/NOCDocument"
+        android:layout_marginTop="16dp"
+        android:text="Register Owner" />
+
+</RelativeLayout>

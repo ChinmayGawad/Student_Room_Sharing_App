@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/editTextOwnerEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:minHeight="48dp" />
+
+    <EditText
+        android:id="@+id/editTextOwnerPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextOwnerEmail"
+        android:layout_marginTop="8dp"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:minHeight="48dp" />
+
+    <!-- TextView for creating an account -->
+    <TextView
+        android:id="@+id/textViewCreateAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/buttonLoginOwner"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="50dp"
+        android:text="@string/create_account"
+        android:textSize="16sp" />
+
+    <!-- TextView for forget password -->
+    <TextView
+        android:id="@+id/textViewForgetPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextOwnerPassword"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="235dp"
+        android:text="@string/forgot_password"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/buttonLoginOwner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextOwnerPassword"
+        android:layout_marginTop="36dp"
+        android:text="Login as Owner" />
+
+</RelativeLayout>
