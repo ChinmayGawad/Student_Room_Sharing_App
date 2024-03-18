@@ -29,11 +29,9 @@ public class RoomDetailsActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.imageRecyclerView);
         Button chatWithRoomMate = findViewById(R.id.ChatWithRoomMate);
 
-        //Intent to ChatActivity
-        chatWithRoomMate.setOnClickListener(v -> {
-            Intent intent = new Intent(this, ChatActivity.class);
-            startActivity(intent);
-        });
+        // Set layout manager for RecyclerView
+        recyclerView.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(this));
+
 
         ImageAdapter imageAdapter = new ImageAdapter();
         recyclerView.setAdapter(imageAdapter);
@@ -58,5 +56,10 @@ public class RoomDetailsActivity extends AppCompatActivity {
             // Handle case where room object is null
             Toast.makeText(this, "Failed to load room details", Toast.LENGTH_SHORT).show();
         }
+
+        chatWithRoomMate.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ChatActivity.class);
+            startActivity(intent);
+        });
     }
 }

@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
-import com.pgshare.studentroomsharingapp.Profile_Page;
+import com.pgshare.studentroomsharingapp.Display_Room;
 import com.pgshare.studentroomsharingapp.R;
 
 import java.util.Objects;
@@ -56,7 +56,7 @@ public class Login extends AppCompatActivity {
                 authLogin.signInWithEmailAndPassword(TextEmail, TextPass).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(Login.this, Profile_Page.class);
+                        Intent intent = new Intent(Login.this, Display_Room.class);
                         startActivity(intent);
                         finish();
                     } else {
@@ -94,16 +94,16 @@ public class Login extends AppCompatActivity {
         }
     }
     //Check if user is Already logged in
-  /* @Override
+   @Override
     protected void onStart() {
         super.onStart();
         if (authLogin.getCurrentUser() != null) {
-            Intent intent = new Intent(Login.this, Profile_Page.class);
+            Intent intent = new Intent(Login.this, Display_Room.class);
             startActivity(intent);
             finish();
         }
         else {
             Toast.makeText(this, "You Can Login Now", Toast.LENGTH_SHORT).show();
         }
-    }*/
+    }
 }
