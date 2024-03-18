@@ -47,7 +47,7 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.RoomVi
 
         // Bind common fields
         holder.roomTitle.setText(room.getRoomName());
-        holder.roomRent.setText(room.getPrice());
+        holder.roomRent.setText(room.getFormatPrice());
         holder.roomLocation.setText(room.getLocation());
 
         // Load image using Glide

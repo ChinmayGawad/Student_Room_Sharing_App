@@ -103,7 +103,12 @@ public class Room implements Parcelable {
     }
 
     public String getPrice() {
-        return "₹" + price;
+        return price;
+    }
+
+    public String getFormatPrice() {
+        // Format price to display with two decimal places and currency symbol
+        return "₹" + getPrice();
     }
 
     public void setPrice(String price) {
