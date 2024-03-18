@@ -1,6 +1,5 @@
 package com.pgshare.studentroomsharingapp;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,22 +39,27 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.RoomVi
         return new RoomViewHolder(view);
     }
 
-    @SuppressLint("StringFormatInvalid")
     @Override
     public void onBindViewHolder(RoomViewHolder holder, int position) {
         Room room = roomData.get(position);
 
-        // Bind common fields (ensure these fields exist in your Room class)
+        // Bind common fields
         holder.roomTitle.setText(room.getRoomName());
-        holder.roomRent.setText((room.getPrice()));
+        holder.roomRent.setText(room.getPrice());
         holder.roomLocation.setText(room.getLocation());
 
-        // Download and display image using Glide
-        Glide.with(context)
-                .load(room.getImageUrl()) // Load image from URL stored in room object
-                .placeholder(R.drawable.imageplaceholder) // Placeholder image while loading
-                .error(R.drawable.imageplaceholder) // Image to show on errors
-                .into(holder.roomImage);
+        // Load image using Glide
+        if (!room.getImageUrls().isEmpty()) {
+            String imageUrl = room.getImageUrls().get(0); // Assuming you're loading the first image
+            Glide.with(context)
+                    .load(imageUrl)
+                    .placeholder(R.drawable.imageplaceholder)
+                    .error(R.drawable.imageplaceholder)
+                    .into(holder.roomImage);
+        } else {
+            // Handle case where there are no image URLs
+            holder.roomImage.setImageResource(R.drawable.imageplaceholder);
+        }
 
         // Set click listener
         holder.itemView.setOnClickListener(v -> {
@@ -64,6 +68,7 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.RoomVi
             }
         });
     }
+
 
     @Override
     public int getItemCount() {

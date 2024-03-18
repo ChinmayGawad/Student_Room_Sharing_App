@@ -3,6 +3,8 @@ package com.pgshare.studentroomsharingapp;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 public class Room implements Parcelable {
 
     public static final Creator<Room> CREATOR = new Creator<Room>() {
@@ -22,20 +24,20 @@ public class Room implements Parcelable {
     private String location;
     private String description;
     private String price;
-    private String imageUrl;
+    private ArrayList<String> imageUrls = new ArrayList<>();
     private int imageResourceId;
 
     // Default constructor with no arguments (required by Firebase)
     public Room() {
     }
 
-    public Room(String id, String roomName, String location, String description, String price, String imageUrl, int imageResourceId) {
+    public Room(String id, String roomName, String location, String description, String price, ArrayList<String> imageUrls, int imageResourceId) {
         this.id = id;
         this.roomName = roomName;
         this.location = location;
         this.description = description;
         this.price = price;
-        this.imageUrl = imageUrl;
+        this.imageUrls = imageUrls;
         this.imageResourceId = imageResourceId;
     }
 
@@ -51,7 +53,7 @@ public class Room implements Parcelable {
         out.writeString(location);
         out.writeString(description);
         out.writeString(price);
-        out.writeString(imageUrl);
+        out.writeStringList(imageUrls);
         out.writeInt(imageResourceId);
     }
 
@@ -61,66 +63,66 @@ public class Room implements Parcelable {
         location = in.readString();
         description = in.readString();
         price = in.readString();
-        imageUrl = in.readString();
+        imageUrls = new ArrayList<>(); // Initialize the ArrayList
+        in.readStringList(imageUrls);
         imageResourceId = in.readInt();
     }
 
-    // Getters and setters remain the same
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setRoomName(String roomName) {
-        this.roomName = roomName;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public void setImageResourceId(int imageResourceId) {
-        this.imageResourceId = imageResourceId;
-    }
+    // Getters and setters
 
     public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getRoomName() {
         return roomName;
     }
 
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
+    }
+
     public String getLocation() {
         return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public String getPrice() {
-        price = "₹" + price;
-        return price;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getPrice() {
+        return "₹" + price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public ArrayList<String> getImageUrls() {
+        return imageUrls;
+    }
+
+    public void setImageUrls(ArrayList<String> imageUrls) {
+        this.imageUrls = imageUrls;
     }
 
     public int getImageResourceId() {
         return imageResourceId;
+    }
+
+    public void setImageResourceId(int imageResourceId) {
+        this.imageResourceId = imageResourceId;
     }
 }
