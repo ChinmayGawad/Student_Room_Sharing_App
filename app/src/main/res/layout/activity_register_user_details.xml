@@ -1,96 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/reges">
+    android:background="#D33333">
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="512dp"
+        android:layout_x="0dp"
+        android:layout_y="158dp"
+        android:backgroundTint="#E6E1E1">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayoutName"
-        android:layout_width="297dp"
-        android:layout_height="79dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="296dp"
-        android:layout_marginEnd="88dp"
-        android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayoutPhone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutName"
+            android:layout_width="297dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="58dp"
+            android:layout_marginTop="100dp"
+            android:background="@color/White"
+            android:paddingTop="10dp">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextName"
-            android:layout_width="279dp"
-            android:layout_height="52dp"
-            android:hint="Name"
-            android:inputType="textPersonName" />
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextName"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayoutPhone"
-        android:layout_width="310dp"
-        android:layout_height="75dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="80dp"
-        android:layout_marginBottom="35dp"
-        app:layout_constraintBottom_toTopOf="@+id/radioGroupGender"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.068"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutName">
+                android:hint="Name"
+                android:inputType="textPersonName" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextPhone"
-            android:layout_width="292dp"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutPhone"
+            android:layout_width="296dp"
+            android:layout_height="75dp"
+            android:layout_marginLeft="58dp"
+            android:layout_marginTop="180dp"
+            android:paddingTop="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextPhone"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:hint="Phone Number"
+                android:textColorHint="@color/black"
+                android:background="@color/White"
+                android:inputType="number" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <RadioGroup
+            android:id="@+id/radioGroupGender"
+            android:layout_width="217dp"
             android:layout_height="58dp"
-            android:hint="Phone Number"
-            android:inputType="number" />
+            android:layout_marginLeft="58dp"
+            android:layout_marginTop="280dp"
+            android:background="@color/White"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPhone">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <RadioButton
+                android:id="@+id/radioButtonMale"
+                android:layout_width="91dp"
+                android:layout_height="58dp"
+                android:layout_marginStart="8dp"
+                android:text="Male"
+                android:textColor="@color/black"/>
 
-    <RadioGroup
-        android:id="@+id/radioGroupGender"
-        android:layout_width="217dp"
-        android:layout_height="58dp"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPhone">
-
-        <RadioButton
-            android:id="@+id/radioButtonMale"
-            android:layout_width="91dp"
-            android:layout_height="58dp"
-            android:layout_marginStart="8dp"
-            android:text="Male" />
-
-        <RadioButton
-            android:id="@+id/radioButtonFemale"
-            android:layout_width="105dp"
-            android:layout_height="match_parent"
-            android:text="Female" />
-    </RadioGroup>
+            <RadioButton
+                android:id="@+id/radioButtonFemale"
+                android:layout_width="105dp"
+                android:layout_height="match_parent"
+                android:text="Female"
+                android:textColor="@color/black"/>
+        </RadioGroup>
 
 
-    <Button
-        android:id="@+id/buttonRegister"
-        android:layout_width="324dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="44dp"
-        android:background="@drawable/button_curve"
-        android:text="Register"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.551"
+        <Button
+            android:id="@+id/buttonRegister"
+            android:layout_width="302dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="58dp"
+            android:layout_marginTop="380dp"
+            android:background="@drawable/button_curve"
+            android:text="Register"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.551"
 
 
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroupGender" />
-
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroupGender" />
+    </androidx.cardview.widget.CardView>
     <ProgressBar
         android:id="@+id/RegisterProgressBar"
         android:layout_width="wrap_content"
@@ -101,6 +104,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="379dp"
+        android:layout_height="wrap_content"
+        android:layout_x="25dp"
+        android:layout_y="33dp"
+        android:text="CREATE ACCOUNT"
+        android:textColor="#E6E1E1"
+        android:textSize="50dp"
+        android:textStyle="bold"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</AbsoluteLayout>
 
