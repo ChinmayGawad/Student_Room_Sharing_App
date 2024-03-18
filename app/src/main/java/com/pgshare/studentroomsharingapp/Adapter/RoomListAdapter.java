@@ -12,25 +12,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.pgshare.studentroomsharingapp.R;
-import com.pgshare.studentroomsharingapp.Room;
 
 import java.util.List;
 
 public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.RoomViewHolder> {
 
-    protected List<Room> roomData;
     private final Context context;
     private final OnItemClickListener listener;
-
-    public void setFilteredList(List<Room> filteredList) {
-       this.roomData = filteredList;
-       notifyDataSetChanged();
-    }
+    protected List<Room> roomData;
 
     public RoomListAdapter(List<Room> roomData, Context context, OnItemClickListener listener) {
         this.roomData = roomData;
         this.context = context;
         this.listener = listener;
+    }
+
+    public void setFilteredList(List<Room> filteredList) {
+        this.roomData = filteredList;
+        notifyDataSetChanged();
     }
 
     @NonNull

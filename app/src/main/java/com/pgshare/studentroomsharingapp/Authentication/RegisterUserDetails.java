@@ -1,4 +1,4 @@
-package com.pgshare.studentroomsharingapp;
+package com.pgshare.studentroomsharingapp.Authentication;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.pgshare.studentroomsharingapp.R;
 
 public class RegisterUserDetails extends AppCompatActivity {
 

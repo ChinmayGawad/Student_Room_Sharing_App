@@ -4,7 +4,8 @@ public class Owner {
 
     public String ownerId, ownerName, ownerEmail, ownerPhone;
 
-    public Owner() {}
+    public Owner() {
+    }
 
     public Owner(String ownerId, String ownerName, String ownerEmail, String ownerPhone) {
         this.ownerId = ownerId;

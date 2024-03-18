@@ -6,6 +6,9 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.pgshare.studentroomsharingapp.Authentication.Login;
+import com.pgshare.studentroomsharingapp.Authentication.OwnerLogin;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -17,15 +20,14 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void Owner(View view) {
-        Intent intent=new Intent(MainActivity.this, OwnerLogin.class);
+        Intent intent = new Intent(MainActivity.this, OwnerLogin.class);
         startActivity(intent);
     }
 
     public void Rent(View view) {
-        Intent intent=new Intent(MainActivity.this, Login.class);
+        Intent intent = new Intent(MainActivity.this, Login.class);
         startActivity(intent);
     }
-
 
 
 }

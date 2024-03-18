@@ -42,8 +42,7 @@ public class Profile_Page extends AppCompatActivity {
 
         if (firebaseUser == null) {
             Toast.makeText(this, "Something went wrong! User not found", Toast.LENGTH_SHORT).show();
-        }
-        else {
+        } else {
             Profile_ProgressBar.setVisibility(View.VISIBLE);
             //Display User's Data
             showProfile(firebaseUser);

@@ -22,7 +22,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.pgshare.studentroomsharingapp.Adapter.Room;
 import com.pgshare.studentroomsharingapp.Adapter.ViewPagerAdapter;
+import com.pgshare.studentroomsharingapp.Authentication.Login;
 
 import java.util.ArrayList;
 
@@ -76,10 +78,6 @@ public class Add_Room extends AppCompatActivity {
             }
 
         });
-
-
-
-
 
 
     }
@@ -173,10 +171,10 @@ public class Add_Room extends AppCompatActivity {
         if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getClipData() != null) {
             int count = data.getClipData().getItemCount();
             for (int i = 0; i < count; i++) {
-               ImageUri = data.getClipData().getItemAt(i).getUri();
-               imageList.add(ImageUri);
+                ImageUri = data.getClipData().getItemAt(i).getUri();
+                imageList.add(ImageUri);
 
-           SetAdapter();
+                SetAdapter();
             }
         }
     }

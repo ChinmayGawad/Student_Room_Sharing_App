@@ -1,4 +1,5 @@
-package com.pgshare.studentroomsharingapp;
+package com.pgshare.studentroomsharingapp.Adapter;
+
 import java.io.Serializable;
 
 public class Message implements Serializable {

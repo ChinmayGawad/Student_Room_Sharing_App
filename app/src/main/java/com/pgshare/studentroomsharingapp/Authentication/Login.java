@@ -1,4 +1,4 @@
-package com.pgshare.studentroomsharingapp;
+package com.pgshare.studentroomsharingapp.Authentication;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.pgshare.studentroomsharingapp.Profile_Page;
+import com.pgshare.studentroomsharingapp.R;
 
 import java.util.Objects;
 
@@ -22,7 +24,7 @@ public class Login extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -47,21 +49,20 @@ public class Login extends AppCompatActivity {
         //User Login Button
         Button buttonLogin = findViewById(R.id.buttonLogin);
         buttonLogin.setOnClickListener(v -> {
-           String TextEmail = Objects.requireNonNull(LoginMail.getText()).toString();
-           String TextPass = Objects.requireNonNull(LoginPass.getText()).toString();
+            String TextEmail = Objects.requireNonNull(LoginMail.getText()).toString();
+            String TextPass = Objects.requireNonNull(LoginPass.getText()).toString();
 
-           if (validateEmail() && validatePassword()) {
-               authLogin.signInWithEmailAndPassword(TextEmail, TextPass).addOnCompleteListener(task -> {
-                   if (task.isSuccessful()) {
-                       Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
-                       Intent intent = new Intent(Login.this, Profile_Page.class);
-                       startActivity(intent);
-                       finish();
-                   }
-                   else {
-                       Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show();
-                   }
-               });
+            if (validateEmail() && validatePassword()) {
+                authLogin.signInWithEmailAndPassword(TextEmail, TextPass).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(Login.this, Profile_Page.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
@@ -72,10 +73,10 @@ public class Login extends AppCompatActivity {
         if (val.isEmpty()) {
             LoginMail.setError("Field Can Not be Empty");
             return false;
-        }  else if (!Patterns.EMAIL_ADDRESS.matcher(val).matches()) {
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(val).matches()) {
             LoginMail.setError("Invalid Email Address");
             return false;
-        }else {
+        } else {
             LoginMail.setError(null);
             return true;
         }
@@ -87,8 +88,7 @@ public class Login extends AppCompatActivity {
         if (val.isEmpty()) {
             LoginPass.setError("Field can not be empty");
             return false;
-        }
-        else {
+        } else {
             LoginPass.setError(null);
             return true;
         }

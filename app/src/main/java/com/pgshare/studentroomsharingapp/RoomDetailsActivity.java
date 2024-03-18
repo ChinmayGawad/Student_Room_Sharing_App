@@ -10,18 +10,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pgshare.studentroomsharingapp.Adapter.ImageAdapter;
+import com.pgshare.studentroomsharingapp.Adapter.Room;
 
 import java.util.List;
 
 public class RoomDetailsActivity extends AppCompatActivity {
-
-    private TextView roomNameTextView;
-    private TextView locationTextView;
-    private TextView descriptionTextView;
-    private TextView priceTextView;
-    private RecyclerView recyclerView;
-    private ImageAdapter imageAdapter;
-    private Button ChatWithRoomMate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,20 +22,20 @@ public class RoomDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_room_details);
 
         // Find view references
-        roomNameTextView = findViewById(R.id.roomNameTextView);
-        locationTextView = findViewById(R.id.locationTextView);
-        descriptionTextView = findViewById(R.id.descriptionTextView);
-        priceTextView = findViewById(R.id.priceTextView);
-        recyclerView = findViewById(R.id.imageRecyclerView);
-        ChatWithRoomMate = findViewById(R.id.ChatWithRoomMate);
+        TextView roomNameTextView = findViewById(R.id.roomNameTextView);
+        TextView locationTextView = findViewById(R.id.locationTextView);
+        TextView descriptionTextView = findViewById(R.id.descriptionTextView);
+        TextView priceTextView = findViewById(R.id.priceTextView);
+        RecyclerView recyclerView = findViewById(R.id.imageRecyclerView);
+        Button chatWithRoomMate = findViewById(R.id.ChatWithRoomMate);
 
         //Intent to ChatActivity
-        ChatWithRoomMate.setOnClickListener(v -> {
+        chatWithRoomMate.setOnClickListener(v -> {
             Intent intent = new Intent(this, ChatActivity.class);
             startActivity(intent);
         });
 
-        imageAdapter = new ImageAdapter();
+        ImageAdapter imageAdapter = new ImageAdapter();
         recyclerView.setAdapter(imageAdapter);
 
         // Get the Room object from the intent

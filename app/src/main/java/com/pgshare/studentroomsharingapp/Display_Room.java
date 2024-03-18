@@ -7,6 +7,7 @@ import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +17,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.pgshare.studentroomsharingapp.Adapter.Room;
 import com.pgshare.studentroomsharingapp.Adapter.RoomListAdapter;
 
 import java.util.ArrayList;
@@ -24,12 +26,10 @@ import java.util.List;
 public class Display_Room extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private DatabaseReference roomRef;
-    private RecyclerView roomList;
-    private RoomListAdapter adapter;
-    private SearchView searchView;
-    private ProgressBar DisplayProgressBar;
     List<Room> roomData = new ArrayList<>();
+    private DatabaseReference roomRef;
+    private RoomListAdapter adapter;
+    private ProgressBar DisplayProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +37,12 @@ public class Display_Room extends AppCompatActivity implements SearchView.OnQuer
         setContentView(R.layout.activity_display_room);
 
         // Set up SearchView
-        searchView = findViewById(R.id.RoomSearchView);
+        SearchView searchView = findViewById(R.id.RoomSearchView);
         searchView.clearFocus();
         searchView.setOnQueryTextListener(this);
 
         // Set up RecyclerView
-        roomList = findViewById(R.id.roomList);
+        RecyclerView roomList = findViewById(R.id.roomList);
         roomList.setLayoutManager(new LinearLayoutManager(this));
 
         // Set up ProgressBar
@@ -67,7 +67,7 @@ public class Display_Room extends AppCompatActivity implements SearchView.OnQuer
         Log.d("Display_Room", "Fetching room data from Firebase");
         roomRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Log.d("Display_Room", "Data changed");
                 roomData.clear();
 
@@ -93,7 +93,7 @@ public class Display_Room extends AppCompatActivity implements SearchView.OnQuer
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
+            public void onCancelled(@NonNull DatabaseError error) {
                 Log.e("Display_Room", "Error fetching rooms: " + error.getMessage(), error.toException());
                 // Handle database read errors
                 Toast.makeText(Display_Room.this, "Error fetching rooms: " + error.getMessage(), Toast.LENGTH_SHORT).show();
@@ -115,7 +115,7 @@ public class Display_Room extends AppCompatActivity implements SearchView.OnQuer
 
     private void filterList(String searchText) {
         List<Room> filteredList = new ArrayList<>();
-        for(Room room :roomData) {
+        for (Room room : roomData) {
             if (room.getLocation().toLowerCase().contains(searchText.toLowerCase())) {
                 filteredList.add(room);
             }

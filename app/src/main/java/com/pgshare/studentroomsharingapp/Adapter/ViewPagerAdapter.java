@@ -15,9 +15,9 @@ import com.pgshare.studentroomsharingapp.R;
 import java.util.ArrayList;
 
 public class ViewPagerAdapter extends PagerAdapter {
-    private Context context;
     ArrayList<Uri> imageUrls;
     LayoutInflater layoutInflater;
+    private final Context context;
 
     public ViewPagerAdapter(Context context, ArrayList<Uri> imageUrls) {
         this.context = context;
@@ -32,7 +32,7 @@ public class ViewPagerAdapter extends PagerAdapter {
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_view_pager,container,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_view_pager, container, false);
         ImageView imageView = view.findViewById(R.id.UploadGallaryImage);
         imageView.setImageURI(imageUrls.get(position));
         container.addView(view);
@@ -47,7 +47,7 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        container.removeView((View)object);
+        container.removeView((View) object);
     }
 
 }

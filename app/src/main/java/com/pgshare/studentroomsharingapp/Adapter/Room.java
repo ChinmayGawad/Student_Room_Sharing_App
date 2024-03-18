@@ -1,4 +1,4 @@
-package com.pgshare.studentroomsharingapp;
+package com.pgshare.studentroomsharingapp.Adapter;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -41,6 +41,17 @@ public class Room implements Parcelable {
         this.imageResourceId = imageResourceId;
     }
 
+    protected Room(Parcel in) {
+        id = in.readString();
+        roomName = in.readString();
+        location = in.readString();
+        description = in.readString();
+        price = in.readString();
+        imageUrls = new ArrayList<>(); // Initialize the ArrayList
+        in.readStringList(imageUrls);
+        imageResourceId = in.readInt();
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -55,17 +66,6 @@ public class Room implements Parcelable {
         out.writeString(price);
         out.writeStringList(imageUrls);
         out.writeInt(imageResourceId);
-    }
-
-    protected Room(Parcel in) {
-        id = in.readString();
-        roomName = in.readString();
-        location = in.readString();
-        description = in.readString();
-        price = in.readString();
-        imageUrls = new ArrayList<>(); // Initialize the ArrayList
-        in.readStringList(imageUrls);
-        imageResourceId = in.readInt();
     }
 
     // Getters and setters
@@ -106,13 +106,13 @@ public class Room implements Parcelable {
         return price;
     }
 
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
     public String getFormatPrice() {
         // Format price to display with two decimal places and currency symbol
         return "₹" + getPrice();
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
     }
 
     public ArrayList<String> getImageUrls() {
