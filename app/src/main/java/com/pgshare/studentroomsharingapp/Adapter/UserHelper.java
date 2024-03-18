@@ -1,4 +1,4 @@
-package com.pgshare.studentroomsharingapp;
+package com.pgshare.studentroomsharingapp.Adapter;
 
 public class UserHelper {
     private String userId, name, email, phoneNo, gender;
