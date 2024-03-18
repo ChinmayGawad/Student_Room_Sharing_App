@@ -29,7 +29,7 @@
             android:layout_weight="1"
             android:hint="Message..."
             android:maxLines="3"
-            android:minHeight="48dp"/>
+            android:minHeight="47dp"/>
 
         <Button
             android:id="@+id/sendButton"
