@@ -1,50 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#E6E1E1"
-    android:padding="10dp">
+    android:backgroundTint="#ffffff">
 
-    <!-- ListView to display messages -->
     <ListView
         android:id="@+id/messageListView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
         android:divider="@android:color/transparent"
+        android:backgroundTint="#ffffff"
         android:dividerHeight="10dp"
         android:stackFromBottom="true"
         android:transcriptMode="alwaysScroll" />
 
-    <!-- Layout for typing and sending messages -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:background="#D33333"
         android:orientation="horizontal"
-        android:padding="10dp"
-        android:gravity="center_vertical"
-        tools:context=".ChatActivity">
+        android:padding="10dp">
 
-        <!-- EditText for typing messages -->
         <EditText
             android:id="@+id/messageEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Message"
+            android:hint="Message..."
             android:maxLines="3"
-            android:minHeight="48dp" />
+            android:minHeight="48dp"/>
 
-        <!-- Button to send messages -->
         <Button
             android:id="@+id/sendButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Send" />
+            android:text="Send"
+            android:backgroundTint="@color/Aquamarine"/>
+
+<include layout="@layout/item_message_sent" />
+<include layout="@layout/item_message_received" />
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>
