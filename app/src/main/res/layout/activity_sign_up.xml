@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E6E1E1"
-   >
-
+    android:background="#E6E1E1">
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
@@ -135,5 +133,5 @@
             app:layout_constraintVertical_bias="0.9"
             tools:ignore="MissingConstraints" />
     </androidx.cardview.widget.CardView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</AbsoluteLayout>
 
