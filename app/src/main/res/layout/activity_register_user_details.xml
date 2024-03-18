@@ -4,30 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D33333">
+    android:background="#E6E1E1">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
+        android:layout_width="350dp"
         android:layout_height="512dp"
-        android:layout_x="0dp"
-        android:layout_y="158dp"
-        android:backgroundTint="#E6E1E1">
+        android:layout_x="30dp"
+        android:layout_y="160dp"
+        android:backgroundTint="#D33333"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="15dp">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutName"
             android:layout_width="297dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="58dp"
+            android:layout_marginLeft="28dp"
             android:layout_marginTop="100dp"
             android:background="@color/White"
-            android:paddingTop="10dp">
+            android:textColorHint="@color/black"
+            android:paddingTop="10dp"
+            android:hint="Name">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextName"
                 android:layout_width="match_parent"
                 android:layout_height="58dp"
-
-                android:hint="Name"
+                android:background="@color/White"
                 android:inputType="textPersonName" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -35,16 +38,16 @@
             android:id="@+id/textInputLayoutPhone"
             android:layout_width="296dp"
             android:layout_height="75dp"
-            android:layout_marginLeft="58dp"
+            android:layout_marginLeft="28dp"
             android:layout_marginTop="180dp"
-            android:paddingTop="10dp">
+            android:paddingTop="10dp"
+            android:hint="Phone Number"
+            android:textColorHint="@color/black">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextPhone"
                 android:layout_width="match_parent"
                 android:layout_height="75dp"
-                android:hint="Phone Number"
-                android:textColorHint="@color/black"
                 android:background="@color/White"
                 android:inputType="number" />
 
@@ -52,9 +55,9 @@
 
         <RadioGroup
             android:id="@+id/radioGroupGender"
-            android:layout_width="217dp"
+            android:layout_width="208dp"
             android:layout_height="58dp"
-            android:layout_marginLeft="58dp"
+            android:layout_marginLeft="28dp"
             android:layout_marginTop="280dp"
             android:background="@color/White"
             android:orientation="horizontal"
@@ -67,14 +70,14 @@
                 android:layout_height="58dp"
                 android:layout_marginStart="8dp"
                 android:text="Male"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black" />
 
             <RadioButton
                 android:id="@+id/radioButtonFemale"
                 android:layout_width="105dp"
                 android:layout_height="match_parent"
                 android:text="Female"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black" />
         </RadioGroup>
 
 
@@ -82,18 +85,18 @@
             android:id="@+id/buttonRegister"
             android:layout_width="302dp"
             android:layout_height="60dp"
-            android:layout_marginLeft="58dp"
+            android:layout_marginLeft="28dp"
             android:layout_marginTop="380dp"
-            android:background="@drawable/button_curve"
+            android:background="#255"
             android:text="Register"
+            android:textColor="#E6E1E1"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.551"
-
-
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/radioGroupGender" />
     </androidx.cardview.widget.CardView>
+
     <ProgressBar
         android:id="@+id/RegisterProgressBar"
         android:layout_width="wrap_content"
@@ -106,14 +109,14 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="379dp"
+        android:layout_width="367dp"
         android:layout_height="wrap_content"
-        android:layout_x="25dp"
+        android:layout_x="37dp"
         android:layout_y="33dp"
         android:text="CREATE ACCOUNT"
-        android:textColor="#E6E1E1"
+        android:textColor="#D33333"
         android:textSize="50dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
 
 </AbsoluteLayout>

@@ -7,15 +7,41 @@
     android:background="#E6E1E1"
     tools:context=".Login">
 
+    <ImageView
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_x="120dp"
+        android:layout_y="42dp"
+        android:background="@drawable/logo" />
+
+
+    <TextView
+        android:layout_width="156dp"
+        android:layout_height="wrap_content"
+        android:layout_x="128dp"
+        android:layout_y="202dp"
+        android:text="SHARE"
+        android:textColor="#D33333"
+        android:textSize="45dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="156dp"
+        android:layout_height="wrap_content"
+        android:layout_x="144dp"
+        android:layout_y="244dp"
+        android:text="ROOM"
+        android:textColor="#D33333"
+        android:textSize="40dp" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="349dp"
         android:layout_height="302dp"
         android:layout_x="30dp"
         android:layout_y="317dp"
-        android:backgroundTint="@color/White"
-        app:cardCornerRadius="16dp">
-
+        android:backgroundTint="#D33333"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="15dp">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/UsernameLayout"
@@ -25,6 +51,7 @@
             android:layout_marginTop="40dp"
             android:background="#E6E1E1"
             android:hint="@string/username"
+            android:textColorHint="@color/black"
             android:inputType="textEmailAddress"
             app:boxStrokeColor="#0C0C0C">
 
@@ -32,7 +59,8 @@
                 android:id="@+id/UsernameEt"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:drawableEnd="@drawable/ic_user" />
+                android:drawableEnd="@drawable/ic_user"
+                android:backgroundTint="#E6E1E1"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -44,6 +72,7 @@
             android:layout_marginTop="110dp"
             android:background="#E6E1E1"
             android:hint="@string/password"
+            android:textColorHint="@color/black"
             android:inputType="textPassword"
             app:passwordToggleEnabled="false"
             tools:ignore="UnknownId">
