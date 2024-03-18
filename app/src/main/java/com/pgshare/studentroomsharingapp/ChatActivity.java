@@ -8,6 +8,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.pgshare.studentroomsharingapp.Adapter.MessageAdapt;
+
 import java.util.ArrayList;
 
 public class ChatActivity extends AppCompatActivity {

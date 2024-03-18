@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.pgshare.studentroomsharingapp.Adapter.ImageAdapter;
+
 import java.util.List;
 
 public class RoomDetailsActivity extends AppCompatActivity {

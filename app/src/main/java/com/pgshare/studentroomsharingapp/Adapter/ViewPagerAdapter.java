@@ -1,4 +1,4 @@
-package com.pgshare.studentroomsharingapp;
+package com.pgshare.studentroomsharingapp.Adapter;
 
 import android.content.Context;
 import android.net.Uri;
@@ -9,6 +9,8 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
+
+import com.pgshare.studentroomsharingapp.R;
 
 import java.util.ArrayList;
 

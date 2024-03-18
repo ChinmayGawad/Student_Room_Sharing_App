@@ -1,4 +1,4 @@
-package com.pgshare.studentroomsharingapp;
+package com.pgshare.studentroomsharingapp.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.pgshare.studentroomsharingapp.R;
+import com.pgshare.studentroomsharingapp.Room;
 
 import java.util.List;
 
