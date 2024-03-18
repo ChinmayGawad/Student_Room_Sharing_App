@@ -40,6 +40,7 @@
 
 <include layout="@layout/item_message_sent" />
 <include layout="@layout/item_message_received" />
+        <include layout="@layout/list_item_message" />
     </LinearLayout>
 
 </RelativeLayout>
