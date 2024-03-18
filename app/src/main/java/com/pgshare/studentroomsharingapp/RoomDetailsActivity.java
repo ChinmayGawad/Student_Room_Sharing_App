@@ -48,7 +48,7 @@ public class RoomDetailsActivity extends AppCompatActivity {
             roomNameTextView.setText(room.getRoomName());
             locationTextView.setText(room.getLocation());
             descriptionTextView.setText(room.getDescription());
-            priceTextView.setText(room.getPrice());
+            priceTextView.setText(room.getFormatPrice());
 
             // Load images into RecyclerView
             List<String> imageUrls = room.getImageUrls();
