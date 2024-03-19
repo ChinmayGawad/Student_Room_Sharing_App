@@ -116,7 +116,8 @@ public class Display_Room extends AppCompatActivity implements SearchView.OnQuer
     private void filterList(String searchText) {
         List<Room> filteredList = new ArrayList<>();
         for (Room room : roomData) {
-            if (room.getLocation().toLowerCase().contains(searchText.toLowerCase())) {
+            if (room.getDescription().toLowerCase().contains(searchText.toLowerCase()) ||
+                    room.getLocation().toLowerCase().contains(searchText.toLowerCase())) {
                 filteredList.add(room);
             }
         }

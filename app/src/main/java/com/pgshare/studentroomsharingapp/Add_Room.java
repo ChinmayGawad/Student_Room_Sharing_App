@@ -122,6 +122,8 @@ public class Add_Room extends AppCompatActivity {
 
                                 // Save the updated Room object to the database
                                 databaseReference.child(roomId).setValue(room);
+
+                                Toast.makeText(this, "Room saved successfully!", Toast.LENGTH_SHORT).show();
                             });
                         })
                         .addOnFailureListener(e -> {
@@ -136,7 +138,7 @@ public class Add_Room extends AppCompatActivity {
             editTextPrice.setText("");
             editTextDescription.setText("");
             // Clear the image list
-            imageList.clear();
+            imageContainer.removeAllViews();
         }
     }
 
