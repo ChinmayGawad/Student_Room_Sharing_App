@@ -18,10 +18,11 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutName"
-            android:layout_width="269dp"
+            android:layout_width="272dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="28dp"
             android:layout_marginTop="100dp"
+            android:layout_marginRight="28dp"
             android:hint="Name"
             android:paddingTop="10dp"
             android:textColorHint="@color/black">

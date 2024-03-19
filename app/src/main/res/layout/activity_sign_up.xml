@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -34,31 +34,28 @@
         android:id="@+id/cardView"
         android:layout_width="350dp"
         android:layout_height="512dp"
-        android:layout_x="30dp"
-        android:layout_y="160dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:backgroundTint="#D33333"
         app:cardCornerRadius="15dp"
         app:cardElevation="15dp">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/EmailLayout"
-            android:layout_width="297dp"
+            android:layout_width="264dp"
             android:layout_height="64dp"
             android:layout_marginLeft="28dp"
             android:layout_marginTop="100dp"
+            android:layout_marginRight="2dp"
             android:background="#E6E1E1"
             android:hint="@string/email_id"
             android:textColorHint="@color/black"
-            app:boxStrokeColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/PasswordLayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="DuplicateIds,MissingConstraints">
+            app:boxStrokeColor="@color/black">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextEmail"
-                android:layout_width="match_parent"
+                android:layout_width="274dp"
                 android:layout_height="match_parent"
                 android:backgroundTint="#E6E1E1"
                 android:drawableEnd="@drawable/bg_mail"
@@ -70,7 +67,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/PasswordLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="297dp"
+            android:layout_width="265dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="28dp"
             android:layout_marginTop="180dp"
@@ -95,7 +92,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/ConfirmPasswordLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="296dp"
+            android:layout_width="267dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="28dp"
             android:layout_marginTop="260dp"
@@ -111,7 +108,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextConfirmPassword"
-                android:layout_width="match_parent"
+                android:layout_width="267dp"
                 android:layout_height="62dp"
                 android:inputType="textPassword"
                 tools:ignore="TextContrastCheck,VisualLintTextFieldSize" />
@@ -119,10 +116,10 @@
 
         <Button
             android:id="@+id/buttonNext"
-            android:layout_width="297dp"
+            android:layout_width="269dp"
             android:layout_height="60dp"
             android:layout_marginLeft="28dp"
-            android:layout_marginTop="380dp"
+            android:layout_marginTop="360dp"
             android:background="#E13B3B"
             android:text="Next"
             android:textSize="20sp"
@@ -133,5 +130,5 @@
             app:layout_constraintVertical_bias="0.9"
             tools:ignore="MissingConstraints" />
     </androidx.cardview.widget.CardView>
-</AbsoluteLayout>
+</RelativeLayout>
 
