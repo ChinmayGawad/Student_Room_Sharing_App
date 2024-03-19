@@ -18,8 +18,11 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.pgshare.studentroomsharingapp.Adapter.Room;
@@ -69,18 +72,53 @@ public class Add_Room extends AppCompatActivity {
             // Check if the user is logged in
             FirebaseUser currentUser = firebaseAuth.getCurrentUser();
             if (currentUser != null) {
-                saveToDatabase();
+                // Check if the current user is the owner
+                if (isCurrentUserOwner(currentUser)) {
+                    saveToDatabase();
+                } else {
+                    // User is not the owner, show a message
+                    Toast.makeText(this, "Only owners can add rooms", Toast.LENGTH_SHORT).show();
+                }
             } else {
                 // Handle case where user is not logged in
                 Toast.makeText(this, "Please log in to save the room", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(Add_Room.this, Login.class);
                 startActivity(intent);
             }
-
         });
 
 
     }
+
+    private boolean isCurrentUserOwner(FirebaseUser user) {
+        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("Users");
+        usersRef.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    String userType = dataSnapshot.child("type").getValue(String.class);
+                    if (userType != null && userType.equals("owner")) {
+                        // User is an owner
+                        saveToDatabase();
+                    } else {
+                        // User is not an owner
+                        Toast.makeText(Add_Room.this, "Only owners can add rooms", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    // User data does not exist
+                    Toast.makeText(Add_Room.this, "User data not found", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Handle error
+                Toast.makeText(Add_Room.this, "Database error", Toast.LENGTH_SHORT).show();
+            }
+        });
+        return false;
+    }
+
 
     private void saveToDatabase() {
         String roomName = editTextRoomName.getText().toString().trim();

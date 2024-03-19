@@ -26,6 +26,10 @@
             android:name=".EditProfile"
             android:exported="false" />
         <activity
+            android:name=".Authentication.RegisterOwnerDetails"
+            android:label="Register Owner Details" />
+
+        <activity
             android:name=".Authentication.OwnerLogin"
             android:exported="false" />
         <activity

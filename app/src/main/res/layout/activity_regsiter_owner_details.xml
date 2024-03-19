@@ -1,0 +1,92 @@
+<!-- RegisterOwnerDetails.xml -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#E6E1E1">
+
+    <EditText
+        android:id="@+id/editTextOwnerName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Owner Name"
+        android:minHeight="48dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
+
+    <EditText
+        android:id="@+id/editTextOwnerPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextOwnerName"
+        android:layout_marginTop="16dp"
+        android:hint="Phone"
+        android:inputType="number"
+        android:minHeight="48dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
+
+    <!-- RadioGroup for Gender -->
+    <RadioGroup
+        android:id="@+id/radioGroupGender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextOwnerPhone"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radioButtonMale"
+            android:layout_width="98dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Male"
+            android:textColor="@color/black"/>
+
+        <RadioButton
+            android:id="@+id/radioButtonFemale"
+            android:layout_width="117dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="Female"
+            android:textColor="@color/black"/>
+
+        <!-- Add more radio buttons for other gender options if needed -->
+
+    </RadioGroup>
+
+    <ImageView
+        android:id="@+id/ImageOwnerNOC"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="16dp"
+        android:layout_below="@id/radioGroupGender"
+        android:src="@drawable/imageplaceholder" />
+
+    <Button
+        android:id="@+id/buttonChooseImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ImageOwnerNOC"
+        android:layout_marginTop="20dp"
+        android:text="Choose Image" />
+
+    <Button
+        android:id="@+id/buttonFinish"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/buttonChooseImage"
+        android:layout_marginTop="16dp"
+        android:text="Finish" />
+
+    <ProgressBar
+        android:id="@+id/OwnerRegisterProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="220dp"
+        android:visibility="gone"
+        />
+
+</RelativeLayout>

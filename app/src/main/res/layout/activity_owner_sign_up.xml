@@ -1,45 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
     android:background="#E6E1E1">
 
-    <EditText
-        android:id="@+id/editTextOwnerName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Owner Name"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black"/>
 
     <EditText
         android:id="@+id/editTextOwnerEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextOwnerName"
         android:layout_marginTop="8dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black"
         android:hint="Email" />
 
-    <EditText
-        android:id="@+id/editTextOwnerPhone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/editTextOwnerEmail"
-        android:layout_marginTop="8dp"
-        android:hint="Phone"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black"
-        android:inputType="number"
-        />
 
     <EditText
         android:id="@+id/editTextOwnerPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextOwnerPhone"
+        android:layout_below="@id/editTextOwnerEmail"
         android:layout_marginTop="8dp"
         android:hint="Password"
         android:textColor="@color/black"
@@ -57,12 +39,7 @@
         android:hint="Confirm Password"
         android:inputType="textPassword" />
 
-    <ImageView
-        android:id="@+id/NOCDocument"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_below="@id/editTextOwnerConfirmPassword"
-        />
+
 
 
 
@@ -70,8 +47,16 @@
         android:id="@+id/buttonRegisterOwner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/NOCDocument"
+        android:layout_below="@id/editTextOwnerConfirmPassword"
         android:layout_marginTop="16dp"
         android:text="Register Owner" />
+
+    <ProgressBar
+        android:id="@+id/OwnerSignUpProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="220dp"
+        android:visibility="gone" />
 
 </RelativeLayout>

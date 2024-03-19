@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ public class OwnerLogin extends AppCompatActivity {
     private EditText editTextOwnerEmail, editTextOwnerPassword;
     private TextView textViewCreateAccount, textViewForgetPassword;
     private Button buttonLoginOwner;
+    private ProgressBar OwnerLoginprogressBar;
 
     private FirebaseAuth firebaseAuth;
 
@@ -38,6 +40,8 @@ public class OwnerLogin extends AppCompatActivity {
         textViewCreateAccount = findViewById(R.id.textViewCreateAccount);
         textViewForgetPassword = findViewById(R.id.textViewForgetPassword);
         buttonLoginOwner = findViewById(R.id.buttonLoginOwner);
+
+        OwnerLoginprogressBar = findViewById(R.id.OwnerLoginProgressBar);
 
         // Set onClickListener for "Create Account" TextView
         textViewCreateAccount.setOnClickListener(v -> {
@@ -81,6 +85,13 @@ public class OwnerLogin extends AppCompatActivity {
             return;
         }
 
+        if (password.length() < 6) {
+            editTextOwnerPassword.setError("Minimum length of password should be 6");
+            editTextOwnerPassword.requestFocus();
+            return;
+        }
+
+        OwnerLoginprogressBar.setVisibility(ProgressBar.VISIBLE);
         // Authenticate user using Firebase Authentication
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
@@ -89,9 +100,11 @@ public class OwnerLogin extends AppCompatActivity {
                         FirebaseUser user = firebaseAuth.getCurrentUser();
                         Toast.makeText(OwnerLogin.this, "Login successful", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(OwnerLogin.this, Add_Room.class));
+                        OwnerLoginprogressBar.setVisibility(ProgressBar.GONE);
                         finish();
                     } else {
                         // If sign in fails, display a message to the user.
+                        OwnerLoginprogressBar.setVisibility(ProgressBar.GONE);
                         Toast.makeText(OwnerLogin.this, "Authentication failed", Toast.LENGTH_SHORT).show();
                     }
                 });
