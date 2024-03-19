@@ -7,18 +7,18 @@
     android:background="#E6E1E1">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="350dp"
-        android:layout_height="512dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="170dp"
+        android:layout_width="373dp"
+        android:layout_height="507dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginRight="20dp"
         android:backgroundTint="#D33333"
         app:cardCornerRadius="15dp"
         app:cardElevation="15dp">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutName"
-            android:layout_width="238dp"
+            android:layout_width="269dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="28dp"
             android:layout_marginTop="100dp"
@@ -28,7 +28,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextName"
-                android:layout_width="240dp"
+                android:layout_width="match_parent"
                 android:layout_height="58dp"
                 android:background="#E6E1E1"
                 android:inputType="textPersonName" />
@@ -36,12 +36,12 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutPhone"
-            android:layout_width="296dp"
+            android:layout_width="269dp"
             android:layout_height="75dp"
             android:layout_marginLeft="28dp"
             android:layout_marginTop="180dp"
-            android:paddingTop="10dp"
             android:hint="Phone Number"
+            android:paddingTop="10dp"
             android:textColorHint="@color/black">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -83,7 +83,7 @@
 
         <Button
             android:id="@+id/buttonRegister"
-            android:layout_width="302dp"
+            android:layout_width="269dp"
             android:layout_height="60dp"
             android:layout_marginLeft="28dp"
             android:layout_marginTop="380dp"
@@ -111,7 +111,7 @@
         android:id="@+id/textView"
         android:layout_width="367dp"
         android:layout_height="wrap_content"
-       android:layout_marginTop="40dp"
+       android:layout_marginTop="20dp"
         android:layout_marginLeft="30dp"
         android:text="Regester Account "
         android:textColor="#D33333"
