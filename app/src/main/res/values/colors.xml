@@ -140,4 +140,6 @@
     <color name="DarkBlue">#00008B</color>
     <color name="Navy">#000080</color>
     <color name="black">#000000</color>
+    <color name="item_message_sent">#EE1809</color>
+    <color name="item_message_received">#0091FF</color>
 </resources>

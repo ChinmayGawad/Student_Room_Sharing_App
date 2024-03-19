@@ -1,46 +1,40 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!-- activity_chat.xml -->
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:backgroundTint="#ffffff">
+    android:layout_height="match_parent">
 
     <ListView
         android:id="@+id/messageListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@android:color/transparent"
-        android:backgroundTint="#ffffff"
-        android:dividerHeight="10dp"
-        android:stackFromBottom="true"
-        android:transcriptMode="alwaysScroll" />
+        android:layout_above="@id/messageInputLayout"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:layout_marginBottom="10dp"/>
 
     <LinearLayout
+        android:id="@+id/messageInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#D33333"
         android:orientation="horizontal"
-        android:padding="10dp">
+        android:padding="8dp">
 
         <EditText
             android:id="@+id/messageEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Message..."
-            android:maxLines="3"
-            android:minHeight="47dp"/>
+            android:hint="Type a message..."
+            android:inputType="text" />
 
         <Button
             android:id="@+id/sendButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Send"
-            android:backgroundTint="@color/Aquamarine"/>
+            android:text="Send" />
 
-<include layout="@layout/item_message_sent" />
-<include layout="@layout/item_message_received" />
-        <include layout="@layout/list_item_message" />
     </LinearLayout>
 
 </RelativeLayout>

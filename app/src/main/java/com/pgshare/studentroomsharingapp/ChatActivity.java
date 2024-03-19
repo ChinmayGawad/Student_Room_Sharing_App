@@ -1,16 +1,13 @@
 package com.pgshare.studentroomsharingapp;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.pgshare.studentroomsharingapp.Adapter.Message;
@@ -25,8 +22,9 @@ public class ChatActivity extends AppCompatActivity {
     private ListView messageListView;
     private ArrayList<Message> messages;
     private MessageAdapt messageAdapt;
-    private DatabaseReference mDatabase;
+    private DatabaseReference messagesRef;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,48 +38,22 @@ public class ChatActivity extends AppCompatActivity {
         messageAdapt = new MessageAdapt(this, messages);
         messageListView.setAdapter(messageAdapt);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference("messages");
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        messagesRef = database.getReference("messages");
 
-        // Listen for new messages in the Firebase Realtime Database
-        mDatabase.addChildEventListener(new ChildEventListener() {
+        sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
-                Message message = dataSnapshot.getValue(Message.class);
-                if (message != null) {
-                    messages.add(message);
-                    messageAdapt.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
-                // Handle changed messages if needed
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                // Handle removed messages if needed
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
-                // Handle moved messages if needed
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(ChatActivity.this, "Failed to load messages: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onClick(View v) {
+                sendMessage();
             }
         });
-
-        sendButton.setOnClickListener(v -> sendMessage());
     }
 
     private void sendMessage() {
         String messageText = messageEditText.getText().toString().trim();
         if (!messageText.isEmpty()) {
-            Message message = new Message(messageText, true); // Assuming the user is sending the message
-            messageAdapt.addMessageToDatabase(message); // Store the message in the database
+            Message message = new Message(messageText, true);
+            messagesRef.push().setValue(message);
             messageEditText.setText("");
         } else {
             Toast.makeText(this, "Please enter a message", Toast.LENGTH_SHORT).show();
