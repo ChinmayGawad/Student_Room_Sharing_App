@@ -58,7 +58,6 @@
                 android:backgroundTint="#E6E1E1"
                 android:drawableEnd="@drawable/bg_mail"
                 android:inputType="textEmailAddress"
-
                 tools:ignore="TextContrastCheck,VisualLintTextFieldSize" />
         </com.google.android.material.textfield.TextInputLayout>
 
