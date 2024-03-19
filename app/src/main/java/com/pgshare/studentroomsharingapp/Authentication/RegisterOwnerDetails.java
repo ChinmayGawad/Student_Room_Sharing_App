@@ -121,11 +121,12 @@ public class RegisterOwnerDetails extends AppCompatActivity {
                         databaseReference.child(ownerId).setValue(owner)
                                 .addOnSuccessListener(aVoid -> {
                                     Intent intent = new Intent(RegisterOwnerDetails.this, OwnerLogin.class);
+                                    intent.putExtra("userType", userType);
                                     Toast.makeText(RegisterOwnerDetails.this, "Owner registered successfully", Toast.LENGTH_SHORT).show();
                                     // You can add further actions here, such as redirecting to another activity
                                     RegisterOwnerDetailsProgressBar.setVisibility(View.GONE);
                                     startActivity(intent);
-                                    finish();
+
                                 })
                                 .addOnFailureListener(e -> {
                                     RegisterOwnerDetailsProgressBar.setVisibility(View.GONE);

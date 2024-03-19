@@ -97,7 +97,7 @@ public class Add_Room extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     String userType = dataSnapshot.child("type").getValue(String.class);
-                    if (userType != null && userType.equals("owner")) {
+                    if (userType != null && userType.equals("Owner")) {
                         // User is an owner
                         saveToDatabase();
                     } else {

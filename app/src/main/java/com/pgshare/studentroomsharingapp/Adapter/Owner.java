@@ -2,26 +2,22 @@ package com.pgshare.studentroomsharingapp.Adapter;
 
 public class Owner {
 
-    private String ownerId, ownerName, ownerEmail, ownerPhone, userType,imageUrl;
+    private String ownerId, ownerName, ownerEmail, ownerPhone, userType,imageUrl, gender;
 
-    public Owner() {
-    }
-
-    public Owner(String ownerId, String ownerName, String ownerEmail, String ownerPhone,String imageUrl,String userType) {
+    public Owner(String ownerId, String ownerName, String ownerPhone, String gender, String imageUrl, String userType) {
         this.ownerId = ownerId;
         this.ownerName = ownerName;
-        this.ownerEmail = ownerEmail;
         this.ownerPhone = ownerPhone;
-        this.imageUrl = imageUrl;
         this.userType = userType;
-
+        this.gender = gender;
+        this.imageUrl = imageUrl;
     }
-
 
     public Owner(String ownerId, String ownerEmail) {
         this.ownerId = ownerId;
         this.ownerEmail = ownerEmail;
     }
+
 
     public String getUserType() {
         return userType;

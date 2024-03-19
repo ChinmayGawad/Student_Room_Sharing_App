@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.pgshare.studentroomsharingapp.Adapter.Owner;
@@ -67,25 +68,42 @@ public class OwnerSignUp extends AppCompatActivity {
         firebaseAuth.createUserWithEmailAndPassword(ownerEmail, ownerPassword).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
 
-
                 // Owner registration successful, save owner details to database
                 String ownerId = firebaseAuth.getCurrentUser().getUid();
                 Owner owner = new Owner(ownerId, ownerEmail);
                 databaseReference.child(ownerId).setValue(owner);
+                sendVerificationEmail();
 
                 Toast.makeText(this, "Owner registered successfully", Toast.LENGTH_SHORT).show();
 
                 OwnerSignUpProgressBar.setVisibility(ProgressBar.GONE);
 
-                // Navigate to owner dashboard or login screen
-                startActivity(new Intent(this, RegisterOwnerDetails.class));
-
-                finish();
             } else {
                 // Owner registration failed, display error message\
                 OwnerSignUpProgressBar.setVisibility(ProgressBar.GONE);
                 Toast.makeText(this, "Failed to register owner: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void sendVerificationEmail() {
+
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user != null) {
+            user.sendEmailVerification().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    // Email verification sent successfully
+                    Toast.makeText(this, "Verification email sent, please check your email", Toast.LENGTH_SHORT).show();
+                    OwnerSignUpProgressBar.setVisibility(ProgressBar.GONE);
+                    // Proceed to registration details activity or login
+                    startActivity(new Intent(this, RegisterOwnerDetails.class));
+                    finish();
+                } else {
+                    // Email verification sending failed
+                    OwnerSignUpProgressBar.setVisibility(ProgressBar.GONE);
+                    Toast.makeText(this, "Failed to send verification email: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 }

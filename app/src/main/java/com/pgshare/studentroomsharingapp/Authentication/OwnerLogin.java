@@ -97,11 +97,21 @@ public class OwnerLogin extends AppCompatActivity {
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
+
                         FirebaseUser user = firebaseAuth.getCurrentUser();
-                        Toast.makeText(OwnerLogin.this, "Login successful", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(OwnerLogin.this, Add_Room.class));
-                        OwnerLoginprogressBar.setVisibility(ProgressBar.GONE);
+                        Intent intent = new Intent(OwnerLogin.this, Add_Room.class);
+//                        intent.putExtra("userType", "Owner");
+                        startActivity(intent);
                         finish();
+                       /* if ("Owner".equals(getIntent().getStringExtra("userType"))) {
+                            // User is logging in as an owner, navigate to Add_Room activity
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toast.makeText(this, "Please Login With  Owner Credentials", Toast.LENGTH_SHORT).show();
+                            OwnerLoginprogressBar.setVisibility(ProgressBar.GONE);
+                        }*/
+
                     } else {
                         // If sign in fails, display a message to the user.
                         OwnerLoginprogressBar.setVisibility(ProgressBar.GONE);

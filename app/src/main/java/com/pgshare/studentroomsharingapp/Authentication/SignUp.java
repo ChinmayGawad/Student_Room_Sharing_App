@@ -85,7 +85,9 @@ public class SignUp extends AppCompatActivity {
                             progressBar.setVisibility(View.GONE);
                             // Navigate to the next screen
                             Intent intent = new Intent(SignUp.this, RegisterUserDetails.class);
+                            intent.putExtra("email", email);
                             startActivity(intent);
+                            finish();
 
                         } else {
                             // User registration failed
