@@ -13,8 +13,6 @@
         android:layout_marginTop="37dp"
         android:layout_marginEnd="14dp"
         android:layout_marginBottom="7dp"
-        android:layout_x="39dp"
-        android:layout_y="54dp"
         android:text="Sign Up"
         android:textColor="#D33333"
         android:textSize="50dp"
@@ -116,17 +114,10 @@
             android:layout_width="264dp"
             android:layout_height="60dp"
             android:layout_marginLeft="28dp"
-
             android:layout_marginTop="360dp"
             android:background="#E13B3B"
             android:text="Next"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ConfirmPasswordLayout"
-            app:layout_constraintVertical_bias="0.9"
-            tools:ignore="MissingConstraints" />
+            android:textSize="20sp" />
     </androidx.cardview.widget.CardView>
 </RelativeLayout>
 

@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E6E1E1"
-    tools:context=".Login">
+    android:background="#E6E1E1">
 
     <ImageView
         android:layout_width="160dp"
@@ -35,24 +34,29 @@
         android:textSize="40dp" />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView3"
         android:layout_width="349dp"
         android:layout_height="302dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="320dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="30dp"
         android:backgroundTint="#D33333"
         app:cardCornerRadius="16dp"
-        android:layout_marginRight="30dp"
         app:cardElevation="15dp">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/UsernameLayout"
+            android:id="@+id/editTextOwnerEmail"
             android:layout_width="247dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="28dp"
             android:layout_marginTop="40dp"
             android:layout_marginRight="28dp"
             android:background="#E6E1E1"
-            android:hint="@string/username"
+            android:hint="@string/email_id"
             android:inputType="textEmailAddress"
             android:textColorHint="@color/black"
             app:boxStrokeColor="#0C0C0C">
