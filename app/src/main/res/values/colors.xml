@@ -142,4 +142,5 @@
     <color name="black">#000000</color>
     <color name="item_message_sent">#EE1809</color>
     <color name="item_message_received">#0091FF</color>
+    <color name="final_white">#E6E1E1</color>
 </resources>

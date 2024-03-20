@@ -6,7 +6,7 @@
     <string name="login">Login</string>
     <string name="create_account">Didn\'t have an account?  Create  One</string>
     <string name="name">Name</string>
-    <string name="email_id">Email_id\n</string>
+    <string name="email_id">Email_id</string>
     <string name="phone_number">Phone No</string>
     <string name="aadhar_card_no">Aadhar_card_no</string>
     <string name="re_enter_password">Re_enter_password</string>

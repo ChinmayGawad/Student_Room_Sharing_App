@@ -18,6 +18,14 @@ public class Owner {
         this.ownerEmail = ownerEmail;
     }
 
+    public Owner(String ownerId, String ownerName, String ownerEmail, String ownerPhone) {
+        this.ownerId = ownerId;
+        this.ownerName = ownerName;
+        this.ownerEmail = ownerEmail;
+        this.ownerPhone = ownerPhone;
+
+    }
+
 
     public String getUserType() {
         return userType;

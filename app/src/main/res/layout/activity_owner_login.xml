@@ -2,8 +2,41 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="16dp"
     android:background="#E6E1E1">
+
+    <ImageView
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_marginLeft="90dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/logo" />
+
+
+    <TextView
+        android:layout_width="156dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="210dp"
+        android:text="@string/Owner"
+        android:textColor="#D33333"
+        android:textSize="45dp"
+        android:textStyle="bold" />
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView3"
+        android:layout_width="349dp"
+        android:layout_height="302dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="320dp"
+        android:layout_marginEnd="20dp"
+        android:backgroundTint="#D33333"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="15dp">
 
     <EditText
         android:id="@+id/editTextOwnerEmail"
@@ -11,6 +44,10 @@
         android:layout_height="wrap_content"
         android:hint="Email"
         android:inputType="textEmailAddress"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="28dp"
+        android:background="#E6E1E1"
         android:minHeight="48dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black"/>
@@ -20,8 +57,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/editTextOwnerEmail"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginRight="28dp"
+        android:layout_marginLeft="28dp"
         android:hint="Password"
+        android:background="#E6E1E1"
         android:inputType="textPassword"
         android:minHeight="48dp"
         android:textColor="@color/black"
@@ -33,32 +73,34 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/buttonLoginOwner"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="50dp"
+        android:layout_marginTop="260dp"
+        android:layout_marginStart="40dp"
         android:text="@string/create_account"
         android:textSize="16sp"
         android:textColor="@color/black" />
 
     <!-- TextView for forget password -->
-    <TextView
-        android:id="@+id/textViewForgetPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/editTextOwnerPassword"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="235dp"
-        android:text="@string/forgot_password"
-        android:textSize="16sp"
-        android:textColor="@color/black" />
+        <TextView
+            android:id="@+id/textViewForgetPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editTextOwnerPassword"
+            android:layout_marginStart="160dp"
+            android:layout_marginTop="160dp"
+            android:text="@string/forgot_password"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
 
-    <Button
-        android:id="@+id/buttonLoginOwner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/editTextOwnerPassword"
-        android:layout_marginTop="36dp"
-        android:text="Login as Owner" />
-
+        <Button
+            android:id="@+id/buttonLoginOwner"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_below="@id/editTextOwnerPassword"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="190dp"
+            android:layout_marginRight="28dp"
+            android:text="Login as Owner" />
+    </androidx.cardview.widget.CardView>
     <ProgressBar
         android:id="@+id/OwnerLoginProgressBar"
         android:layout_width="wrap_content"
