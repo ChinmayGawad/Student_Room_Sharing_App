@@ -11,11 +11,10 @@
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="200dp"
-        android:layout_marginLeft="35dp"
         app:cardCornerRadius="20dp"
-        app:cardElevation="15dp"
-        >
+        app:cardElevation="15dp">
 
 
         <RelativeLayout
@@ -24,7 +23,7 @@
             android:background="@color/White"
             android:backgroundTint="#D33333"
             tools:ignore="ExtraText">
->
+            >
 
 
             <EditText
@@ -33,40 +32,40 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
+                android:background="@color/final_white"
                 android:hint="Email"
                 android:minHeight="48dp"
-                android:background="@color/final_white"
+                android:padding="10dp"
                 android:textColor="@color/black"
-                android:textColorHint="@color/black"
-                android:padding="10dp"/>
+                android:textColorHint="@color/black" />
 
             <EditText
                 android:id="@+id/editTextOwnerPassword"
                 android:layout_width="299dp"
-                android:padding="10dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/editTextOwnerEmail"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="16dp"
-                android:hint="Password"
                 android:background="@color/final_white"
+                android:hint="Password"
                 android:inputType="textPassword"
                 android:minHeight="48dp"
+                android:padding="10dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black" />
 
             <EditText
                 android:id="@+id/editTextOwnerConfirmPassword"
                 android:layout_width="299dp"
-                android:padding="10dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/editTextOwnerPassword"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="16dp"
+                android:background="@color/final_white"
                 android:hint="Confirm Password"
                 android:inputType="textPassword"
                 android:minHeight="48dp"
-                android:background="@color/final_white"
+                android:padding="10dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black" />
 
@@ -76,8 +75,8 @@
                 android:layout_width="299dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/editTextOwnerConfirmPassword"
-                android:layout_marginTop="24dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="24dp"
                 android:background="@drawable/button_curve"
                 android:text="Register Owner" />
 
