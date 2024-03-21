@@ -3,6 +3,7 @@ package com.pgshare.studentroomsharingapp.Authentication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.pgshare.studentroomsharingapp.Add_Room;
+import com.pgshare.studentroomsharingapp.Display_Room;
 import com.pgshare.studentroomsharingapp.R;
 
 public class OwnerLogin extends AppCompatActivity {
@@ -60,11 +62,15 @@ public class OwnerLogin extends AppCompatActivity {
             // Perform login operation
             loginOwner();
         });
+
+
     }
 
     private void loginOwner() {
         String email = editTextOwnerEmail.getText().toString().trim();
         String password = editTextOwnerPassword.getText().toString().trim();
+        String userType = getIntent().getStringExtra("userType");
+        Log.d("UserType", "UserType: " + userType);
 
         // Validate email and password
         if (TextUtils.isEmpty(email)) {
@@ -99,18 +105,19 @@ public class OwnerLogin extends AppCompatActivity {
                         // Sign in success, update UI with the signed-in user's information
 
                         FirebaseUser user = firebaseAuth.getCurrentUser();
-                        Intent intent = new Intent(OwnerLogin.this, Add_Room.class);
-//                        intent.putExtra("userType", "Owner");
+                        /*Intent intent = new Intent(OwnerLogin.this, Add_Room.class);
+                        intent.putExtra("userType", "Owner");
                         startActivity(intent);
-                        finish();
-                       /* if ("Owner".equals(getIntent().getStringExtra("userType"))) {
+                        finish();*/
+                        if ("Owner".equals(userType)) {
                             // User is logging in as an owner, navigate to Add_Room activity
+                            Intent intent = new Intent(OwnerLogin.this, Add_Room.class);
                             startActivity(intent);
                             finish();
                         } else {
                             Toast.makeText(this, "Please Login With  Owner Credentials", Toast.LENGTH_SHORT).show();
                             OwnerLoginprogressBar.setVisibility(ProgressBar.GONE);
-                        }*/
+                        }
 
                     } else {
                         // If sign in fails, display a message to the user.
@@ -118,5 +125,18 @@ public class OwnerLogin extends AppCompatActivity {
                         Toast.makeText(OwnerLogin.this, "Authentication failed", Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (firebaseAuth.getCurrentUser() != null) {
+            Intent intent = new Intent(OwnerLogin.this, Display_Room.class);
+            startActivity(intent);
+            finish();
+        }
+        else {
+            Toast.makeText(this, "You Can Login Now", Toast.LENGTH_SHORT).show();
+        }
     }
 }

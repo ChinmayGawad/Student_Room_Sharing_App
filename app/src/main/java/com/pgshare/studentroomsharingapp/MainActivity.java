@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void Owner(View view) {
         Intent intent = new Intent(MainActivity.this, OwnerLogin.class);
+        intent.putExtra("userType", "Owner");
         startActivity(intent);
     }
 
