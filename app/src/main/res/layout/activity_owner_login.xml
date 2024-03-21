@@ -46,6 +46,7 @@
         android:inputType="textEmailAddress"
         android:layout_marginLeft="28dp"
         android:layout_marginTop="40dp"
+        android:padding="15dp"
         android:layout_marginRight="28dp"
         android:background="#E6E1E1"
         android:minHeight="48dp"
@@ -57,9 +58,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/editTextOwnerEmail"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="110dp"
         android:layout_marginRight="28dp"
         android:layout_marginLeft="28dp"
+        android:padding="15dp"
         android:hint="Password"
         android:background="#E6E1E1"
         android:inputType="textPassword"
@@ -73,10 +75,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/buttonLoginOwner"
-        android:layout_marginTop="260dp"
-        android:layout_marginStart="40dp"
+        android:layout_marginTop="270dp"
+        android:layout_marginLeft="40dp"
         android:text="@string/create_account"
-        android:textSize="16sp"
         android:textColor="@color/black" />
 
     <!-- TextView for forget password -->
@@ -85,11 +86,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/editTextOwnerPassword"
-            android:layout_marginStart="160dp"
-            android:layout_marginTop="160dp"
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="170dp"
             android:text="@string/forgot_password"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            />
 
         <Button
             android:id="@+id/buttonLoginOwner"
@@ -97,7 +98,8 @@
             android:layout_height="64dp"
             android:layout_below="@id/editTextOwnerPassword"
             android:layout_marginLeft="28dp"
-            android:layout_marginTop="190dp"
+            android:layout_marginTop="200dp"
+            android:padding="15dp"
             android:layout_marginRight="28dp"
             android:text="Login as Owner" />
     </androidx.cardview.widget.CardView>
