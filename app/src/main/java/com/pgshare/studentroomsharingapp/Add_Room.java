@@ -5,10 +5,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -27,7 +28,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.pgshare.studentroomsharingapp.Adapter.Room;
 import com.pgshare.studentroomsharingapp.Adapter.ViewPagerAdapter;
-import com.pgshare.studentroomsharingapp.Authentication.Login;
 
 import java.util.ArrayList;
 
@@ -38,7 +38,7 @@ public class Add_Room extends AppCompatActivity {
     private ViewPager imageContainer;
     private Uri ImageUri;
     private ArrayList<Uri> imageList;
-
+    private ProgressBar progressBar;
     private DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
 
@@ -55,6 +55,8 @@ public class Add_Room extends AppCompatActivity {
         SaveRoom = findViewById(R.id.buttonSave);
         imageContainer = findViewById(R.id.viewPager);
 
+        //progressBar
+        progressBar = findViewById(R.id.Add_roomProgressBar);
 
         //imageList
         imageList = new ArrayList<>();
@@ -69,34 +71,31 @@ public class Add_Room extends AppCompatActivity {
         });
 
         SaveRoom.setOnClickListener(view -> {
-            // Check if the user is logged in
             FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-            if (currentUser != null) {
-                // Check if the current user is the owner
-                if (isCurrentUserOwner(currentUser)) {
-                    saveToDatabase();
-                } else {
-                    // User is not the owner, show a message
-                    Toast.makeText(this, "Only owners can add rooms", Toast.LENGTH_SHORT).show();
+            if (currentUser != null ) {
+                if (ValidateInput()) {
+                    isCurrentUserOwner(currentUser);
                 }
             } else {
                 // Handle case where user is not logged in
-                Toast.makeText(this, "Please log in to save the room", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(Add_Room.this, Login.class);
+                Toast.makeText(this, "Please log in to add a room", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Add_Room.this, MainActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
 
+
     }
 
-    private boolean isCurrentUserOwner(FirebaseUser user) {
-        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("Users");
+    private void isCurrentUserOwner(FirebaseUser user) {
+        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("Owners");
         usersRef.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    String userType = dataSnapshot.child("type").getValue(String.class);
+                    String userType = dataSnapshot.child("userType").getValue(String.class);
                     if (userType != null && userType.equals("Owner")) {
                         // User is an owner
                         saveToDatabase();
@@ -116,9 +115,40 @@ public class Add_Room extends AppCompatActivity {
                 Toast.makeText(Add_Room.this, "Database error", Toast.LENGTH_SHORT).show();
             }
         });
-        return false;
     }
 
+
+
+    private boolean ValidateInput() {
+
+        if (editTextRoomName.getText().toString().isEmpty()) {
+            editTextRoomName.setError("Room name is required");
+            return false;
+        }
+
+        if (editTextLocation.getText().toString().isEmpty()) {
+            editTextLocation.setError("Location is required");
+            return false;
+        }
+
+        if (editTextDescription.getText().toString().isEmpty()) {
+            editTextDescription.setError("Description is required");
+            return false;
+        }
+
+        if (editTextPrice.getText().toString().isEmpty()) {
+            editTextPrice.setError("Price is required");
+            return false;
+        }
+
+
+
+        if (imageList.isEmpty()) {
+            Toast.makeText(this, "Please add at least one image", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
 
     private void saveToDatabase() {
         String roomName = editTextRoomName.getText().toString().trim();
@@ -126,50 +156,27 @@ public class Add_Room extends AppCompatActivity {
         String description = editTextDescription.getText().toString().trim(); // Add logic to get description if needed
         String price = editTextPrice.getText().toString().trim();
 
-        if (TextUtils.isEmpty(roomName) || TextUtils.isEmpty(location) || TextUtils.isEmpty(price) || imageList.isEmpty()) {
-            // Handle case where any required field is empty or no images are selected
-            Toast.makeText(this, "Please fill in all fields and select at least one image", Toast.LENGTH_SHORT).show();
-            return;
-        }
+
+
 
         // Generate a unique key for the room
         String roomId = databaseReference.push().getKey();
 
+
         if (roomId != null) {
+
             // Save room details to the database
+
             Room room = new Room(roomId, roomName, location, description, price, new ArrayList<>(), 0); // Set imageUrl and imageResourceId as needed
             databaseReference.child(roomId).setValue(room);
 
             // Upload images to Firebase Storage and save their URLs in the database
             for (int i = 0; i < imageList.size(); i++) {
                 Uri imageUri = imageList.get(i);
-                StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-                StorageReference fileReference = storageReference.child("RoomImages/" + roomId + "/" + i + "." + getFileExtension(imageUri));
-                fileReference.putFile(imageUri)
-                        .addOnSuccessListener(taskSnapshot -> {
-                            // Image uploaded successfully, get download URL
-                            fileReference.getDownloadUrl().addOnSuccessListener(uri -> {
-                                String imageUrl = uri.toString();
-
-                                // Update the Room object with the image URL
-                                if (room.getImageUrls() == null) {
-                                    room.setImageUrls(new ArrayList<>());
-                                }
-                                room.getImageUrls().add(imageUrl);
-
-
-                                // Save the updated Room object to the database
-                                databaseReference.child(roomId).setValue(room);
-
-                                Toast.makeText(this, "Room saved successfully!", Toast.LENGTH_SHORT).show();
-                            });
-                        })
-                        .addOnFailureListener(e -> {
-                            // Handle image upload failure
-                            Toast.makeText(Add_Room.this, "Failed to upload image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        });
+                uploadImageToStorage(roomId, i, imageUri, room);
             }
 
+            progressBar.setVisibility(View.GONE);
             // Clear input fields
             editTextRoomName.setText("");
             editTextLocation.setText("");
@@ -178,6 +185,39 @@ public class Add_Room extends AppCompatActivity {
             // Clear the image list
             imageContainer.removeAllViews();
         }
+        else {
+            progressBar.setVisibility(View.GONE);
+            // Handle failure to generate room ID
+            Toast.makeText(this, "Failed to generate room ID", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void uploadImageToStorage(String roomId, int i, Uri imageUri, Room room) {
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        StorageReference fileReference = storageReference.child("RoomImages/" + roomId + "/" + i + "." + getFileExtension(imageUri));
+        fileReference.putFile(imageUri)
+                .addOnSuccessListener(taskSnapshot -> {
+                    progressBar.setVisibility(View.VISIBLE);
+                    // Image uploaded successfully, get download URL
+                    fileReference.getDownloadUrl().addOnSuccessListener(uri -> {
+                        String imageUrl = uri.toString();
+
+                        // Update the Room object with the image URL
+                        if (room.getImageUrls() == null) {
+                            room.setImageUrls(new ArrayList<>());
+                        }
+                        room.getImageUrls().add(imageUrl);
+
+                        // Save the updated Room object to the database
+                        databaseReference.child(roomId).setValue(room);
+
+                        Toast.makeText(this, "Room saved successfully!", Toast.LENGTH_SHORT).show();
+                    });
+                })
+                .addOnFailureListener(e -> {
+                    // Handle image upload failure
+                    Toast.makeText(Add_Room.this, "Failed to upload image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
     }
 
 

@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">Student PG App</string>
+    <string name="app_name">Student Room Sharing</string>
     <string name="username">Username</string>
     <string name="userimage">UserImage</string>
     <string name="password">Password</string>
@@ -24,7 +24,6 @@
     <string name="search">Search</string>
     <string name="description">Description</string>
     <string name="save">Save</string>
-
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="gender">Gender</string>

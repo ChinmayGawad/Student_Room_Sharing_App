@@ -118,7 +118,7 @@ public class OwnerLogin extends AppCompatActivity {
                                     }
                                 } else {
                                     // User data does not exist in the database
-                                    Toast.makeText(OwnerLogin.this, "User data not found", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(OwnerLogin.this, "Owner Does Not Exist", Toast.LENGTH_SHORT).show();
                                 }
                                 OwnerLoginprogressBar.setVisibility(ProgressBar.GONE);
                             }
@@ -139,6 +139,18 @@ public class OwnerLogin extends AppCompatActivity {
                 });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (firebaseAuth.getCurrentUser() != null) {
+            Intent intent = new Intent(OwnerLogin.this, Add_Room.class);
+            startActivity(intent);
+            finish();
+        }
+        else {
+            Toast.makeText(this, "You Can Login Now", Toast.LENGTH_SHORT).show();
+        }
+    }
 
 
 }

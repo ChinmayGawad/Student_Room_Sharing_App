@@ -92,7 +92,17 @@ public class RegisterOwnerDetails extends AppCompatActivity {
     private void registerOwner() {
         String ownerName = editTextOwnerName.getText().toString().trim();
         String ownerPhone = editTextOwnerPhone.getText().toString().trim();
-        String gender = ((RadioButton)findViewById(radioGroupGender.getCheckedRadioButtonId())).getText().toString();
+        String gender;
+        int selectedId = radioGroupGender.getCheckedRadioButtonId();
+        if (selectedId != -1) {
+            RadioButton selectedRadioButton = findViewById(selectedId);
+            gender = selectedRadioButton.getText().toString();
+        } else {
+            // Handle case where no radio button is selected
+            Toast.makeText(this, "Please select your gender", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         String userType = "Owner";
 
         // Perform validation
