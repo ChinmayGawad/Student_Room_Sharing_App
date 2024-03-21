@@ -2,26 +2,50 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="16dp"
-    android:background="#E6E1E1">
+    android:background="@color/final_white">
+
+    <ImageView
+        android:id="@+id/ImageOwnerNOC"
+        android:layout_width="340dp"
+        android:layout_height="200dp"
+        android:layout_marginLeft="20dp"
+        android:src="@drawable/imageplaceholder" />
+    <androidx.cardview.widget.CardView
+        android:layout_width="360dp"
+        android:layout_height="420dp"
+        android:layout_marginTop="220dp"
+        android:layout_marginLeft="10dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="15dp"
+        android:backgroundTint="#D33333">
 
     <EditText
         android:id="@+id/editTextOwnerName"
-        android:layout_width="match_parent"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/ImageOwnerNOC"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="20dp"
+        android:padding="15dp"
         android:hint="Owner Name"
         android:minHeight="48dp"
+        android:background="@color/final_white"
         android:textColor="@color/black"
         android:textColorHint="@color/black" />
 
     <EditText
         android:id="@+id/editTextOwnerPhone"
-        android:layout_width="match_parent"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/editTextOwnerName"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="120dp"
+        android:layout_marginLeft="20dp"
         android:hint="Phone"
         android:inputType="number"
+        android:padding="15dp"
+        android:background="@color/final_white"
         android:minHeight="48dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black" />
@@ -29,10 +53,13 @@
     <!-- RadioGroup for Gender -->
     <RadioGroup
         android:id="@+id/radioGroupGender"
-        android:layout_width="match_parent"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/editTextOwnerPhone"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="190dp"
+        android:layout_marginLeft="20dp"
+        android:background="@color/final_white"
+        android:padding="5dp"
         android:orientation="horizontal">
 
         <RadioButton
@@ -55,28 +82,25 @@
 
     </RadioGroup>
 
-    <ImageView
-        android:id="@+id/ImageOwnerNOC"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="16dp"
-        android:layout_below="@id/radioGroupGender"
-        android:src="@drawable/imageplaceholder" />
 
     <Button
         android:id="@+id/buttonChooseImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ImageOwnerNOC"
-        android:layout_marginTop="20dp"
+        android:layout_below="@+id/radioGroupGender"
+        android:layout_marginTop="260dp"
+        android:padding="15dp"
+        android:layout_marginLeft="20dp"
         android:text="Choose Image" />
 
     <Button
         android:id="@+id/buttonFinish"
-        android:layout_width="match_parent"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/buttonChooseImage"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="330dp"
+        android:layout_marginLeft="20dp"
+        android:padding="15dp"
         android:text="Finish" />
 
     <ProgressBar
@@ -85,7 +109,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="160dp"
         android:layout_marginTop="220dp"
-        android:visibility="gone"
-        />
-
+        android:visibility="gone" />
+    </androidx.cardview.widget.CardView>
 </RelativeLayout>
