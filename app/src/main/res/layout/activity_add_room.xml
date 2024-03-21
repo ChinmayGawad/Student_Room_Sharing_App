@@ -1,7 +1,8 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp"
     tools:context=".Add_Room"
@@ -10,8 +11,9 @@
     <!-- LinearLayout to hold multiple selected images -->
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
-        android:layout_width="match_parent"
+        android:layout_width="360"
         android:layout_height="200dp"
+        android:layout_marginLeft="10dp"
         android:contentDescription="@string/add_room">
 
         <LinearLayout
@@ -22,14 +24,22 @@
 
     </androidx.viewpager.widget.ViewPager>
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="360dp"
+        android:layout_height="450dp"
+        android:layout_marginTop="220dp"
+        android:layout_marginLeft="10dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="15dp"
+        android:backgroundTint="#D33333">
     <EditText
         android:id="@+id/editTextRoomName"
-        android:layout_width="match_parent"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
-        android:background="#D33333"
+        android:background="@color/final_white"
         android:padding="15dp"
         android:textColorHint="@color/black"
         android:autofillHints="@string/room_name"
@@ -40,13 +50,13 @@
 
     <EditText
         android:id="@+id/editTextLocation"
-        android:layout_width="match_parent"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="40dp"
         android:autofillHints="@string/location"
-        android:background="#D33333"
+        android:background="@color/final_white"
         android:padding="15dp"
         android:textColorHint="@color/black"
         android:hint="@string/location"
@@ -57,10 +67,10 @@
         android:id="@+id/editTextDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="170dp"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
-        android:background="#D33333"
+        android:background="@color/final_white"
         android:padding="15dp"
         android:textColorHint="@color/black"
         android:autofillHints="@string/description"
@@ -70,12 +80,12 @@
 
     <EditText
         android:id="@+id/editTextPrice"
-        android:layout_width="match_parent"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="240dp"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
-        android:background="#D33333"
+        android:background="@color/final_white"
         android:padding="15dp"
         android:textColorHint="@color/black"
         android:autofillHints="@string/price"
@@ -85,9 +95,9 @@
 
     <Button
         android:id="@+id/BtnGallery"
-        android:layout_width="300dp"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="370dp"
         android:layout_marginStart="40dp"
         android:background="#E6E1E1"
         android:text="@string/select_form_gallery" />
@@ -98,12 +108,12 @@
         android:id="@+id/buttonSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="150dp"
+        android:layout_marginTop="310dp"
+        android:layout_marginStart="140dp"
         android:background="#E6E1E1"
         android:text="@string/save" />
 
+</androidx.cardview.widget.CardView>
 
 
-
-</LinearLayout>
+</RelativeLayout>
