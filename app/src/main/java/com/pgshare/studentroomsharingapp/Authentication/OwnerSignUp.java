@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,12 +15,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.pgshare.studentroomsharingapp.Adapter.Owner;
 import com.pgshare.studentroomsharingapp.R;
 
+import java.util.Objects;
+
 public class OwnerSignUp extends AppCompatActivity {
 
     private EditText editTextOwnerEmail;
     private EditText editTextOwnerPassword;
     private EditText editTextOwnerConfirmPassword;
-    private Button buttonRegisterOwner;
 
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
@@ -34,7 +34,7 @@ public class OwnerSignUp extends AppCompatActivity {
         editTextOwnerEmail = findViewById(R.id.editTextOwnerEmail);
         editTextOwnerPassword = findViewById(R.id.editTextOwnerPassword);
         editTextOwnerConfirmPassword = findViewById(R.id.editTextOwnerConfirmPassword);
-        buttonRegisterOwner = findViewById(R.id.buttonRegisterOwner);
+        Button buttonRegisterOwner = findViewById(R.id.buttonRegisterOwner);
 
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("Owners");
@@ -64,7 +64,7 @@ public class OwnerSignUp extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         // Owner registration successful, save owner details to database
-                        String ownerId = firebaseAuth.getCurrentUser().getUid();
+                        String ownerId = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
                         Owner owner = new Owner(ownerId, ownerEmail);
                         databaseReference.child(ownerId).setValue(owner);
 
@@ -75,7 +75,7 @@ public class OwnerSignUp extends AppCompatActivity {
                         finish();
                     } else {
                         // Owner registration failed, display error message
-                        Toast.makeText(this, "Failed to register owner: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Failed to register owner: " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
