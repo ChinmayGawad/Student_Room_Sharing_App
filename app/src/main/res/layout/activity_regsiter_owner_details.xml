@@ -51,39 +51,40 @@
         android:textColorHint="@color/black" />
 
     <!-- RadioGroup for Gender -->
-    <RadioGroup
-        android:id="@+id/radioGroupGender"
-        android:layout_width="320dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/editTextOwnerPhone"
-        android:layout_marginTop="190dp"
-        android:layout_marginLeft="20dp"
-        android:background="@color/final_white"
-        android:padding="5dp"
-        android:orientation="horizontal">
 
-        <RadioButton
-            android:id="@+id/radioButtonMale"
-            android:layout_width="98dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="Male"
-            android:textColor="@color/black"/>
 
-        <RadioButton
-            android:id="@+id/radioButtonFemale"
-            android:layout_width="117dp"
+        <RadioGroup
+            android:id="@+id/radioGroupGender"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
+            android:layout_below="@id/editTextOwnerPhone"
             android:layout_marginLeft="20dp"
-            android:text="Female"
-            android:textColor="@color/black"/>
+            android:layout_marginTop="190dp"
+            android:background="@color/final_white"
+            android:orientation="horizontal"
+            android:padding="5dp">
 
-        <!-- Add more radio buttons for other gender options if needed -->
+            <RadioButton
+                android:id="@+id/radioButtonMale"
+                android:layout_width="98dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Male"
+                android:textColor="@color/black" />
 
-    </RadioGroup>
+            <RadioButton
+                android:id="@+id/radioButtonFemale"
+                android:layout_width="117dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="Female"
+                android:textColor="@color/black" />
 
+            <!-- Add more radio buttons for other gender options if needed -->
 
-    <Button
+        </RadioGroup>
+
+        <Button
         android:id="@+id/buttonChooseImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
