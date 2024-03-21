@@ -55,7 +55,6 @@
             android:layout_marginLeft="28dp"
             android:layout_marginTop="40dp"
             android:layout_marginRight="28dp"
-            android:padding=""
             android:background="#E6E1E1"
             android:hint="@string/email_id"
             android:inputType="textEmailAddress"
@@ -67,7 +66,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:backgroundTint="#E6E1E1"
-                android:drawableEnd="@drawable/ic_user" />
+                android:drawableEnd="@drawable/ic_user"
+                tools:ignore="TouchTargetSizeCheck" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -88,6 +88,7 @@
                 android:id="@+id/PasswordEt"
                 android:layout_width="match_parent"
                 android:layout_height="58dp"
+                android:hint="@string/password"
                 tools:ignore="VisualLintTextFieldSize,TextContrastCheck" />
 
         </com.google.android.material.textfield.TextInputLayout>
