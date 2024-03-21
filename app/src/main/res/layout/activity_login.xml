@@ -55,6 +55,7 @@
             android:layout_marginLeft="28dp"
             android:layout_marginTop="40dp"
             android:layout_marginRight="28dp"
+            android:padding=""
             android:background="#E6E1E1"
             android:hint="@string/email_id"
             android:inputType="textEmailAddress"

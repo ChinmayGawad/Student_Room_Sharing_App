@@ -76,9 +76,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/buttonLoginOwner"
         android:layout_marginTop="270dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="40dp"
         android:text="@string/create_account"
-        android:textSize="16sp"
         android:textColor="@color/black" />
 
     <!-- TextView for forget password -->
@@ -87,11 +86,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/editTextOwnerPassword"
-            android:layout_marginLeft="130dp"
+            android:layout_marginLeft="150dp"
             android:layout_marginTop="170dp"
             android:text="@string/forgot_password"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            />
 
         <Button
             android:id="@+id/buttonLoginOwner"
