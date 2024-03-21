@@ -81,6 +81,7 @@
                 android:id="@+id/passwordEditText"
                 android:layout_width="match_parent"
                 android:layout_height="61dp"
+                android:hint="@string/password"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -105,6 +106,7 @@
                 android:id="@+id/editTextConfirmPassword"
                 android:layout_width="267dp"
                 android:layout_height="62dp"
+                android:hint="@string/password"
                 android:inputType="textPassword"
                 tools:ignore="TextContrastCheck,VisualLintTextFieldSize" />
         </com.google.android.material.textfield.TextInputLayout>
