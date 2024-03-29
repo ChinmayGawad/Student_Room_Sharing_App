@@ -32,29 +32,28 @@
         app:cardCornerRadius="20dp"
         app:cardElevation="15dp"
         android:backgroundTint="#D33333">
-    <EditText
-        android:id="@+id/editTextRoomName"
-        android:layout_width="280dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        android:background="@color/final_white"
-        android:padding="15dp"
-        android:textColorHint="@color/black"
-        android:autofillHints="@string/room_name"
-        android:hint="@string/room_name"
-        android:minHeight="48dp"
-        tools:ignore="TextFields"
-        />
+
+        <EditText
+            android:id="@+id/editTextRoomName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="28dp"
+            android:autofillHints="@string/room_name"
+            android:background="@color/final_white"
+            android:hint="@string/room_name"
+            android:minHeight="48dp"
+            android:textColorHint="@color/black"
+            tools:ignore="TextFields" />
 
     <EditText
         android:id="@+id/editTextLocation"
-        android:layout_width="280dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="28dp"
         android:layout_marginTop="100dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginEnd="28dp"
         android:autofillHints="@string/location"
         android:background="@color/final_white"
         android:padding="15dp"
@@ -68,8 +67,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="170dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginEnd="28dp"
         android:background="@color/final_white"
         android:padding="15dp"
         android:textColorHint="@color/black"
@@ -80,11 +79,11 @@
 
     <EditText
         android:id="@+id/editTextPrice"
-        android:layout_width="280dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="240dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginEnd="28dp"
         android:background="@color/final_white"
         android:padding="15dp"
         android:textColorHint="@color/black"
@@ -95,10 +94,11 @@
 
     <Button
         android:id="@+id/BtnGallery"
-        android:layout_width="280dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="370dp"
-        android:layout_marginStart="40dp"
+        android:layout_marginTop="310dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginEnd="28dp"
         android:background="#E6E1E1"
         android:text="@string/select_form_gallery" />
 
@@ -106,10 +106,11 @@
 
     <Button
         android:id="@+id/buttonSave"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="310dp"
-        android:layout_marginStart="140dp"
+        android:layout_marginTop="370dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp"
         android:background="#E6E1E1"
         android:text="@string/save" />
 

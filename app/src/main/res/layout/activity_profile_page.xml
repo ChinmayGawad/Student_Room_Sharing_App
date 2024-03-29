@@ -8,12 +8,12 @@
     tools:context="Profile_Page">
 
        <TextView
-        android:layout_width="230dp"
+        android:layout_width="220dp"
         android:layout_height="70dp"
         android:text="Profile"
         android:textSize="50dp"
         android:layout_marginTop="80dp"
-        android:layout_marginLeft="130dp"
+        android:layout_marginStart="70dp"
         android:textColor="#D33333"
         android:textStyle="bold">
 
@@ -21,9 +21,9 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="414dp"
-        android:layout_height="500dp"
+        android:layout_height="480dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="190dp"
         android:layout_marginRight="20dp"
         android:backgroundTint="#D33333"
         app:cardCornerRadius="20dp"
@@ -31,68 +31,83 @@
 
         <TextView
             android:id="@+id/ProfileUserName"
-            android:layout_width="313dp"
-            android:layout_height="64dp"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
             android:layout_marginStart="28dp"
+            android:layout_marginEnd="28dp"
             android:layout_marginTop="70dp"
-            android:layout_marginEnd="48dp"
             android:background="#E6E1E1"
             android:hint="@string/name"
+            android:paddingTop="20dp"
+            android:paddingLeft="10dp"
+            android:textSize="15dp"
             android:textColor="@color/black"
             android:textColorHint="@color/black" />
 
         <TextView
             android:id="@+id/ProfileEmailId"
-            android:layout_width="312dp"
-            android:layout_height="62dp"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
             android:layout_marginStart="28dp"
+            android:layout_marginEnd="28dp"
             android:layout_marginTop="150dp"
-            android:layout_marginEnd="48dp"
             android:background="#E6E1E1"
             android:hint="@string/email_id"
+            android:paddingTop="20dp"
+            android:paddingLeft="10dp"
+            android:textSize="15dp"
             android:textColor="@color/black"
             android:textColorHint="@color/black" />
 
         <TextView
             android:id="@+id/ProfilePhoneNo"
-            android:layout_width="313dp"
+            android:layout_width="match_parent"
             android:layout_height="58dp"
             android:layout_marginStart="28dp"
+            android:layout_marginEnd="28dp"
             android:layout_marginTop="230dp"
-            android:layout_marginEnd="48dp"
             android:background="#E6E1E1"
             android:hint="@string/phone_number"
+            android:paddingTop="20dp"
+            android:paddingLeft="10dp"
+            android:textSize="15dp"
             android:textColor="@color/black"
             android:textColorHint="@color/black" />
 
         <TextView
             android:id="@+id/ProfileGender"
-            android:layout_width="315dp"
+            android:layout_width="match_parent"
             android:layout_height="61dp"
             android:layout_marginStart="28dp"
             android:layout_marginTop="310dp"
-            android:layout_marginEnd="48dp"
+            android:layout_marginEnd="28dp"
             android:layout_marginBottom="190dp"
             android:background="#E6E1E1"
             android:hint="@string/gender"
+            android:paddingTop="20dp"
+            android:paddingLeft="10dp"
+            android:textSize="15dp"
             android:textColor="@color/black"
             android:textColorHint="@color/black" />
+
         <ImageView
-            android:layout_width="70dp"
+            android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:layout_marginLeft="280dp"
-            android:layout_marginTop="400dp"
+            android:layout_marginStart="250dp"
+            android:layout_marginEnd="38dp"
+            android:layout_marginTop="390dp"
             android:background="@drawable/baseline_edit_24">
 
         </ImageView>
 
         <ProgressBar
             android:id="@+id/ProfileProgressBar"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
             android:layout_marginTop="220dp"
-            android:layout_marginLeft="160dp"/>
+            android:layout_marginStart="150dp"
+            android:layout_marginEnd="150dp" />
     </androidx.cardview.widget.CardView>
 
 

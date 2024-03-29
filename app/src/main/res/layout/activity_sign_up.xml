@@ -28,7 +28,7 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
         android:layout_height="512dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="150dp"
@@ -39,11 +39,11 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/EmailLayout"
-            android:layout_width="264dp"
-            android:layout_height="64dp"
-            android:layout_marginLeft="28dp"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginEnd="28dp"
             android:layout_marginTop="100dp"
-            android:layout_marginRight="2dp"
             android:background="#E6E1E1"
             android:hint="@string/email_id"
             android:textColorHint="@color/black"
@@ -51,7 +51,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextEmail"
-                android:layout_width="274dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:backgroundTint="#E6E1E1"
                 android:drawableEnd="@drawable/bg_mail"
@@ -62,9 +62,10 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/PasswordLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="265dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="28dp"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginEnd="28dp"
             android:layout_marginTop="180dp"
             android:background="#E6E1E1"
             android:hint="@string/password"
@@ -88,9 +89,10 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/ConfirmPasswordLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="262dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="28dp"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginEnd="28dp"
             android:layout_marginTop="260dp"
             android:background="#E6E1E1"
             android:hint="@string/re_enter_password"
@@ -104,7 +106,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextConfirmPassword"
-                android:layout_width="267dp"
+                android:layout_width="match_parent"
                 android:layout_height="62dp"
                 android:hint="@string/password"
                 android:inputType="textPassword"
@@ -113,9 +115,10 @@
 
         <Button
             android:id="@+id/buttonNext"
-            android:layout_width="264dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="28dp"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginEnd="28dp"
             android:layout_marginTop="360dp"
             android:background="#E13B3B"
             android:text="Next"

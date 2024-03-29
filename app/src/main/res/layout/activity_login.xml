@@ -7,28 +7,29 @@
     android:background="#E6E1E1">
 
     <ImageView
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        android:layout_marginLeft="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginStart="110dp"
+        android:layout_marginEnd="110dp"
         android:layout_marginTop="50dp"
         android:background="@drawable/logo" />
 
 
     <TextView
-        android:layout_width="156dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="110dp"
-        android:layout_marginTop="210dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="190dp"
         android:text="SHARE"
         android:textColor="#D33333"
         android:textSize="45dp"
         android:textStyle="bold" />
 
     <TextView
-        android:layout_width="156dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="250dp"
-        android:layout_marginLeft="130dp"
+        android:layout_marginStart="125dp"
+        android:layout_marginTop="230dp"
         android:text="ROOM"
         android:textColor="#D33333"
         android:textSize="40dp" />
@@ -50,11 +51,11 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/editTextOwnerEmail"
-            android:layout_width="247dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="28dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginEnd="28dp"
             android:layout_marginTop="40dp"
-            android:layout_marginRight="28dp"
             android:background="#E6E1E1"
             android:hint="@string/email_id"
             android:inputType="textEmailAddress"
@@ -73,9 +74,10 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/passwordTextInputLayout1"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="247dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="28dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginEnd="28dp"
             android:layout_marginTop="110dp"
             android:background="#E6E1E1"
             android:hint="@string/password"
@@ -95,19 +97,19 @@
 
         <TextView
             android:id="@+id/forgetPassword"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="160dp"
             android:layout_marginTop="180dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginStart="160dp"
             android:text="@string/forgot_password"
             android:textColor="#040303" />
 
         <Button
             android:id="@+id/buttonLogin"
-            android:layout_width="245dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="28dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginEnd="28dp"
             android:layout_marginTop="210dp"
             android:background="@drawable/button_curve"
             android:text="@string/login" />
@@ -116,7 +118,7 @@
             android:id="@+id/CreateAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
+            android:layout_marginStart="40dp"
             android:layout_marginTop="270dp"
             android:text="@string/create_account"
             android:textColor="@color/black" />

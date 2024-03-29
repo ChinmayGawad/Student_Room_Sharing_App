@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:padding="16dp"
     tools:context=".RoomDetailsActivity"
-    android:background="@color/White">
+    android:background="@color/final_white">
 
     <!-- TextViews for room details -->
     <TextView
