@@ -12,9 +12,8 @@
         android:id="@+id/roomNameTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:textSize="30sp"
         android:textColor="@color/black"
+        android:textSize="30sp"
         android:textStyle="bold" />
 
     <TextView
@@ -47,12 +46,13 @@
 
 
     <!-- RecyclerView to display multiple images -->
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/imageRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ChatWithRoomMate"
-        android:layout_marginTop="24dp"/>
+        android:layout_below="@+id/priceTextView"
+        android:layout_marginTop="136dp" />
 
     <Button
         android:id="@+id/ChatWithRoomMate"

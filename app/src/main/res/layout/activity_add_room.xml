@@ -42,7 +42,7 @@
             android:padding="15dp"
             android:autofillHints="@string/room_name"
             android:background="@color/final_white"
-            android:hint="@string/room_name"
+            android:hint="Room Name 1BK 2BK"
             android:minHeight="48dp"
             android:textColorHint="@color/black"
             tools:ignore="TextFields" />
