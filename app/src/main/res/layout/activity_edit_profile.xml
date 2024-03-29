@@ -12,7 +12,7 @@
         android:layout_width="230dp"
         android:layout_height="130dp"
         android:layout_marginLeft="50dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:text="Edit Profile"
         android:textColor="#D33333"
         android:textSize="50dp"
@@ -22,7 +22,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="414dp"
         android:layout_height="500dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="190dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:backgroundTint="#D33333"
@@ -31,44 +31,52 @@
 
         <TextView
             android:id="@+id/textView4"
-            android:layout_width="320dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="28dp"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginEnd="28dp"
+            android:textSize="15dp"
+            android:padding="20dp"
             android:layout_marginTop="70dp"
-            android:layout_marginRight="48dp"
             android:textColorHint="@color/black"
             android:background="#E6E1E1"
             android:hint="@string/email_id" />
 
         <EditText
             android:id="@+id/editTextText"
-            android:layout_width="316dp"
-            android:layout_height="62dp"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
             android:layout_marginStart="28dp"
+            android:layout_marginEnd="28dp"
+            android:textSize="15dp"
+            android:padding="20dp"
             android:layout_marginTop="150dp"
-            android:layout_marginEnd="48dp"
             android:background="#E6E1E1"
             android:hint="Name"
             android:textColorHint="@color/black" />
 
         <EditText
             android:id="@+id/editTextText2"
-            android:layout_width="316dp"
+            android:layout_width="match_parent"
             android:layout_height="58dp"
             android:layout_marginStart="28dp"
+            android:layout_marginEnd="28dp"
+            android:textSize="15dp"
+            android:padding="20dp"
             android:layout_marginTop="230dp"
-            android:layout_marginEnd="48dp"
             android:background="#E6E1E1"
             android:hint="Phone No"
             android:textColorHint="@color/black" />
 
         <EditText
             android:id="@+id/editTextText4"
-            android:layout_width="315dp"
-            android:layout_height="61dp"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
             android:layout_marginStart="28dp"
+            android:layout_marginEnd="28dp"
+            android:textSize="15dp"
+            android:padding="20dp"
             android:layout_marginTop="310dp"
-            android:layout_marginEnd="48dp"
             android:layout_marginBottom="190dp"
             android:background="#E6E1E1"
             android:hint="Gender"
@@ -76,9 +84,12 @@
 
         <Button
             android:id="@+id/button"
-            android:layout_width="320dp"
-            android:layout_height="70dp"
+            android:layout_width="match_parent"
+            android:layout_height="68dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginEnd="28dp"
             android:text="Save"
+            android:textSize="20dp"
             android:layout_marginTop="390dp"
             android:layout_marginLeft="28dp"/>
 
