@@ -1,5 +1,6 @@
 package com.pgshare.studentroomsharingapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -23,11 +24,13 @@ public class Profile_Page extends AppCompatActivity {
     private TextView ProfileUserName, ProfileEmailId, ProfilePhoneNo, ProfileGender;
     private String Profile_email, Profile_name, Profile_phoneNo, Profile_gender;
     private ProgressBar Profile_ProgressBar;
+    public Object view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page);
+
 
 
         ProfileUserName = findViewById(R.id.ProfileUserName);
@@ -84,5 +87,10 @@ public class Profile_Page extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void onEditProfileClick(View view) {
+        Intent intent = new Intent(Profile_Page.this, EditProfile.class);
+        startActivity(intent);
     }
 }
