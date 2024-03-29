@@ -25,10 +25,9 @@
     </androidx.viewpager.widget.ViewPager>
 
     <androidx.cardview.widget.CardView
-        android:layout_width="360dp"
+        android:layout_width="match_parent"
         android:layout_height="450dp"
         android:layout_marginTop="210dp"
-        android:layout_marginLeft="10dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="15dp"
         android:backgroundTint="#D33333">
