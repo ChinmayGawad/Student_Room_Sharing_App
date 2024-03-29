@@ -40,6 +40,7 @@
             android:layout_marginStart="28dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="28dp"
+            android:padding="15dp"
             android:autofillHints="@string/room_name"
             android:background="@color/final_white"
             android:hint="@string/room_name"
