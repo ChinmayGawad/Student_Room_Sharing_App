@@ -197,7 +197,6 @@ public class Add_Room extends AppCompatActivity {
         StorageReference fileReference = storageReference.child("RoomImages/" + roomId + "/" + i + "." + getFileExtension(imageUri));
         fileReference.putFile(imageUri)
                 .addOnSuccessListener(taskSnapshot -> {
-                    progressBar.setVisibility(View.VISIBLE);
                     // Image uploaded successfully, get download URL
                     fileReference.getDownloadUrl().addOnSuccessListener(uri -> {
                         String imageUrl = uri.toString();
