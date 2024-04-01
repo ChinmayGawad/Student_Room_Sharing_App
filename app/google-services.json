@@ -1,13 +1,14 @@
 {
   "project_info": {
-    "project_number": "506400530295",
-    "project_id": "student-room-sharing-app-6d6d8",
-    "storage_bucket": "student-room-sharing-app-6d6d8.appspot.com"
+    "project_number": "983571996508",
+    "firebase_url": "https://share-rooms-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "share-rooms",
+    "storage_bucket": "share-rooms.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:506400530295:android:dc3388cacf6934aceb8b72",
+        "mobilesdk_app_id": "1:983571996508:android:a766c56153166561102b99",
         "android_client_info": {
           "package_name": "com.pgshare.studentroomsharingapp"
         }
@@ -15,7 +16,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyA8v9utpma1kOx3ukH1CckOt4iu7RJUoAk"
+          "current_key": "AIzaSyAKi04zuDTIbOIJbt7wpkfJnf4YSRBWXLw"
         }
       ],
       "services": {

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E6E1E1">
+    android:background="#E6E1E1"
+    tools:ignore="VisualLintBounds">
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
@@ -15,7 +16,7 @@
         android:layout_marginBottom="7dp"
         android:text="Sign Up"
         android:textColor="#D33333"
-        android:textSize="50dp"
+        android:textSize="50sp"
         android:textStyle="bold" />
 
     <ProgressBar
@@ -44,7 +45,6 @@
             android:layout_marginStart="28dp"
             android:layout_marginEnd="28dp"
             android:layout_marginTop="100dp"
-            android:padding="15dp"
             android:background="#E6E1E1"
             android:hint="@string/email_id"
             android:textColorHint="@color/black"
@@ -53,10 +53,10 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextEmail"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:backgroundTint="#E6E1E1"
+                android:padding="15dp"
                 android:drawableEnd="@drawable/bg_mail"
-                android:inputType="textEmailAddress"
                 tools:ignore="TextContrastCheck,VisualLintTextFieldSize" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -85,7 +85,8 @@
                 android:layout_height="61dp"
                 android:hint="@string/password"
                 android:padding="15dp"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                tools:ignore="VisualLintTextFieldSize,VisualLintBounds" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -113,7 +114,7 @@
                 android:hint="@string/password"
                 android:padding="15dp"
                 android:inputType="textPassword"
-                tools:ignore="TextContrastCheck,VisualLintTextFieldSize" />
+                tools:ignore="TextContrastCheck,VisualLintTextFieldSize,VisualLintBounds" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
@@ -125,7 +126,8 @@
             android:layout_marginTop="360dp"
             android:background="#E13B3B"
             android:text="Next"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            tools:ignore="VisualLintButtonSize" />
     </androidx.cardview.widget.CardView>
 </RelativeLayout>
 

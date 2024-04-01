@@ -2,6 +2,7 @@ package com.pgshare.studentroomsharingapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -22,22 +23,17 @@ import com.pgshare.studentroomsharingapp.Adapter.UserHelper;
 public class Profile_Page extends AppCompatActivity {
 
     private TextView ProfileUserName, ProfileEmailId, ProfilePhoneNo, ProfileGender;
-    private String Profile_email, Profile_name, Profile_phoneNo, Profile_gender;
     private ProgressBar Profile_ProgressBar;
-    public Object view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page);
 
-
-
         ProfileUserName = findViewById(R.id.ProfileUserName);
         ProfileEmailId = findViewById(R.id.ProfileEmailId);
         ProfilePhoneNo = findViewById(R.id.ProfilePhoneNo);
         ProfileGender = findViewById(R.id.ProfileGender);
-
         Profile_ProgressBar = findViewById(R.id.ProfileProgressBar);
 
         FirebaseAuth authProfile = FirebaseAuth.getInstance();
@@ -47,35 +43,34 @@ public class Profile_Page extends AppCompatActivity {
             Toast.makeText(this, "Something went wrong! User not found", Toast.LENGTH_SHORT).show();
         } else {
             Profile_ProgressBar.setVisibility(View.VISIBLE);
-            //Display User's Data
+            // Display user's data
             showProfile(firebaseUser);
         }
-
     }
 
     private void showProfile(FirebaseUser firebaseUser) {
         String uid = firebaseUser.getUid();
+        DatabaseReference referenceProfile = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
 
-        //Extract User's Data
-        DatabaseReference refrenceProfile = FirebaseDatabase.getInstance().getReference("Users");
-        refrenceProfile.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-
+        referenceProfile.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                UserHelper FetchUser = snapshot.getValue(UserHelper.class);
-                //Display User's Data
-                if (FetchUser != null) {
-                    //Extract User's Data
-                    Profile_email = FetchUser.getEmail();
-                    Profile_name = FetchUser.getName();
-                    Profile_phoneNo = FetchUser.getPhoneNo();
-                    Profile_gender = FetchUser.getGender();
+                UserHelper user = snapshot.getValue(UserHelper.class);
+                Log.d("Profile_Page", "UserHelper object: " + user);
+                if (user != null) {
+                    // Extract user's data
+                    String profileName = user.getName();
+                    String profileEmail = user.getEmail();
+                    String profilePhoneNo = user.getPhone(); // Corrected getter method name
+                    String profileGender = user.getGender();
 
-                    //Display User's Data
-                    ProfileUserName.setText(Profile_name);
-                    ProfileEmailId.setText(Profile_email);
-                    ProfilePhoneNo.setText(Profile_phoneNo);
-                    ProfileGender.setText(Profile_gender);
+                    Log.d("Profile_Page", "Profile Phone Number: " + profilePhoneNo);
+
+                    // Display user's data
+                    ProfileUserName.setText(profileName);
+                    ProfileEmailId.setText(profileEmail);
+                    ProfilePhoneNo.setText(profilePhoneNo);
+                    ProfileGender.setText(profileGender);
                 }
                 Profile_ProgressBar.setVisibility(View.GONE);
             }
@@ -84,10 +79,10 @@ public class Profile_Page extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(Profile_Page.this, "Something went wrong", Toast.LENGTH_SHORT).show();
                 Profile_ProgressBar.setVisibility(View.GONE);
-
             }
         });
     }
+
 
     public void onEditProfileClick(View view) {
         Intent intent = new Intent(Profile_Page.this, EditProfile.class);

@@ -8,11 +8,23 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class EditProfile extends AppCompatActivity {
 
-    EditText  nameEditText, phoneEditText, genderEditText;
+    EditText nameEditText, phoneEditText, genderEditText;
     Button saveButton;
     ProgressBar profileProgressBar;
+
+    // Firebase authentication instance
+    FirebaseAuth mAuth;
+    // Firebase Realtime Database instance
+    FirebaseDatabase mDatabase;
+    // Reference to the current user's data node in the database
+    DatabaseReference mUserReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +37,14 @@ public class EditProfile extends AppCompatActivity {
         saveButton = findViewById(R.id.button);
         profileProgressBar = findViewById(R.id.ProfileProgressBar);
 
+        // Initialize Firebase instances
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            mUserReference = mDatabase.getReference().child("Users").child(currentUser.getUid());
+        }
+
         saveButton.setOnClickListener(v -> {
             // Perform save operation here
             saveProfile();
@@ -32,9 +52,19 @@ public class EditProfile extends AppCompatActivity {
     }
 
     private void saveProfile() {
-        // Placeholder method for saving profile
-        // You can implement your saving logic here
-        // For demonstration, just showing a toast message
-        Toast.makeText(this, "Profile saved!", Toast.LENGTH_SHORT).show();
+        // Retrieve updated profile information from EditText fields
+        String newName = nameEditText.getText().toString();
+        String newPhone = phoneEditText.getText().toString();
+        String newGender = genderEditText.getText().toString();
+
+        // Update profile in the Firebase Realtime Database
+        if (mUserReference != null) {
+            mUserReference.child("name").setValue(newName);
+            mUserReference.child("phone").setValue(newPhone);
+            mUserReference.child("gender").setValue(newGender);
+            Toast.makeText(this, "Profile updated!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Failed to update profile.", Toast.LENGTH_SHORT).show();
+        }
     }
 }

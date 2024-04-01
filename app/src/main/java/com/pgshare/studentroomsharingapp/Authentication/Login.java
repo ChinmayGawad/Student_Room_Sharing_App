@@ -60,7 +60,13 @@ public class Login extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                     } else {
-                        Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show();
+                        // Check if the error is due to user not existing (invalid email)
+                        if (task.getException() != null && task.getException().getMessage() != null &&
+                                task.getException().getMessage().contains("There is no user record corresponding to this identifier")) {
+                            Toast.makeText(this, "User does not exist", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
             }
@@ -93,17 +99,15 @@ public class Login extends AppCompatActivity {
             return true;
         }
     }
+
     //Check if user is Already logged in
-   @Override
+    @Override
     protected void onStart() {
         super.onStart();
         if (authLogin.getCurrentUser() != null) {
             Intent intent = new Intent(Login.this, Display_Room.class);
             startActivity(intent);
             finish();
-        }
-        else {
-            Toast.makeText(this, "You Can Login Now", Toast.LENGTH_SHORT).show();
         }
     }
 }
