@@ -43,6 +43,7 @@
             android:background="@color/final_white"
             android:hint="1RK 1BHK 2BHK"
             android:minHeight="48dp"
+            android:textColor="@color/black"
             android:textColorHint="@color/black"
             tools:ignore="TextFields" />
 
@@ -56,6 +57,7 @@
         android:autofillHints="@string/location"
         android:background="@color/final_white"
         android:padding="15dp"
+        android:textColor="@color/black"
         android:textColorHint="@color/black"
         android:hint="@string/location"
         android:minHeight="48dp"
@@ -70,6 +72,7 @@
         android:layout_marginEnd="28dp"
         android:background="@color/final_white"
         android:padding="15dp"
+        android:textColor="@color/black"
         android:textColorHint="@color/black"
         android:autofillHints="@string/description"
         android:hint="@string/description"
@@ -85,6 +88,7 @@
         android:layout_marginEnd="28dp"
         android:background="@color/final_white"
         android:padding="15dp"
+        android:textColor="@color/black"
         android:textColorHint="@color/black"
         android:autofillHints="@string/price"
         android:hint="@string/price"

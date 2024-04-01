@@ -1,6 +1,7 @@
 package com.pgshare.studentroomsharingapp;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ProgressBar;
@@ -35,6 +36,7 @@ public class Display_Room extends AppCompatActivity implements SearchView.OnQuer
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_room);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.C_color)));
 
         // Set up SearchView
         SearchView searchView = findViewById(R.id.RoomSearchView);

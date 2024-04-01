@@ -1,6 +1,7 @@
 package com.pgshare.studentroomsharingapp;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -29,6 +30,7 @@ public class Profile_Page extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.C_color)));
 
         ProfileUserName = findViewById(R.id.ProfileUserName);
         ProfileEmailId = findViewById(R.id.ProfileEmailId);

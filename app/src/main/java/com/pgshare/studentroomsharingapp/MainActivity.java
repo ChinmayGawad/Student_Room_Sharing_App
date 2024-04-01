@@ -2,6 +2,7 @@ package com.pgshare.studentroomsharingapp;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,7 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.pgshare.studentroomsharingapp.Adapter.Owner;
 import com.pgshare.studentroomsharingapp.Authentication.Login;
+import com.pgshare.studentroomsharingapp.Authentication.OwnerLogin;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,13 +25,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.C_color)));
         // Initialize Firebase Authentication
         firebaseAuth = FirebaseAuth.getInstance();
     }
 
     public void Owner(View view) {
-        Intent intent = new Intent(MainActivity.this, ChatActivity.class);
+        Intent intent = new Intent(MainActivity.this, OwnerLogin.class);
         startActivity(intent);
     }
 

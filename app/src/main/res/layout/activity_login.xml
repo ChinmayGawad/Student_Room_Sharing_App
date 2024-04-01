@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E6E1E1">
+    android:background="@color/final_white">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_marginStart="110dp"
-        android:layout_marginEnd="110dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp"
         android:layout_marginTop="50dp"
         android:background="@drawable/logo" />
 
@@ -36,15 +36,13 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView3"
-        android:layout_width="349dp"
+        android:layout_width="match_parent"
         android:layout_height="302dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="30dp"
-        android:layout_marginLeft="30dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="320dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginEnd="20dp"
         android:backgroundTint="@color/C_color"
         app:cardCornerRadius="16dp">
 

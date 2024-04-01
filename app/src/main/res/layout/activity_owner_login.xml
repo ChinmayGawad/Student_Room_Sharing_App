@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="16dp"
-    android:background="#E6E1E1">
+    android:background="@color/final_white">
 
 
     <ImageView
@@ -18,26 +17,25 @@
     <TextView
         android:layout_width="156dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="100dp"
+        android:layout_marginLeft="115dp"
         android:layout_marginTop="200dp"
         android:text="@string/Owner"
-        android:textColor="#D33333"
+        android:textColor="@color/C_color"
         android:textSize="45dp"
         android:textStyle="bold" />
 
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView3"
-        android:layout_width="349dp"
+        android:layout_width="match_parent"
         android:layout_height="302dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="20dp"
         android:layout_marginTop="320dp"
         android:layout_marginEnd="20dp"
-        android:backgroundTint="#D33333"
         app:cardCornerRadius="15dp"
-        app:cardElevation="15dp">
+        android:backgroundTint="@color/C_color">
 
     <EditText
         android:id="@+id/editTextOwnerEmail"
@@ -77,9 +75,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/buttonLoginOwner"
         android:layout_marginTop="270dp"
-        android:layout_marginLeft="40dp"
+        android:layout_marginLeft="50dp"
         android:text="@string/create_account"
-        android:textColor="@color/black" />
+        android:textColor="@color/final_white" />
 
     <!-- TextView for forget password -->
         <TextView
@@ -87,10 +85,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/editTextOwnerPassword"
-            android:layout_marginLeft="150dp"
+            android:layout_marginLeft="180dp"
             android:layout_marginTop="170dp"
             android:text="@string/forgot_password"
-            android:textColor="@color/black"
+            android:textColor="@color/final_white"
             />
 
         <Button
