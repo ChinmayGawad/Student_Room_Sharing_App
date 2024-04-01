@@ -55,7 +55,6 @@
             android:layout_marginTop="40dp"
             android:background="@color/final_white"
             android:hint="@string/email_id"
-            app:errorTextColor="@color/black"
             android:inputType="textEmailAddress"
             android:textColorHint="@color/black"
             app:boxStrokeColor="#0C0C0C">
@@ -65,6 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:backgroundTint="#E6E1E1"
+                android:textColor="@color/black"
                 android:drawableEnd="@drawable/ic_user"
                 tools:ignore="TouchTargetSizeCheck" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -90,6 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="58dp"
                 android:hint="@string/password"
+                android:textColor="@color/black"
                 tools:ignore="VisualLintTextFieldSize,TextContrastCheck" />
 
         </com.google.android.material.textfield.TextInputLayout>
