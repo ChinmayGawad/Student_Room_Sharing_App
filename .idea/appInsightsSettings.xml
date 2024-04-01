@@ -10,9 +10,9 @@
               <option name="connection">
                 <ConnectionSetting>
                   <option name="appId" value="com.pgshare.studentroomsharingapp" />
-                  <option name="mobileSdkAppId" value="1:506400530295:android:dc3388cacf6934aceb8b72" />
-                  <option name="projectId" value="student-room-sharing-app-6d6d8" />
-                  <option name="projectNumber" value="506400530295" />
+                  <option name="mobileSdkAppId" value="1:983571996508:android:a766c56153166561102b99" />
+                  <option name="projectId" value="share-rooms" />
+                  <option name="projectNumber" value="983571996508" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

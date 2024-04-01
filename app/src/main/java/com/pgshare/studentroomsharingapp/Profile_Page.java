@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.pgshare.studentroomsharingapp.Adapter.Owner;
 import com.pgshare.studentroomsharingapp.Adapter.UserHelper;
 
 public class Profile_Page extends AppCompatActivity {
@@ -53,6 +54,7 @@ public class Profile_Page extends AppCompatActivity {
     private void showProfile(FirebaseUser firebaseUser) {
         String uid = firebaseUser.getUid();
         DatabaseReference referenceProfile = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
+        DatabaseReference referenceOwner = FirebaseDatabase.getInstance().getReference().child("Owners").child(uid);
 
         referenceProfile.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -73,8 +75,34 @@ public class Profile_Page extends AppCompatActivity {
                     ProfileEmailId.setText(profileEmail);
                     ProfilePhoneNo.setText(profilePhoneNo);
                     ProfileGender.setText(profileGender);
+                    Profile_ProgressBar.setVisibility(View.GONE);
                 }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(Profile_Page.this, "Something went wrong", Toast.LENGTH_SHORT).show();
                 Profile_ProgressBar.setVisibility(View.GONE);
+            }
+        });
+
+        referenceOwner.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Owner owner = snapshot.getValue(Owner.class);
+                if (owner != null) {
+                    // Extract owner's data
+                    String ownerName = owner.getOwnerName();
+                    String ownerPhone = owner.getOwnerPhone();
+                    String ownerGender = owner.getGender();
+
+                    // Display owner's data
+                    ProfileUserName.setText(ownerName);
+                    ProfileEmailId.setText("Owner Email"); // You can decide if you want to display owner's email
+                    ProfilePhoneNo.setText(ownerPhone);
+                    ProfileGender.setText(ownerGender);
+                    Profile_ProgressBar.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -84,6 +112,7 @@ public class Profile_Page extends AppCompatActivity {
             }
         });
     }
+
 
 
     public void onEditProfileClick(View view) {

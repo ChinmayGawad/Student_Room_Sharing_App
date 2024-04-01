@@ -4,6 +4,9 @@ public class Owner {
 
     private String ownerId, ownerName, ownerEmail, ownerPhone, userType,imageUrl, gender;
 
+    public Owner() {
+    }
+
     public Owner(String ownerId, String ownerName, String ownerPhone, String gender, String imageUrl, String userType) {
         this.ownerId = ownerId;
         this.ownerName = ownerName;
@@ -26,6 +29,13 @@ public class Owner {
 
     }
 
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 
     public String getUserType() {
         return userType;
