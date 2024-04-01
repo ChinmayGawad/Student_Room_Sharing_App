@@ -12,9 +12,8 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="150dp"
         android:layout_marginRight="20dp"
-        android:backgroundTint="#D33333"
-        app:cardCornerRadius="15dp"
-        app:cardElevation="15dp">
+        android:backgroundTint="@color/C_color"
+        app:cardCornerRadius="15dp">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutName"
@@ -124,7 +123,7 @@
        android:layout_marginTop="20dp"
         android:layout_marginLeft="30dp"
         android:text="Regester Account "
-        android:textColor="#D33333"
+        android:textColor="@color/C_color"
         android:textSize="50dp"
         android:textStyle="bold" />
 

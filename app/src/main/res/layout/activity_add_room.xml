@@ -29,8 +29,7 @@
         android:layout_height="450dp"
         android:layout_marginTop="210dp"
         app:cardCornerRadius="20dp"
-        app:cardElevation="15dp"
-        android:backgroundTint="#D33333">
+        android:backgroundTint="@color/C_color">
 
         <EditText
             android:id="@+id/editTextRoomName"
@@ -42,7 +41,7 @@
             android:padding="15dp"
             android:autofillHints="@string/room_name"
             android:background="@color/final_white"
-            android:hint="Room Name 1BK 2BK"
+            android:hint="1RK 1BHK 2BHK"
             android:minHeight="48dp"
             android:textColorHint="@color/black"
             tools:ignore="TextFields" />
@@ -99,7 +98,7 @@
         android:layout_marginTop="310dp"
         android:layout_marginStart="28dp"
         android:layout_marginEnd="28dp"
-        android:background="#E6E1E1"
+        android:background="@color/C_color"
         android:text="@string/select_form_gallery" />
 
 

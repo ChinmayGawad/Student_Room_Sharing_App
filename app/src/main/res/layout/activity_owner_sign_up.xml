@@ -14,7 +14,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="30dp"
         android:text="Sign Up"
-        android:textColor="#D33333"
+        android:textColor="@color/C_color"
         android:textSize="50dp"
         android:textStyle="bold"/>
 
@@ -22,9 +22,8 @@
         android:layout_width="match_parent"
         android:layout_height="512dp"
         android:layout_marginTop="130dp"
-        android:backgroundTint="#D33333"
-        app:cardCornerRadius="15dp"
-        app:cardElevation="15dp">
+        android:backgroundTint="@color/C_color"
+        app:cardCornerRadius="15dp">
 
 
 

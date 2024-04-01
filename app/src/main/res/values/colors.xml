@@ -144,4 +144,5 @@
     <color name="item_message_received">#0091FF</color>
     <color name="final_white">#E6E1E1</color>
     <color name="ic_launcher_background">@color/final_white</color>
+    <color name="C_color">#BA3D0BF3</color>
 </resources>
