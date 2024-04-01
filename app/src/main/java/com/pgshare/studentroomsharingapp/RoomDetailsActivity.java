@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pgshare.studentroomsharingapp.Adapter.ImageAdapter;
@@ -32,7 +33,8 @@ public class RoomDetailsActivity extends AppCompatActivity {
         Button chatWithRoomMate = findViewById(R.id.ChatWithRoomMate);
 
         // Set layout manager for RecyclerView
-        recyclerView.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
 
 
         ImageAdapter imageAdapter = new ImageAdapter();
