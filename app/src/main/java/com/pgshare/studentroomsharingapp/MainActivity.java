@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.pgshare.studentroomsharingapp.Authentication.Login;
-import com.pgshare.studentroomsharingapp.Authentication.OwnerLogin;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void Owner(View view) {
-        Intent intent = new Intent(MainActivity.this, OwnerLogin.class);
+        Intent intent = new Intent(MainActivity.this, ChatActivity.class);
         startActivity(intent);
     }
 
