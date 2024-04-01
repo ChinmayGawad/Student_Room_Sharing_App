@@ -1,6 +1,7 @@
 package com.pgshare.studentroomsharingapp.Authentication;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
@@ -30,6 +31,7 @@ public class OwnerSignUp extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner_sign_up);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.C_color)));
 
         editTextOwnerEmail = findViewById(R.id.editTextOwnerEmail);
         editTextOwnerPassword = findViewById(R.id.editTextOwnerPassword);

@@ -1,6 +1,7 @@
 package com.pgshare.studentroomsharingapp.Authentication;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.widget.Button;
@@ -27,6 +28,7 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.C_color)));
 
         LoginMail = findViewById(R.id.UsernameEt);
         LoginPass = findViewById(R.id.PasswordEt);

@@ -1,5 +1,6 @@
 package com.pgshare.studentroomsharingapp.Authentication;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -21,6 +22,7 @@ public class ForgetPassword extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forget_password);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.C_color)));
 
         emailEditText = findViewById(R.id.resetPassword);
         Button resetButton = findViewById(R.id.buttonReset);

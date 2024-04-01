@@ -2,6 +2,7 @@ package com.pgshare.studentroomsharingapp.Authentication;
 
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -49,6 +50,7 @@ public class RegisterOwnerDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_regsiter_owner_details);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.C_color)));
 
         // Initialize Firebase Auth
         firebaseAuth = FirebaseAuth.getInstance();
