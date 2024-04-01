@@ -71,23 +71,26 @@
         android:textColorHint="@color/black"/>
 
     <!-- TextView for creating an account -->
-    <TextView
-        android:id="@+id/textViewCreateAccount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/buttonLoginOwner"
-        android:layout_marginTop="270dp"
-        android:layout_marginLeft="40dp"
-        android:text="@string/create_account"
-        android:textColor="@color/black" />
 
-    <!-- TextView for forget password -->
+        <!-- TextView for forget password -->
+        <TextView
+            android:id="@+id/textViewCreateAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/buttonLoginOwner"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="270dp"
+            android:text="@string/create_account"
+
+            android:textAlignment="center"
+            android:textColor="@color/black" />
+
         <TextView
             android:id="@+id/textViewForgetPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/editTextOwnerPassword"
-            android:layout_marginLeft="150dp"
+            android:layout_marginLeft="170dp"
             android:layout_marginTop="170dp"
             android:text="@string/forgot_password"
             android:textColor="@color/black"
