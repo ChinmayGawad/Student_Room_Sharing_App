@@ -24,6 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:background="@color/C_color"
         android:orientation="horizontal"
         android:padding="8dp">
 
@@ -34,6 +35,8 @@
             android:layout_weight="1"
             android:hint="Type a message..."
             android:inputType="text"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
             android:minHeight="48dp" />
 
         <Button
