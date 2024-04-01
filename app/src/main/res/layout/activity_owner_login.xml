@@ -47,7 +47,7 @@
         android:layout_marginTop="40dp"
         android:padding="15dp"
         android:layout_marginRight="28dp"
-        android:background="#E6E1E1"
+        android:background="@color/final_white"
         android:minHeight="48dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black"/>

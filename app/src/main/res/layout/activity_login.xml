@@ -55,6 +55,7 @@
             android:layout_marginTop="40dp"
             android:background="@color/final_white"
             android:hint="@string/email_id"
+            app:errorTextColor="@color/black"
             android:inputType="textEmailAddress"
             android:textColorHint="@color/black"
             app:boxStrokeColor="#0C0C0C">
@@ -78,6 +79,7 @@
             android:layout_marginTop="110dp"
             android:background="@color/final_white"
             android:hint="@string/password"
+            app:errorTextColor="@color/black"
             android:inputType="textPassword"
             android:textColorHint="@color/black"
             app:passwordToggleEnabled="true"
