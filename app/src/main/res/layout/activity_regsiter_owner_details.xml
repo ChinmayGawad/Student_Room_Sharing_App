@@ -67,7 +67,7 @@
 
             <RadioButton
                 android:id="@+id/radioButtonMale"
-                android:layout_width="80dp"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:text="Male"
                 android:textColor="@color/black" />
@@ -94,7 +94,7 @@
         android:layout_marginTop="260dp"
         android:padding="15dp"
         android:layout_marginLeft="20dp"
-        android:text="Choose Image" />
+        android:text="Choose NOC" />
 
     <Button
         android:id="@+id/buttonFinish"
