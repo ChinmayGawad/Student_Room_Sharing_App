@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
     tools:context=".RoomDetailsActivity"
     android:background="@color/final_white">
+<RelativeLayout
+    android:padding="16dp"
+    tools:context=".RoomDetailsActivity"
+    android:background="@color/final_white"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent">
 
     <!-- TextViews for room details -->
     <TextView
@@ -61,21 +69,25 @@
         android:layout_below="@id/priceTextView"
         android:layout_marginTop="26dp"
         android:text="Chat Room Mate"
-        android:textSize="15sp"
+        android:textSize="12sp"
         android:background="@drawable/button_curve"
         android:backgroundTint="@color/MediumPurple"
-        android:layout_marginStart="230dp"/>
+        android:layout_marginStart="200dp"/>
 
     <Button
         android:id="@+id/bookRoomButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/imageRecyclerView"
-        android:layout_marginTop="16dp"
-        android:background="@color/BlueViolet"
-        android:text="Book Room"
-        android:onClick="bookRoom" />
+        android:layout_below="@id/priceTextView"
+        android:layout_marginTop="26dp"
+        android:backgroundTint="@color/MediumPurple"
+        android:onClick="bookRoom"
+        android:text="@string/book_room"
+        android:background="@drawable/button_curve"
+        android:textColor="@color/black" />
 
 
 
 </RelativeLayout>
+
+</ScrollView>

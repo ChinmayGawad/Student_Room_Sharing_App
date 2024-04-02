@@ -32,5 +32,6 @@
     <string name="upload_from_camara">Upload From Camara</string>
     <string name="select_form_gallery">Select Form Gallery</string>
     <string name="enter_otp">Enter OTP</string>
+    <string name="book_room">Book Room</string>
 
 </resources>

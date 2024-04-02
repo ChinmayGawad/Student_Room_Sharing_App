@@ -33,7 +33,7 @@ public class RoomDetailsActivity extends AppCompatActivity {
         Button chatWithRoomMate = findViewById(R.id.ChatWithRoomMate);
 
         // Set layout manager for RecyclerView
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
 
 
