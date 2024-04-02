@@ -5,6 +5,8 @@ public class Message {
     private boolean sentByUser;
     private String timestamp;
 
+    private String roomId;
+
     public Message() {
         // Default constructor required for Firebase
     }
@@ -28,4 +30,7 @@ public class Message {
         return sentByUser;
     }
 
+    public String getRoomId() {
+        return roomId;
+    }
 }

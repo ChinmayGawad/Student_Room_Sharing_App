@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -16,35 +17,46 @@ import com.pgshare.studentroomsharingapp.R;
 import java.util.ArrayList;
 
 public class MessageAdapt extends ArrayAdapter<Message> {
+
     private final Context mContext;
     private final ArrayList<Message> mMessages;
     private DatabaseReference mDatabaseReference;
+    private String currentRoom; // To store the currently selected room
 
     public MessageAdapt(Context context, ArrayList<Message> messages) {
         super(context, 0, messages);
         mContext = context;
         mMessages = messages;
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("messages");
-        mDatabaseReference.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
-                Message message = dataSnapshot.getValue(Message.class);
-                mMessages.add(message);
-                notifyDataSetChanged();
-            }
+    }
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, String s) {}
+    public void updateRoom(String roomId) {
+        currentRoom = roomId;
+        mMessages.clear(); // Clear existing messages
+        if (currentRoom != null && !currentRoom.isEmpty()) {
+            mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("chatrooms").child(currentRoom);
+            mDatabaseReference.addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
+                    Message message = dataSnapshot.getValue(Message.class);
+                    mMessages.add(message);
+                    notifyDataSetChanged();
+                }
 
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {}
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
 
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, String s) {}
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot snapshot) {}
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {}
-        });
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {}
+
+                // Other event listener methods (onChildChanged, onChildRemoved, etc.)
+            });
+        }
     }
 
     @NonNull
