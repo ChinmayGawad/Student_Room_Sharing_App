@@ -26,7 +26,7 @@
         android:layout_alignParentBottom="true"
         android:background="@color/C_color"
         android:orientation="horizontal"
-        android:padding="8dp">
+        android:padding="7dp">
 
         <EditText
             android:id="@+id/messageEditText"
