@@ -54,9 +54,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#E6E1E1"
+                android:textColor="@color/black"
                 android:padding="15dp"
-                android:drawableEnd="@drawable/bg_mail"
-                tools:ignore="TextContrastCheck,VisualLintTextFieldSize" />
+                android:drawableEnd="@drawable/bg_mail" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -83,6 +83,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="61dp"
                 android:hint="@string/password"
+                android:textColor="@color/black"
                 android:padding="15dp"
                 android:inputType="textPassword"
                 tools:ignore="VisualLintTextFieldSize,VisualLintBounds" />
@@ -111,6 +112,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="62dp"
                 android:hint="@string/password"
+                android:textColor="@color/black"
                 android:padding="15dp"
                 android:inputType="textPassword"
                 tools:ignore="TextContrastCheck,VisualLintTextFieldSize,VisualLintBounds" />

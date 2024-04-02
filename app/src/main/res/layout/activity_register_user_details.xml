@@ -32,6 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="58dp"
                 android:padding="15dp"
+                android:textColor="@color/black"
                 android:background="@color/final_white"
                 android:inputType="textPersonName" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -52,6 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="58dp"
                 android:padding="15dp"
+                android:textColor="@color/black"
                 android:background="@color/final_white"
                 android:inputType="number" />
 
