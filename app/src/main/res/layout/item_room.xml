@@ -28,10 +28,13 @@
                android:id="@+id/room_image"
                android:layout_width="200dp"
                android:layout_height="150dp"
-               android:layout_y="10dp"
+               android:layout_y="1dp"
                android:layout_x="1dp"
                android:scaleType="fitXY"
-               android:padding="@dimen/card_corner_radius"
+               android:padding="8dp"
+               android:background="@drawable/image_corner"
+               android:backgroundTint="#B4D3ED"
+
                android:contentDescription="Images of rooms" />
 
            <TextView

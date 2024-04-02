@@ -1,6 +1,7 @@
 package com.pgshare.studentroomsharingapp;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -19,7 +20,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.pgshare.studentroomsharingapp.Adapter.Message;
 import com.pgshare.studentroomsharingapp.Adapter.MessageAdapt;
-import com.pgshare.studentroomsharingapp.Adapter.Room;
 
 import java.util.ArrayList;
 
@@ -39,6 +39,7 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.C_color)));
 
         // Initialize views
         messageEditText = findViewById(R.id.messageEditText);
