@@ -40,7 +40,7 @@ public class RoomDetailsActivity extends AppCompatActivity {
         bookRoomButton = findViewById(R.id.bookRoomButton);
 
         // Set layout manager for RecyclerView
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
         // Get the Room object from the intent
         room = getIntent().getParcelableExtra("Rooms");
