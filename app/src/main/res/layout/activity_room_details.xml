@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,86 +7,86 @@
     android:padding="16dp"
     tools:context=".RoomDetailsActivity"
     android:background="@color/final_white">
-<RelativeLayout
-    android:padding="16dp"
-    tools:context=".RoomDetailsActivity"
-    android:background="@color/final_white"
-    android:layout_height="wrap_content"
-    android:layout_width="match_parent">
-
-    <!-- TextViews for room details -->
-    <TextView
-        android:id="@+id/roomNameTextView"
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:padding="16dp"
+        tools:context=".RoomDetailsActivity"
+        android:background="@color/final_white"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        android:layout_width="match_parent">
 
-    <TextView
-        android:id="@+id/locationTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/roomNameTextView"
-        android:layout_marginTop="8dp"
-        android:textColor="@color/black"
-        android:textSize="24sp" />
+        <!-- TextViews for room details -->
+        <TextView
+            android:id="@+id/roomNameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/descriptionTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/locationTextView"
-        android:layout_marginTop="8dp"
-        android:textColor="@color/black"
-        android:textSize="24sp" />
+        <TextView
+            android:id="@+id/locationTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/roomNameTextView"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
 
-    <TextView
-        android:id="@+id/priceTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/descriptionTextView"
-        android:layout_marginTop="8dp"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/descriptionTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/locationTextView"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
 
-
-    <!-- RecyclerView to display multiple images -->
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/imageRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/priceTextView"
-        android:layout_marginTop="136dp" />
-
-    <Button
-        android:id="@+id/ChatWithRoomMate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/priceTextView"
-        android:layout_marginTop="26dp"
-        android:text="Chat Room Mate"
-        android:textSize="12sp"
-        android:background="@drawable/button_curve"
-        android:backgroundTint="@color/MediumPurple"
-        android:layout_marginStart="200dp"/>
-
-    <Button
-        android:id="@+id/bookRoomButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/priceTextView"
-        android:layout_marginTop="26dp"
-        android:backgroundTint="@color/MediumPurple"
-        android:onClick="bookRoom"
-        android:text="@string/book_room"
-        android:background="@drawable/button_curve"
-        android:textColor="@color/black" />
+        <TextView
+            android:id="@+id/priceTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/descriptionTextView"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
 
+        <!-- RecyclerView to display multiple images -->
 
-</RelativeLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/imageRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/priceTextView"
+            android:layout_marginTop="136dp" />
+
+        <Button
+            android:id="@+id/ChatWithRoomMate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/priceTextView"
+            android:layout_marginTop="26dp"
+            android:text="Chat Room Mate"
+            android:textSize="12sp"
+            android:background="@drawable/button_curve"
+            android:backgroundTint="@color/MediumPurple"
+            android:layout_marginStart="200dp"/>
+
+        <Button
+            android:id="@+id/bookRoomButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/priceTextView"
+            android:layout_marginTop="26dp"
+            android:backgroundTint="@color/MediumPurple"
+            android:onClick="bookRoom"
+            android:text="@string/book_room"
+            android:background="@drawable/button_curve"
+            android:textColor="@color/black" />
+
+
+
+    </RelativeLayout>
 
 </ScrollView>

@@ -26,6 +26,8 @@ public class Room implements Parcelable {
     private String price;
     private ArrayList<String> imageUrls = new ArrayList<>();
     private int imageResourceId;
+    private boolean isRoomBooked; // Add new field for booking status
+    private Owner owner;
 
     // Default constructor with no arguments (required by Firebase)
     public Room() {
@@ -39,6 +41,7 @@ public class Room implements Parcelable {
         this.price = price;
         this.imageUrls = imageUrls;
         this.imageResourceId = imageResourceId;
+        this.isRoomBooked = false; // Initialize booked status to false
     }
 
     protected Room(Parcel in) {
@@ -50,6 +53,7 @@ public class Room implements Parcelable {
         imageUrls = new ArrayList<>(); // Initialize the ArrayList
         in.readStringList(imageUrls);
         imageResourceId = in.readInt();
+        isRoomBooked = in.readByte() != 0; // Read booking status from Parcel
     }
 
     @Override
@@ -66,9 +70,14 @@ public class Room implements Parcelable {
         out.writeString(price);
         out.writeStringList(imageUrls);
         out.writeInt(imageResourceId);
+        out.writeByte((byte) (isRoomBooked ? 1 : 0)); // Write booking status to Parcel
     }
 
     // Getters and setters
+
+    public Owner getOwner() {
+        return owner;
+    }
 
     public String getId() {
         return id;
@@ -129,5 +138,13 @@ public class Room implements Parcelable {
 
     public void setImageResourceId(int imageResourceId) {
         this.imageResourceId = imageResourceId;
+    }
+
+    public boolean isRoomBooked() {
+        return isRoomBooked;
+    }
+
+    public void setRoomBooked(boolean roomBooked) {
+        isRoomBooked = roomBooked;
     }
 }
