@@ -119,7 +119,7 @@ public class Display_Room extends AppCompatActivity implements SearchView.OnQuer
         List<Room> filteredList = new ArrayList<>();
         for (Room room : roomData) {
             if (room.getDescription().toLowerCase().contains(searchText.toLowerCase()) ||
-                    room.getLocation().toLowerCase().contains(searchText.toLowerCase())) {
+                    room.getLocation().toLowerCase().contains(searchText.toLowerCase()) || room.getRoomName().toLowerCase().contains(searchText.toLowerCase())) {
                 filteredList.add(room);
             }
         }

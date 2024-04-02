@@ -66,5 +66,16 @@
         android:backgroundTint="@color/MediumPurple"
         android:layout_marginStart="230dp"/>
 
+    <Button
+        android:id="@+id/bookRoomButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageRecyclerView"
+        android:layout_marginTop="16dp"
+        android:background="@color/BlueViolet"
+        android:text="Book Room"
+        android:onClick="bookRoom" />
+
+
 
 </RelativeLayout>

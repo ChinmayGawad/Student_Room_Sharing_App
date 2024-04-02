@@ -7,6 +7,18 @@ import java.util.ArrayList;
 
 public class Room implements Parcelable {
 
+    public static final Creator<Room> CREATOR = new Creator<Room>() {
+        @Override
+        public Room createFromParcel(Parcel in) {
+            return new Room(in);
+        }
+
+        @Override
+        public Room[] newArray(int size) {
+            return new Room[size];
+        }
+    };
+
     private String id;
     private String roomName;
     private String location;
@@ -19,7 +31,6 @@ public class Room implements Parcelable {
     public Room() {
     }
 
-    // Constructor with parameters
     public Room(String id, String roomName, String location, String description, String price, ArrayList<String> imageUrls, int imageResourceId) {
         this.id = id;
         this.roomName = roomName;
@@ -36,19 +47,9 @@ public class Room implements Parcelable {
         location = in.readString();
         description = in.readString();
         price = in.readString();
+        imageUrls = new ArrayList<>(); // Initialize the ArrayList
         in.readStringList(imageUrls);
         imageResourceId = in.readInt();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(roomName);
-        dest.writeString(location);
-        dest.writeString(description);
-        dest.writeString(price);
-        dest.writeStringList(imageUrls);
-        dest.writeInt(imageResourceId);
     }
 
     @Override
@@ -56,18 +57,16 @@ public class Room implements Parcelable {
         return 0;
     }
 
-    // Parcelable CREATOR
-    public static final Creator<Room> CREATOR = new Creator<Room>() {
-        @Override
-        public Room createFromParcel(Parcel in) {
-            return new Room(in);
-        }
-
-        @Override
-        public Room[] newArray(int size) {
-            return new Room[size];
-        }
-    };
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeString(id);
+        out.writeString(roomName);
+        out.writeString(location);
+        out.writeString(description);
+        out.writeString(price);
+        out.writeStringList(imageUrls);
+        out.writeInt(imageResourceId);
+    }
 
     // Getters and setters
 

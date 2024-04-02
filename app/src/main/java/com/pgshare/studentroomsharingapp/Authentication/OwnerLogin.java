@@ -107,23 +107,29 @@ public class OwnerLogin extends AppCompatActivity {
                         ownerRef.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                Log.d("OwnerLogin", "onDataChange triggered");
                                 if (snapshot.exists()) {
                                     String userType = snapshot.child("userType").getValue(String.class);
-                                    Log.d("UserType", userType);
+                                    Log.d("OwnerLogin", "Retrieved user type: " + userType);
                                     if ("Owner".equals(userType)) {
+                                        Log.d("OwnerLogin", "User is an owner");
                                         // User is an owner, proceed to owner-specific functionality
                                         startActivity(new Intent(OwnerLogin.this, Add_Room.class));
                                         finish();
                                     } else {
+                                        Log.d("OwnerLogin", "User is not an owner");
                                         // User is not authorized as an owner
                                         Toast.makeText(OwnerLogin.this, "You are not authorized as an owner", Toast.LENGTH_SHORT).show();
                                     }
                                 } else {
+                                    Log.d("OwnerLogin", "Snapshot does not exist");
                                     // User data does not exist in the database
-                                    Toast.makeText(OwnerLogin.this, "Owner Does Not Exist", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(OwnerLogin.this, "Owner data does not exist", Toast.LENGTH_SHORT).show();
                                 }
                                 OwnerLoginprogressBar.setVisibility(ProgressBar.GONE);
                             }
+
+
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
