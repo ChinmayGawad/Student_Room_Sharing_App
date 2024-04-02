@@ -10,7 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import com.pgshare.studentroomsharingapp.ChatActivity;
 import com.pgshare.studentroomsharingapp.Adapter.ImageAdapter;
 import com.pgshare.studentroomsharingapp.Adapter.Room;
 
@@ -33,7 +33,7 @@ public class RoomDetailsActivity extends AppCompatActivity {
         Button chatWithRoomMate = findViewById(R.id.ChatWithRoomMate);
 
         // Set layout manager for RecyclerView
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
 
 
@@ -63,7 +63,9 @@ public class RoomDetailsActivity extends AppCompatActivity {
 
         chatWithRoomMate.setOnClickListener(v -> {
             Intent intent = new Intent(this, ChatActivity.class);
+            intent.putExtra("roomId", room.getId()); // Pass room ID instead of entire Room object
             startActivity(intent);
         });
+
     }
 }
