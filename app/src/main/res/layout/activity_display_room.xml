@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E6E1E1"
-    tools:context=".Display_Room">
+    tools:context=".Display_Room"
+    tools:ignore="VisualLintTextFieldSize">
 
 
     <SearchView
@@ -17,6 +18,7 @@
         android:iconifiedByDefault="false"
         android:queryHint="Search Rooms"
         android:searchHintIcon="@color/black"
+        style="@style/SearchHintColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
