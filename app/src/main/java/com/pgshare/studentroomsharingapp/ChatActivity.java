@@ -92,7 +92,7 @@ public class ChatActivity extends AppCompatActivity {
                 Message message = dataSnapshot.getValue(Message.class);
                 messages.add(message);
                 messageAdapt.notifyDataSetChanged();
-                Log.d("temp_debug", message.getMessage() + ":" + message.isSentByUser() + ":" + message.getUsername() + ":" + message.getEmail());
+                Log.d("temp_debug", "Msg Sent: " + message.getMessage() + ":" + message.isSentByUser() + ":" + message.getUsername() + ":" + message.getEmail());
             }
 
             @Override
