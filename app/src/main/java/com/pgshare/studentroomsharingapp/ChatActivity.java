@@ -1,7 +1,9 @@
 package com.pgshare.studentroomsharingapp;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,14 +14,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.pgshare.studentroomsharingapp.Adapter.Message;
 import com.pgshare.studentroomsharingapp.Adapter.MessageAdapt;
-import com.pgshare.studentroomsharingapp.Adapter.Room;
+import com.pgshare.studentroomsharingapp.Adapter.UserHelper;
 
 import java.util.ArrayList;
 
@@ -32,6 +37,8 @@ public class ChatActivity extends AppCompatActivity {
     private MessageAdapt messageAdapt;
     private DatabaseReference messagesRef;
 
+    private FirebaseAuth firebaseAuth;
+
     private String roomId; // Variable to store the room ID
 
     // Override onCreate method
@@ -39,6 +46,7 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.C_color)));
 
         // Initialize views
         messageEditText = findViewById(R.id.messageEditText);
@@ -84,6 +92,7 @@ public class ChatActivity extends AppCompatActivity {
                 Message message = dataSnapshot.getValue(Message.class);
                 messages.add(message);
                 messageAdapt.notifyDataSetChanged();
+                Log.d("temp_debug", message.getMessage() + ":" + message.isSentByUser() + ":" + message.getUsername() + ":" + message.getEmail());
             }
 
             @Override
@@ -102,10 +111,36 @@ public class ChatActivity extends AppCompatActivity {
 
     private void sendMessage() {
         String messageText = messageEditText.getText().toString().trim();
+
         if (!messageText.isEmpty()) {
-            Message message = new Message(messageText, true);
-            messagesRef.push().setValue(message); // Push message to the specific room's messages
-            messageEditText.setText("");
+            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference usersRef = database.getReference("Users").child(userId);
+
+//            UserHelper user =  database.getReference("Users").child(userId).getReference
+
+            usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    UserHelper user = snapshot.getValue(UserHelper.class);
+                    String displayName = user.getName();
+                    String email = user.getEmail();
+//                    String displayName = usersRef.child("name").get().toString();
+//                    String email = usersRef.child("email").get().toString();
+
+                    Message message = new Message(messageText, true, displayName, email);
+                    messagesRef.push().setValue(message); // Push message to the specific room's messages
+                    messageEditText.setText("");
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+
         } else {
             Toast.makeText(this, "Please enter a message", Toast.LENGTH_SHORT).show();
         }

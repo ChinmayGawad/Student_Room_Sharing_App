@@ -12,8 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.pgshare.studentroomsharingapp.Adapter.ImageAdapter;
 import com.pgshare.studentroomsharingapp.Adapter.Room;
 
@@ -40,7 +38,7 @@ public class RoomDetailsActivity extends AppCompatActivity {
         bookRoomButton = findViewById(R.id.bookRoomButton);
 
         // Set layout manager for RecyclerView
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
         // Get the Room object from the intent
         room = getIntent().getParcelableExtra("Rooms");
@@ -84,36 +82,8 @@ public class RoomDetailsActivity extends AppCompatActivity {
 
     // Method to handle booking of the room
     public void bookRoom(View view) {
-        // Toggle the booking status of the room
-        isRoomBooked = !isRoomBooked;
-
-        // Update UI to reflect the booking status
-        if (isRoomBooked) {
-            // If room is booked, disable the book button and display a message
-            bookRoomButton.setText("Room Booked");
-            bookRoomButton.setEnabled(false);
-        } else {
-            // If room is available, enable the book button
-            bookRoomButton.setText("Book Room");
-            bookRoomButton.setEnabled(true);
-        }
-
-        // Update the booked status in the Room object
-        room.setRoomBooked(isRoomBooked); // Assuming you have a Room object named 'room'
-
-        // You can also update the booked status in the database here
-        // For example, if using Firebase Realtime Database:
-        DatabaseReference roomRef = FirebaseDatabase.getInstance().getReference("Rooms").child(room.getId());
-        roomRef.child("booked").setValue(isRoomBooked);
-    }
-
-    // Method to make the room available again
-    public void makeRoomAvailableAgain() {
-        // Assuming you have the room ID available
-        String roomId = room.getId(); // Get the room ID from the Room object
-
-        // Update the booked status in the database to false
-        DatabaseReference roomRef = FirebaseDatabase.getInstance().getReference("Rooms").child(roomId);
-        roomRef.child("booked").setValue(false); // Update the 'booked' field to false
+       Intent intent = new Intent(RoomDetailsActivity.this,PaymentActivity.class);
+       startActivity(intent);
+       finish();
     }
 }
