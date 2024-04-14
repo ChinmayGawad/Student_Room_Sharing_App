@@ -1,19 +1,25 @@
 package com.pgshare.studentroomsharingapp.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.pgshare.studentroomsharingapp.R;
+
 import java.util.ArrayList;
 
 public class MessageAdapt extends ArrayAdapter<Message> {
@@ -43,16 +49,20 @@ public class MessageAdapt extends ArrayAdapter<Message> {
                 }
 
                 @Override
-                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
+                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                }
 
                 @Override
-                public void onChildRemoved(@NonNull DataSnapshot snapshot) {}
+                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                }
 
                 @Override
-                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
+                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                }
 
                 @Override
-                public void onCancelled(@NonNull DatabaseError error) {}
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
 
                 // Other event listener methods (onChildChanged, onChildRemoved, etc.)
             });
@@ -63,35 +73,48 @@ public class MessageAdapt extends ArrayAdapter<Message> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View listItem = convertView;
+        Message message = mMessages.get(position);
+
         if (listItem == null) {
             LayoutInflater inflater = LayoutInflater.from(mContext);
-            if (getItemViewType(position) == 0) {
+            if (getItemViewType(message.getEmail()) == 0) {
                 listItem = inflater.inflate(R.layout.item_message_sent, parent, false);
             } else {
                 listItem = inflater.inflate(R.layout.item_message_received, parent, false);
+                TextView textViewUserInitial = listItem.findViewById(R.id.textViewUserInitial);
+                TextView textViewUserName = listItem.findViewById(R.id.textViewUserName);
+                String userInitial = String.valueOf(message.getUsername().toString().toUpperCase().charAt(0));
+
+                textViewUserInitial.setText(userInitial);
+                textViewUserName.setText(message.getUsername());
             }
         }
 
-        Message message = mMessages.get(position);
 
         TextView messageTextView = listItem.findViewById(R.id.messageTextView);
+
+
         messageTextView.setText(message.getMessage());
 
+
         // Handle timestampTextView
-        TextView timestampTextView = listItem.findViewById(R.id.timestampTextView);
-        if (message.getTimestamp() != null) {
-            timestampTextView.setVisibility(View.VISIBLE);
-            timestampTextView.setText(message.getTimestamp());
-        } else {
-            timestampTextView.setVisibility(View.GONE);
-        }
+//        TextView timestampTextView = listItem.findViewById(R.id.timestampTextView);
+//        if (message.getTimestamp() != null) {
+//            timestampTextView.setVisibility(View.VISIBLE);
+//            timestampTextView.setText(message.getTimestamp());
+//        } else {
+//            timestampTextView.setVisibility(View.GONE);
+//        }
 
         return listItem;
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        return mMessages.get(position).isSentByUser() ? 0 : 1;
+
+    public int getItemViewType(String email) {
+//        return mMessages.get(position).isSentByUser() ? 0 : 1;
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//        Log.d("temp_debug", user.getEmail() + "::" + email + "::" + (user.getEmail().toString().equals(email.toString())));
+        return user.getEmail().toString().equals(email.toString()) ? 0 : 1;
     }
 
     @Override
