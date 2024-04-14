@@ -3,15 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    android:paddingRight="80dp"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingRight="80dp">
 
     <LinearLayout
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:background="@drawable/circle_background"
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="5dp"
+        android:background="@drawable/circle_background"
         android:gravity="center">
 
         <!-- TextView to show the first letter of the username -->
@@ -37,30 +37,22 @@
             android:id="@+id/textViewUserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:text="username"
             android:layout_marginLeft="8dp"
+            android:text="username"
+            android:textColor="@color/black"
             android:textSize="14sp" />
 
         <TextView
             android:id="@+id/messageTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_message_received"
-            android:padding="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="4dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
+            android:background="@drawable/bg_message_received"
+            android:padding="8dp"
             android:textColor="@android:color/black" />
 
-<!--    <TextView-->
-<!--        android:id="@+id/timestampTextView"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="4dp"-->
-<!--        android:text="Timestamp"-->
-<!--        android:textColor="@android:color/darker_gray"-->
-<!--        android:textSize="12sp" />-->
-</LinearLayout>
+    </LinearLayout>
 </LinearLayout>
