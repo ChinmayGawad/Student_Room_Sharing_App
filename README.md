@@ -28,7 +28,7 @@ A smoother way to discover your next space. 🏡✨
 
 ⚙️ Setup
 
-git clone https://github.com/ChinmayGawad/Student_Room_Sharing_App.git
+git clone https://github.com/ChinmayGawad/Student_Room_Sharing_App.git <br>
 cd Student_Room_Sharing_App
 ./gradlew build
 
