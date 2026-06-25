@@ -1,15 +1,47 @@
+# Built artifacts
+bin/
+gen/
+out/
+build/
+
+# Gradle
+.gradle/
+gradle-app.setting
+!gradle-wrapper.jar
+.navigation/
+
+# IntelliJ IDEA
+.idea/
 *.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+*.iws
+*.ipr
+
+# Android Studio
+captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+*.aar
+*.ap_
+*.dex
+
+# Local configuration file (sdk path, etc)
 local.properties
+
+# Log files
+*.log
+
+# Keystore files
+# Uncomment the line below if you want to avoid checking in your keystore
+# *.jks
+# *.keystore
+
+# Google Services file (if you want to keep it private)
+google-services.json
+
+# Device specific files
+.DS_Store
+Thumbs.db
+
+# Misc
+.shelf/
