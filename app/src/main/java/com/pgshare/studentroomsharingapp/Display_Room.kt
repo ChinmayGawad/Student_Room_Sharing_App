@@ -118,13 +118,13 @@ class Display_Room : AppCompatActivity(), SearchView.OnQueryTextListener {
     private fun filterList(searchText: String) {
         val filteredList: MutableList<Room?> = ArrayList<Room?>()
         for (room in roomData) {
-            if (room.getDescription().lowercase(Locale.getDefault()).contains(
+            if (room.description.lowercase(Locale.getDefault()).contains(
                     searchText.lowercase(
                         Locale.getDefault()
                     )
                 ) ||
-                room.getLocation().lowercase(Locale.getDefault())
-                    .contains(searchText.lowercase(Locale.getDefault())) || room.getRoomName()
+                room.location.lowercase(Locale.getDefault())
+                    .contains(searchText.lowercase(Locale.getDefault())) || room.roomName
                     .lowercase(
                         Locale.getDefault()
                     ).contains(searchText.lowercase(Locale.getDefault()))

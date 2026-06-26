@@ -61,10 +61,10 @@ class Profile_Page : AppCompatActivity() {
                 Log.d("Profile_Page", "UserHelper object: " + user)
                 if (user != null) {
                     // Extract user's data
-                    val profileName = user.getName()
-                    val profileEmail = user.getEmail()
-                    val profilePhoneNo = user.getPhone() // Corrected getter method name
-                    val profileGender = user.getGender()
+                    val profileName = user.name
+                    val profileEmail = user.email
+                    val profilePhoneNo = user.phone // Corrected getter method name
+                    val profileGender = user.gender
 
                     Log.d("Profile_Page", "Profile Phone Number: " + profilePhoneNo)
 
@@ -88,9 +88,9 @@ class Profile_Page : AppCompatActivity() {
                 val owner = snapshot.getValue<Owner?>(Owner::class.java)
                 if (owner != null) {
                     // Extract owner's data
-                    val ownerName = owner.getOwnerName()
-                    val ownerPhone = owner.getOwnerPhone()
-                    val ownerGender = owner.getGender()
+                    val ownerName = owner.ownerName
+                    val ownerPhone = owner.ownerPhone
+                    val ownerGender = owner.gender
 
                     // Display owner's data
                     ProfileUserName!!.setText(ownerName)

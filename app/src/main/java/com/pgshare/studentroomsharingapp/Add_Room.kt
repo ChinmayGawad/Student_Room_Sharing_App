@@ -111,8 +111,7 @@ class Add_Room : AppCompatActivity() {
                 }
             }
 
-            override fun onCancelled(databaseError: DatabaseError?) {
-                // Handle error
+            override fun onCancelled(p0: DatabaseError) {
                 Toast.makeText(this@Add_Room, "Database error", Toast.LENGTH_SHORT).show()
             }
         })
@@ -206,10 +205,10 @@ class Add_Room : AppCompatActivity() {
                 fileReference.getDownloadUrl().addOnSuccessListener(OnSuccessListener { uri: Uri? ->
                     val imageUrl = uri.toString()
                     // Update the Room object with the image URL
-                    if (room.getImageUrls() == null) {
+                    if (room.imageUrls == null) {
                         room.setImageUrls(ArrayList<String?>())
                     }
-                    room.getImageUrls().add(imageUrl)
+                    room.imageUrls.add(imageUrl)
 
                     // Save the updated Room object to the database
                     databaseReference!!.child(roomId).setValue(room)

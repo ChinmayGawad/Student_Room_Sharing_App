@@ -27,7 +27,7 @@ class ForgetPassword : AppCompatActivity() {
         val resetButton = findViewById<Button>(R.id.buttonReset)
         firebaseAuth = FirebaseAuth.getInstance()
 
-        resetButton.setOnClickListener(View.OnClickListener { v: View? ->
+        resetButton.setOnClickListener { v: View? ->
             val email = emailEditText!!.getText().toString().trim { it <= ' ' }
             if (TextUtils.isEmpty(email)) {
                 emailEditText!!.setError("Email is required")
@@ -48,6 +48,7 @@ class ForgetPassword : AppCompatActivity() {
                             "Password reset email sent",
                             Toast.LENGTH_SHORT
                         ).show()
+                        finish()
                     } else {
                         Toast.makeText(
                             this@ForgetPassword,
@@ -56,6 +57,6 @@ class ForgetPassword : AppCompatActivity() {
                         ).show()
                     }
                 })
-        })
+        }
     }
 }

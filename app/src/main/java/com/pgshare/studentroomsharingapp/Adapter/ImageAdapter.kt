@@ -36,7 +36,7 @@ class ImageAdapter : RecyclerView.Adapter<ImageViewHolder?>() {
         return if (imageUrls != null) imageUrls!!.size else 0
     }
 
-    internal class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var imageView: ImageView
 
         init {

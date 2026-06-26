@@ -1,10 +1,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/profile"
-        android:title="Profile" />
+        android:title="Profile"
+        android:icon="@drawable/baseline_person_24"/>
     <item android:id="@+id/contact"
-        android:title="Contact Us" />
+        android:title="Contact Us"
+        android:icon="@drawable/baseline_contact_support_24"
+        />
     <item android:id="@+id/menu_About"
         android:title="About" />
     <item android:id="@+id/menu_logout"
-        android:title="Log out" />
+        android:title="Log out"
+        android:icon="@drawable/baseline_logout_24"/>
 </menu>

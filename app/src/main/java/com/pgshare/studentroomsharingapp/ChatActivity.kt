@@ -112,8 +112,8 @@ class ChatActivity : AppCompatActivity() {
             usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val user = snapshot.getValue<UserHelper?>(UserHelper::class.java)
-                    val displayName = user!!.getName()
-                    val email = user.getEmail()
+                    val displayName = user!!.name
+                    val email = user.email
 
                     //                    String displayName = usersRef.child("name").get().toString();
 //                    String email = usersRef.child("email").get().toString();

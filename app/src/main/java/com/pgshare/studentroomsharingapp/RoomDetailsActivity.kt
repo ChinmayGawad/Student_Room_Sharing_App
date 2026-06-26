@@ -47,13 +47,13 @@ class RoomDetailsActivity : AppCompatActivity() {
         // Check if room object is not null
         if (room != null) {
             // Set room details
-            roomNameTextView.setText(room!!.getRoomName())
-            locationTextView.setText(room!!.getLocation())
-            descriptionTextView.setText(room!!.getDescription())
+            roomNameTextView.setText(room!!.roomName)
+            locationTextView.setText(room!!.location)
+            descriptionTextView.setText(room!!.description)
             priceTextView.setText(room!!.getFormatPrice())
 
             // Load images into RecyclerView
-            val imageUrls: MutableList<String?>? = room!!.getImageUrls()
+            val imageUrls: MutableList<String?>? = room!!.imageUrls
             if (imageUrls != null && !imageUrls.isEmpty()) {
                 val imageAdapter = ImageAdapter()
                 recyclerView.setAdapter(imageAdapter)
@@ -62,7 +62,7 @@ class RoomDetailsActivity : AppCompatActivity() {
 
             // Retrieve booking status of the room from the database
             // Check if the room is booked
-            isRoomBooked = room!!.isRoomBooked() // Example: Retrieve booked status from Room object
+            isRoomBooked = room!!.isRoomBooked // Example: Retrieve booked status from Room object
             if (isRoomBooked) {
                 // If room is booked, disable the book button and display a message
                 bookRoomButton!!.setText("Room Booked")
@@ -76,7 +76,7 @@ class RoomDetailsActivity : AppCompatActivity() {
         // Set onClickListener for chat button
         chatWithRoomMate.setOnClickListener(View.OnClickListener { v: View? ->
             val intent = Intent(this, ChatActivity::class.java)
-            intent.putExtra("roomId", room!!.getId())
+            intent.putExtra("roomId", room!!.id)
             startActivity(intent)
         })
     }
