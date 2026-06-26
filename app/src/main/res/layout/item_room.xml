@@ -1,87 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:padding="@dimen/card_padding">
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="12dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/md_theme_light_outline"
+    app:strokeWidth="1dp"
+    android:clickable="true"
+    android:focusable="true">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp">
 
+        <!-- Room Image (Hero) -->
+        <ImageView
+            android:id="@+id/img_room_hero"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/imageplaceholder"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
+        <!-- Favorite / Save Button -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_save_room"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            app:fabSize="mini"
+            app:tint="@color/md_theme_light_onSurfaceVariant"
+            app:backgroundTint="@color/white"
+            app:elevation="4dp"
+            android:src="@drawable/baseline_favorite_border_24"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
+        <!-- Room Price -->
+        <TextView
+            android:id="@+id/tv_room_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="₹8,500 / month"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/md_theme_light_onBackground"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintTop_toBottomOf="@id/img_room_hero"
+            app:layout_constraintStart_toStartOf="parent" />
 
-       <androidx.cardview.widget.CardView
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="190dp"
-           android:layout_marginLeft="20dp"
-           android:layout_marginRight="20dp"
-           app:cardBackgroundColor="#B4D3ED"
-           app:cardCornerRadius="15dp">
+        <!-- Verified Owner Badge -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintTop_toTopOf="@id/tv_room_price"
+            app:layout_constraintBottom_toBottomOf="@id/tv_room_price"
+            app:layout_constraintEnd_toEndOf="parent">
 
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/baseline_check_circle_24"
+                app:tint="@color/md_theme_light_primary"/>
 
-           <AbsoluteLayout
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Verified Owner"
+                android:textSize="12sp"
+                android:textColor="@color/md_theme_light_primary"
+                android:layout_marginStart="4dp"
+                android:textStyle="bold"/>
+        </LinearLayout>
 
-           <ImageView
-               android:id="@+id/room_image"
-               android:layout_width="200dp"
-               android:layout_height="150dp"
-               android:layout_y="1dp"
-               android:layout_x="1dp"
-               android:scaleType="fitXY"
-               android:padding="8dp"
-               android:background="@drawable/image_corner"
-               android:backgroundTint="#B4D3ED"
+        <!-- Room Title / Type -->
+        <TextView
+            android:id="@+id/tv_room_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Private Room in 3BHK"
+            android:textSize="16sp"
+            android:textColor="@color/md_theme_light_onSurface"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_room_price"
+            app:layout_constraintStart_toStartOf="@id/tv_room_price"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-               android:contentDescription="Images of rooms" />
+        <!-- Room Location -->
+        <TextView
+            android:id="@+id/tv_room_location"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Kothrud, Pune • 1.2 km from campus"
+            android:textSize="14sp"
+            android:textColor="@color/md_theme_light_onSurfaceVariant"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_room_title"
+            app:layout_constraintStart_toStartOf="@id/tv_room_title"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-           <TextView
-               android:id="@+id/room_title"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_x="220dp"
-               android:layout_y="20dp"
-               android:textSize="20sp"
-               android:textColor="@color/black"
-               android:layout_marginTop="@dimen/item_margin"
-
-               android:textStyle="bold" />
-
-           <TextView
-               android:id="@+id/roomAddress"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:textColor="@color/black"
-               android:layout_x="220dp"
-               android:layout_y="50dp"
-               android:textSize="20sp"
-               android:maxLines="2" />
-
-           <TextView
-               android:id="@+id/room_rent"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:textColor="@color/black"
-               android:layout_x="220dp"
-               android:textSize="20sp"
-               android:layout_y="80dp"/>
-
-           <TextView
-               android:id="@+id/room_description"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:textColor="@color/black"
-               android:layout_x="220dp"
-               android:layout_y="110dp"
-               android:textSize="20sp"
-               android:maxLines="2" />
-
-           </AbsoluteLayout>
-
-       </androidx.cardview.widget.CardView>
-
-
-
-</AbsoluteLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

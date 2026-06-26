@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.pgshare.studentroomsharingapp.R
+import com.pgshare.studentroomsharingapp.databinding.ActivitySignUpBinding
 import java.util.Objects
 
 class SignUp : AppCompatActivity() {
@@ -33,61 +34,53 @@ class SignUp : AppCompatActivity() {
     private var database: FirebaseDatabase? = null
     private var auth: FirebaseAuth? = null
 
+    lateinit var binding : ActivitySignUpBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_up)
-        getSupportActionBar()!!.setBackgroundDrawable(ColorDrawable(getResources().getColor(R.color.C_color)))
+        supportActionBar?.hide()
+        binding = ActivitySignUpBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
 
         // Initialize Firebase
         database = FirebaseDatabase.getInstance()
         auth = FirebaseAuth.getInstance()
 
 
-        // Find views
-        emailLayout = findViewById<TextInputLayout>(R.id.EmailLayout)
-        passwordLayout = findViewById<TextInputLayout>(R.id.PasswordLayout)
-        confirmPasswordLayout = findViewById<TextInputLayout>(R.id.ConfirmPasswordLayout)
-
-        editTextEmail = findViewById<EditText>(R.id.editTextEmail)
-        passwordEditText = findViewById<EditText>(R.id.passwordEditText)
-        editTextConfirmPassword = findViewById<EditText>(R.id.editTextConfirmPassword)
-
-        buttonNext = findViewById<Button>(R.id.buttonNext)
-        progressBar = findViewById<ProgressBar>(R.id.SignUpProgressBar)
-
         // Button click listener
-        buttonNext!!.setOnClickListener(View.OnClickListener { v: View? -> onRegisterBtnClick() })
+        binding.btnRegister.setOnClickListener { v: View? -> onRegisterBtnClick() }
     }
 
     private fun onRegisterBtnClick() {
-        val email = editTextEmail!!.getText().toString().trim { it <= ' ' }
-        val password = passwordEditText!!.getText().toString().trim { it <= ' ' }
-        val confirmPassword = editTextConfirmPassword!!.getText().toString().trim { it <= ' ' }
+        val email = binding.etEmailSignup.text.toString().trim()
+        val password = binding.etPasswordSignup.text.toString().trim()
+        val confirmPassword = binding.etConfirmPasswordSignup.text.toString().trim()
 
         // Input validation
         if (isValidInput(email, password, confirmPassword)) {
             // Show progress bar
-            progressBar!!.setVisibility(View.VISIBLE)
+            progressBar?.visibility = View.VISIBLE
 
-            auth!!.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, OnCompleteListener { task: Task<AuthResult?>? ->
-                    if (task!!.isSuccessful()) {
+            auth?.createUserWithEmailAndPassword(email, password)
+                ?.addOnCompleteListener(this, OnCompleteListener { task: Task<AuthResult?>? ->
+                    if (task!!.isSuccessful) {
                         // User registration success
-                        val userId = auth!!.getCurrentUser()!!.getUid()
+                        val userId = auth?.currentUser?.uid
 
 
                         // Now, add user data to the Realtime Database
-                        userRef = database!!.getReference("Users").child(userId)
+                        userRef = database?.getReference("Users")?.child(userId.toString())
 
                         // Replace "users" with the desired node name
-                        userRef!!.child("email").setValue(email)
+                        userRef?.child("email")?.setValue(email)
 
 
                         // You can add more data if needed, such as name, etc.
                         // database.getReference("users").child(userId).child("name").setValue(userName);
 
                         // Hide progress bar
-                        progressBar!!.setVisibility(View.GONE)
+                        progressBar?.visibility = View.GONE
                         // Navigate to the next screen
                         val intent = Intent(this@SignUp, RegisterUserDetails::class.java)
                         intent.putExtra("email", email)
@@ -97,39 +90,39 @@ class SignUp : AppCompatActivity() {
                         // User registration failed
                         // Handle the failure, display an error message, etc.
                         // You can check task.getException().getMessage() for the error message.
-                        Objects.requireNonNull<Exception?>(task.getException()).message
+                        Objects.requireNonNull<Exception?>(task.exception).message
                         // Hide progress bar
-                        progressBar!!.setVisibility(View.GONE)
+                        progressBar?.visibility = View.GONE
                     }
                 })
         }
     }
 
-    private fun isValidInput(email: String?, password: String, confirmPassword: String?): Boolean {
+    private fun isValidInput(email: String, password: String, confirmPassword: String): Boolean {
         var valid = true
 
         // Check if email is valid
         if (TextUtils.isEmpty(email) || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            emailLayout!!.setError("Invalid email address")
+            binding.etEmailSignup.error = "Invalid email address"
             valid = false
         } else {
-            emailLayout!!.setError(null)
+            binding.etEmailSignup.error = null
         }
 
         // Check if password is empty or meets minimum length
         if (TextUtils.isEmpty(password) || password.length < 6) {
-            passwordLayout!!.setError("Password must be at least 6 characters")
+            binding.etPasswordSignup.error = "Password must be at least 6 characters"
             valid = false
         } else {
-            passwordLayout!!.setError(null)
+            binding.etPasswordSignup.error = null
         }
 
         // Check if passwords match
         if (password != confirmPassword) {
-            confirmPasswordLayout!!.setError("Passwords do not match")
+            binding.etConfirmPasswordSignup.error = "Passwords do not match"
             valid = false
         } else {
-            confirmPasswordLayout!!.setError(null)
+            binding.etConfirmPasswordSignup.error = null
         }
 
         return valid

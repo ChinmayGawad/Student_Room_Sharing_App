@@ -29,8 +29,9 @@ class RegisterUserDetails : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
         setContentView(R.layout.activity_register_user_details)
-        getSupportActionBar()!!.setBackgroundDrawable(ColorDrawable(getResources().getColor(R.color.C_color)))
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.C_color)))
 
         // Initialize Firebase
         database = FirebaseDatabase.getInstance()
@@ -49,17 +50,17 @@ class RegisterUserDetails : AppCompatActivity() {
     }
 
     private fun onRegisterBtnClick() {
-        val name = editTextName!!.getText().toString().trim { it <= ' ' }
-        val phone = editTextPhone!!.getText().toString().trim { it <= ' ' }
+        val name = editTextName!!.text.toString().trim { it <= ' ' }
+        val phone = editTextPhone!!.text.toString().trim { it <= ' ' }
         val gender = this.selectedGender
 
         // Input validation
         if (isValidInput(name, phone, gender)) {
             // Show progress bar
-            progressBar!!.setVisibility(View.VISIBLE)
+            progressBar!!.visibility = View.VISIBLE
 
             // Obtain the current user's UID
-            val userId = FirebaseAuth.getInstance().getCurrentUser()!!.getUid()
+            val userId = FirebaseAuth.getInstance().currentUser!!.uid
 
             // Create a new user node in the database
             val usersRef = database!!.getReference("Users").child(userId)
@@ -72,7 +73,7 @@ class RegisterUserDetails : AppCompatActivity() {
             // Add more details as needed
 
             // Hide progress bar
-            progressBar!!.setVisibility(View.GONE)
+            progressBar!!.visibility = View.GONE
             Toast.makeText(this@RegisterUserDetails, "Registration successful!", Toast.LENGTH_SHORT)
                 .show()
 
@@ -85,7 +86,7 @@ class RegisterUserDetails : AppCompatActivity() {
 
     private val selectedGender: String
         get() {
-            val selectedId = radioGroupGender!!.getCheckedRadioButtonId()
+            val selectedId = radioGroupGender!!.checkedRadioButtonId
             if (selectedId == R.id.radioButtonMale) {
                 return "Male"
             } else if (selectedId == R.id.radioButtonFemale) {

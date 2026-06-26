@@ -28,7 +28,7 @@ class Profile_Page : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile_page)
-        getSupportActionBar()!!.setBackgroundDrawable(ColorDrawable(getResources().getColor(R.color.C_color)))
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.C_color)))
 
         ProfileUserName = findViewById<TextView>(R.id.ProfileUserName)
         ProfileEmailId = findViewById<TextView>(R.id.ProfileEmailId)
@@ -37,19 +37,19 @@ class Profile_Page : AppCompatActivity() {
         Profile_ProgressBar = findViewById<ProgressBar>(R.id.ProfileProgressBar)
 
         val authProfile = FirebaseAuth.getInstance()
-        val firebaseUser = authProfile.getCurrentUser()
+        val firebaseUser = authProfile.currentUser
 
         if (firebaseUser == null) {
             Toast.makeText(this, "Something went wrong! User not found", Toast.LENGTH_SHORT).show()
         } else {
-            Profile_ProgressBar!!.setVisibility(View.VISIBLE)
+            Profile_ProgressBar!!.visibility = View.VISIBLE
             // Display user's data
             showProfile(firebaseUser)
         }
     }
 
     private fun showProfile(firebaseUser: FirebaseUser) {
-        val uid = firebaseUser.getUid()
+        val uid = firebaseUser.uid
         val referenceProfile =
             FirebaseDatabase.getInstance().getReference().child("Users").child(uid)
         val referenceOwner =
@@ -69,17 +69,17 @@ class Profile_Page : AppCompatActivity() {
                     Log.d("Profile_Page", "Profile Phone Number: " + profilePhoneNo)
 
                     // Display user's data
-                    ProfileUserName!!.setText(profileName)
-                    ProfileEmailId!!.setText(profileEmail)
-                    ProfilePhoneNo!!.setText(profilePhoneNo)
-                    ProfileGender!!.setText(profileGender)
-                    Profile_ProgressBar!!.setVisibility(View.GONE)
+                    ProfileUserName!!.text = profileName
+                    ProfileEmailId!!.text = profileEmail
+                    ProfilePhoneNo!!.text = profilePhoneNo
+                    ProfileGender!!.text = profileGender
+                    Profile_ProgressBar!!.visibility = View.GONE
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(this@Profile_Page, "Something went wrong", Toast.LENGTH_SHORT).show()
-                Profile_ProgressBar!!.setVisibility(View.GONE)
+                Profile_ProgressBar!!.visibility = View.GONE
             }
         })
 
@@ -93,17 +93,17 @@ class Profile_Page : AppCompatActivity() {
                     val ownerGender = owner.gender
 
                     // Display owner's data
-                    ProfileUserName!!.setText(ownerName)
-                    ProfileEmailId!!.setText("Owner Email") // You can decide if you want to display owner's email
-                    ProfilePhoneNo!!.setText(ownerPhone)
-                    ProfileGender!!.setText(ownerGender)
-                    Profile_ProgressBar!!.setVisibility(View.GONE)
+                    ProfileUserName!!.text = ownerName
+                    ProfileEmailId!!.text = "Owner Email" // You can decide if you want to display owner's email
+                    ProfilePhoneNo!!.text = ownerPhone
+                    ProfileGender!!.text = ownerGender
+                    Profile_ProgressBar!!.visibility = View.GONE
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(this@Profile_Page, "Something went wrong", Toast.LENGTH_SHORT).show()
-                Profile_ProgressBar!!.setVisibility(View.GONE)
+                Profile_ProgressBar!!.visibility = View.GONE
             }
         })
     }

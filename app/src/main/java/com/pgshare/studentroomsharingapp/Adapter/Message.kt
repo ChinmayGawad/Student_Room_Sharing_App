@@ -23,7 +23,7 @@ class Message {
         this.message = message
         this.isSentByUser = sentByUser
         // Set timestamp when the message is created
-        this.timestamp = timestamp // Example timestamp, you can use your own logic to set the timestamp
+        // Example timestamp, you can use your own logic to set the timestamp
         this.email = email
         this.username = username
     }

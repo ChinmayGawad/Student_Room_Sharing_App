@@ -1,90 +1,84 @@
 package com.pgshare.studentroomsharingapp
 
 import android.content.Intent
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.pgshare.studentroomsharingapp.Adapter.ImageAdapter
+import com.google.android.material.tabs.TabLayoutMediator
+import com.pgshare.studentroomsharingapp.Adapter.ImagePagerAdapter // Make sure this imports your ViewPager2 adapter
 import com.pgshare.studentroomsharingapp.Adapter.Room
+import com.pgshare.studentroomsharingapp.databinding.ActivityRoomDetailsBinding
 
 class RoomDetailsActivity : AppCompatActivity() {
-    protected var room: Room? = null
-    private var bookRoomButton: Button? = null
+
+    private var room: Room? = null
     private var isRoomBooked = false
+    private lateinit var binding: ActivityRoomDetailsBinding
+    private lateinit var imageAdapter: ImagePagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_room_details)
-        getSupportActionBar()!!.setBackgroundDrawable(ColorDrawable(getResources().getColor(R.color.C_color)))
 
-        // Initialize views
-        val roomNameTextView = findViewById<TextView>(R.id.roomNameTextView)
-        val locationTextView = findViewById<TextView>(R.id.locationTextView)
-        val descriptionTextView = findViewById<TextView>(R.id.descriptionTextView)
-        val priceTextView = findViewById<TextView>(R.id.priceTextView)
-        val recyclerView = findViewById<RecyclerView>(R.id.imageRecyclerView)
-        val chatWithRoomMate = findViewById<Button>(R.id.ChatWithRoomMate)
-        bookRoomButton = findViewById<Button>(R.id.bookRoomButton)
+        // Hide default action bar since we are using our custom CollapsingToolbar
+        supportActionBar?.hide()
 
-        // Set layout manager for RecyclerView
-        recyclerView.setLayoutManager(
-            LinearLayoutManager(
-                this,
-                LinearLayoutManager.VERTICAL,
-                false
-            )
-        )
+        binding = ActivityRoomDetailsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         // Get the Room object from the intent
-        room = getIntent().getParcelableExtra<Room?>("Rooms")
+        room = intent.getParcelableExtra("Rooms")
 
-        // Check if room object is not null
         if (room != null) {
-            // Set room details
-            roomNameTextView.setText(room!!.roomName)
-            locationTextView.setText(room!!.location)
-            descriptionTextView.setText(room!!.description)
-            priceTextView.setText(room!!.getFormatPrice())
+            // 1. Populate Text Data
+            binding.tvDetailTitle.text = room!!.roomName
+            binding.tvDescriptionBody.text = room!!.description
 
-            // Load images into RecyclerView
-            val imageUrls: MutableList<String?>? = room!!.imageUrls
-            if (imageUrls != null && !imageUrls.isEmpty()) {
-                val imageAdapter = ImageAdapter()
-                recyclerView.setAdapter(imageAdapter)
-                imageAdapter.setImageUrls(imageUrls)
+            // Set price in both the description breakdown AND the bottom floating sheet
+            binding.tvRentAmount.text = room!!.formatPrice
+            binding.tvCtaPrice.text = room!!.formatPrice
+
+            // Note: If you have a deposit field in your Room model, you can set it here:
+//             binding.tvDepositAmount.text = room!!.depositAmount
+
+            // 2. Setup ViewPager2 and TabLayout for Swipeable Images
+            val imageUrls: List<String> = room?.imageUrls?.filterNotNull() ?: emptyList()
+            if (imageUrls.isNotEmpty()) {
+                // Initialize the adapter with the URLs
+                imageAdapter = ImagePagerAdapter(imageUrls)
+                binding.viewpagerRoomImages.adapter = imageAdapter
+
+                // Attach the dots to the swiping action
+                TabLayoutMediator(binding.tabLayoutImageIndicator, binding.viewpagerRoomImages) { _, _ ->
+                    // Empty lambda because our dots don't have text labels
+                }.attach()
             }
 
-            // Retrieve booking status of the room from the database
-            // Check if the room is booked
-            isRoomBooked = room!!.isRoomBooked // Example: Retrieve booked status from Room object
+            // 3. Handle Booking Status
+            isRoomBooked = room!!.isRoomBooked
             if (isRoomBooked) {
-                // If room is booked, disable the book button and display a message
-                bookRoomButton!!.setText("Room Booked")
-                bookRoomButton!!.setEnabled(false)
+                // Update our new MaterialButton CTA instead of the old 'bookRoomButton'
+                binding.btnChatOwner.text = "Room Booked"
+                binding.btnChatOwner.isEnabled = false
             }
+
+            // 4. Setup Click Listeners
+            binding.btnChatOwner.setOnClickListener {
+                if (!isRoomBooked) {
+                    val intent = Intent(this, ChatActivity::class.java)
+                    intent.putExtra("roomId", room!!.id)
+                    startActivity(intent)
+                }
+            }
+
+            // Setup back button behavior on the CollapsingToolbar
+            binding.toolbar.setNavigationOnClickListener {
+                onBackPressedDispatcher.onBackPressed()
+            }
+
         } else {
-            // Handle case where room object is null
+            // Handle case where room object is null gracefully
             Toast.makeText(this, "Failed to load room details", Toast.LENGTH_SHORT).show()
+            finish() // Close the activity so the user isn't stuck on a blank screen
         }
-
-        // Set onClickListener for chat button
-        chatWithRoomMate.setOnClickListener(View.OnClickListener { v: View? ->
-            val intent = Intent(this, ChatActivity::class.java)
-            intent.putExtra("roomId", room!!.id)
-            startActivity(intent)
-        })
-    }
-
-    // Method to handle booking of the room
-    fun bookRoom(view: View?) {
-        val intent = Intent(this@RoomDetailsActivity, PaymentActivity::class.java)
-        startActivity(intent)
-        finish()
     }
 }

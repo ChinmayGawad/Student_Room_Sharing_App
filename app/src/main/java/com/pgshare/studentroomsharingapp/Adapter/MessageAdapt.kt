@@ -18,7 +18,7 @@ import java.util.Locale
 class MessageAdapt(private val mContext: Context, private val mMessages: ArrayList<Message>) :
     ArrayAdapter<Message?>(
         mContext, 0,
-        mMessages
+        mMessages as MutableList<Message?>
     ) {
     private var mDatabaseReference: DatabaseReference? = null
     private var currentRoom: String? = null // To store the currently selected room
@@ -62,20 +62,20 @@ class MessageAdapt(private val mContext: Context, private val mMessages: ArrayLi
             } else {
                 listItem = inflater.inflate(R.layout.item_message_received, parent, false)
                 val textViewUserInitial = listItem.findViewById<TextView>(R.id.textViewUserInitial)
-                val textViewUserName = listItem.findViewById<TextView>(R.id.textViewUserName)
+                val textViewUserName = listItem!!.findViewById<TextView>(R.id.textViewUserName)
                 val userInitial =
                     message.username!!.uppercase(Locale.getDefault()).get(0).toString()
 
-                textViewUserInitial.setText(userInitial)
-                textViewUserName.setText(message.username)
+                textViewUserInitial!!.text = userInitial
+                textViewUserName!!.text = message.username
             }
         }
 
 
-        val messageTextView = listItem.findViewById<TextView>(R.id.messageTextView)
+        val messageTextView = listItem!!.findViewById<TextView>(R.id.messageTextView)
 
 
-        messageTextView.setText(message.message)
+        messageTextView!!.text = message.message
 
 
         // Handle timestampTextView
@@ -92,9 +92,9 @@ class MessageAdapt(private val mContext: Context, private val mMessages: ArrayLi
 
     fun getItemViewType(email: String?): Int {
 //        return mMessages.get(position).isSentByUser() ? 0 : 1;
-        val user = FirebaseAuth.getInstance().getCurrentUser()
+        val user = FirebaseAuth.getInstance().currentUser
         //        Log.d("temp_debug", user.getEmail() + "::" + email + "::" + (user.getEmail().toString().equals(email.toString())));
-        return if (user!!.getEmail() == email) 0 else 1
+        return if (user!!.email == email) 0 else 1
     }
 
     override fun getViewTypeCount(): Int {

@@ -18,8 +18,8 @@ class RoomListAdapter(
     private val context: Context,
     private val listener: OnItemClickListener?
 ) : RecyclerView.Adapter<RoomViewHolder?>() {
-    fun setFilteredList(filteredList: MutableList<Room>) {
-        this.roomData = filteredList
+    fun setFilteredList(filteredList: MutableList<Room?>) {
+        this.roomData = filteredList as MutableList<Room>
         notifyDataSetChanged()
     }
 
@@ -36,9 +36,9 @@ class RoomListAdapter(
         val room = roomData.get(position)
 
         // Bind common fields
-        holder.roomTitle.setText(room.roomName)
-        holder.roomRent.setText(room.formatPrice)
-        holder.roomLocation.setText(room.location)
+        holder.roomTitle.text = room.roomName
+        holder.roomRent.text = room.formatPrice
+        holder.roomLocation.text = room.location
 
         // Load image using Glide
         if (!room.imageUrls!!.isEmpty()) {
@@ -84,10 +84,10 @@ class RoomListAdapter(
         val roomLocation: TextView
 
         init {
-            roomTitle = itemView.findViewById<TextView>(R.id.room_title)
-            roomRent = itemView.findViewById<TextView>(R.id.room_rent)
-            roomImage = itemView.findViewById<ImageView>(R.id.room_image)
-            roomLocation = itemView.findViewById<TextView>(R.id.roomAddress)
+            roomTitle = itemView.findViewById<TextView>(R.id.tv_room_title)
+            roomRent = itemView.findViewById<TextView>(R.id.tv_room_price)
+            roomImage = itemView.findViewById<ImageView>(R.id.img_room_hero)
+            roomLocation = itemView.findViewById<TextView>(R.id.tv_room_location)
         }
     }
 }

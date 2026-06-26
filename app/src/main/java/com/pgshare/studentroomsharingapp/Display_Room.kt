@@ -29,7 +29,7 @@ class Display_Room : AppCompatActivity(), SearchView.OnQueryTextListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_display_room)
-        getSupportActionBar()!!.setBackgroundDrawable(ColorDrawable(getResources().getColor(R.color.C_color)))
+        supportActionBar?.hide()
 
         // Set up SearchView
         val searchView = findViewById<SearchView>(R.id.RoomSearchView)
@@ -46,12 +46,14 @@ class Display_Room : AppCompatActivity(), SearchView.OnQueryTextListener {
 
         // Create the adapter with an empty list initially
         adapter = RoomListAdapter(
-            ArrayList<Room?>(),
+            ArrayList<Room>(),
             this@Display_Room,
-            RoomListAdapter.OnItemClickListener { room: Room? ->
-                val intent = Intent(this@Display_Room, RoomDetailsActivity::class.java)
-                intent.putExtra("Rooms", room)
-                startActivity(intent)
+            object : RoomListAdapter.OnItemClickListener {
+                override fun onItemClick(room: Room?) {
+                    val intent = Intent(this@Display_Room, RoomDetailsActivity::class.java)
+                    intent.putExtra("Rooms", room)
+                    startActivity(intent)
+                }
             })
         roomList.setAdapter(adapter)
 
@@ -61,7 +63,7 @@ class Display_Room : AppCompatActivity(), SearchView.OnQueryTextListener {
     }
 
     private fun fetchRoomDataFromFirebase() {
-        DisplayProgressBar!!.setVisibility(ProgressBar.VISIBLE)
+        DisplayProgressBar!!.visibility = ProgressBar.VISIBLE
         Log.d("Display_Room", "Fetching room data from Firebase")
         roomRef!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -77,28 +79,28 @@ class Display_Room : AppCompatActivity(), SearchView.OnQueryTextListener {
                     }
 
                     // Update adapter with retrieved data
-                    adapter!!.updateData(roomData)
+                    adapter!!.updateData(roomData as MutableList<Room?>)
 
                     // Hide progress bar
-                    DisplayProgressBar!!.setVisibility(ProgressBar.GONE)
+                    DisplayProgressBar!!.visibility = ProgressBar.GONE
                     Log.d("Display_Room", "Room data retrieved successfully: " + roomData)
                 } else {
                     // Handle case when there is no data
                     Toast.makeText(this@Display_Room, "No rooms found", Toast.LENGTH_LONG).show()
-                    DisplayProgressBar!!.setVisibility(ProgressBar.GONE)
+                    DisplayProgressBar!!.visibility = ProgressBar.GONE
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
                 Log.e(
                     "Display_Room",
-                    "Error fetching rooms: " + error.getMessage(),
+                    "Error fetching rooms: " + error.message,
                     error.toException()
                 )
                 // Handle database read errors
                 Toast.makeText(
                     this@Display_Room,
-                    "Error fetching rooms: " + error.getMessage(),
+                    "Error fetching rooms: " + error.message,
                     Toast.LENGTH_SHORT
                 ).show()
                 Log.w("Display_Room", "Error fetching rooms: ", error.toException())
@@ -118,16 +120,16 @@ class Display_Room : AppCompatActivity(), SearchView.OnQueryTextListener {
     private fun filterList(searchText: String) {
         val filteredList: MutableList<Room?> = ArrayList<Room?>()
         for (room in roomData) {
-            if (room.description.lowercase(Locale.getDefault()).contains(
+            if ((room.description?.lowercase(Locale.getDefault())?.contains(
                     searchText.lowercase(
                         Locale.getDefault()
                     )
-                ) ||
-                room.location.lowercase(Locale.getDefault())
-                    .contains(searchText.lowercase(Locale.getDefault())) || room.roomName
-                    .lowercase(
+                ) ?: false) ||
+                (room.location?.lowercase(Locale.getDefault())
+                    ?.contains(searchText.lowercase(Locale.getDefault())) ?: false) || (room.roomName
+                    ?.lowercase(
                         Locale.getDefault()
-                    ).contains(searchText.lowercase(Locale.getDefault()))
+                    )?.contains(searchText.lowercase(Locale.getDefault())) ?: false)
             ) {
                 filteredList.add(room)
             }

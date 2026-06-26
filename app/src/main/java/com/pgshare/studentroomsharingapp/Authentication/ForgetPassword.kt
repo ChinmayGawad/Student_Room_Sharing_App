@@ -20,29 +20,30 @@ class ForgetPassword : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
         setContentView(R.layout.activity_forget_password)
-        getSupportActionBar()!!.setBackgroundDrawable(ColorDrawable(getResources().getColor(R.color.C_color)))
+
 
         emailEditText = findViewById<EditText>(R.id.resetPassword)
         val resetButton = findViewById<Button>(R.id.buttonReset)
         firebaseAuth = FirebaseAuth.getInstance()
 
         resetButton.setOnClickListener { v: View? ->
-            val email = emailEditText!!.getText().toString().trim { it <= ' ' }
+            val email = emailEditText!!.text.toString().trim { it <= ' ' }
             if (TextUtils.isEmpty(email)) {
-                emailEditText!!.setError("Email is required")
+                emailEditText!!.error = "Email is required"
                 return@setOnClickListener
             }
 
             if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                emailEditText!!.setError("Invalid email address")
+                emailEditText!!.error = "Invalid email address"
                 return@setOnClickListener
             }
 
             // Send password reset email
             firebaseAuth!!.sendPasswordResetEmail(email)
                 .addOnCompleteListener(OnCompleteListener { task: Task<Void?>? ->
-                    if (task!!.isSuccessful()) {
+                    if (task!!.isSuccessful) {
                         Toast.makeText(
                             this@ForgetPassword,
                             "Password reset email sent",

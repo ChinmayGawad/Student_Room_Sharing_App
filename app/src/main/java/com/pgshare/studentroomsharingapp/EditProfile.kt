@@ -32,7 +32,7 @@ class EditProfile : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
-        getSupportActionBar()!!.setBackgroundDrawable(ColorDrawable(getResources().getColor(R.color.C_color)))
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.C_color)))
 
         nameEditText = findViewById<EditText>(R.id.editTextText)
         phoneEditText = findViewById<EditText>(R.id.editTextText2)
@@ -43,9 +43,9 @@ class EditProfile : AppCompatActivity() {
         // Initialize Firebase instances
         mAuth = FirebaseAuth.getInstance()
         mDatabase = FirebaseDatabase.getInstance()
-        val currentUser = mAuth!!.getCurrentUser()
+        val currentUser = mAuth!!.currentUser
         if (currentUser != null) {
-            mUserReference = mDatabase!!.getReference().child("Users").child(currentUser.getUid())
+            mUserReference = mDatabase!!.getReference().child("Users").child(currentUser.uid)
         }
 
         saveButton!!.setOnClickListener(View.OnClickListener { v: View? ->
@@ -56,11 +56,11 @@ class EditProfile : AppCompatActivity() {
 
     private fun saveProfile() {
         // Retrieve updated profile information from EditText fields
-        val newName = nameEditText!!.getText().toString()
-        val newPhone = phoneEditText!!.getText().toString()
-        val newGender = genderEditText!!.getText().toString()
+        val newName = nameEditText!!.text.toString()
+        val newPhone = phoneEditText!!.text.toString()
+        val newGender = genderEditText!!.text.toString()
 
-        profileProgressBar!!.setVisibility(View.VISIBLE)
+        profileProgressBar!!.visibility = View.VISIBLE
         // Update profile in the Firebase Realtime Database
         if (mUserReference != null) {
             mUserReference!!.child("name").setValue(newName)
@@ -68,11 +68,11 @@ class EditProfile : AppCompatActivity() {
             mUserReference!!.child("gender").setValue(newGender)
             Toast.makeText(this, "Profile updated!", Toast.LENGTH_SHORT).show()
 
-            nameEditText!!.getText().clear()
-            phoneEditText!!.getText().clear()
-            genderEditText!!.getText().clear()
+            nameEditText!!.text.clear()
+            phoneEditText!!.text.clear()
+            genderEditText!!.text.clear()
 
-            profileProgressBar!!.setVisibility(View.GONE)
+            profileProgressBar!!.visibility = View.GONE
             startActivity(Intent(this@EditProfile, Profile_Page::class.java))
             finish()
         } else {

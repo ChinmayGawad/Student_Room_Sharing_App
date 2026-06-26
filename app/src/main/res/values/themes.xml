@@ -1,11 +1,28 @@
-<resources>
-    <!-- Base application theme. -->
-    <style name="Base.Theme.StudentRoomSharingApp" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your light theme here. -->
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <style name="Theme.StudentRoomSharingApp"
+        parent="Theme.Material3.DayNight">
+
+        <!-- Primary -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryContainer">@color/primary_light</item>
+
+        <!-- Secondary -->
+        <item name="colorSecondary">@color/secondary</item>
+
+        <!-- Status Bar -->
+        <item name="android:statusBarColor">@color/primary</item>
+
+        <!-- Navigation -->
+        <item name="android:navigationBarColor">@color/background</item>
+
+        <!-- Background -->
+        <item name="android:windowBackground">@color/background</item>
+
+        <!-- Ripple -->
+        <item name="colorControlHighlight">@color/primary_light</item>
 
     </style>
 
-    <style name="Theme.StudentRoomSharingApp" parent="Base.Theme.StudentRoomSharingApp" />
 </resources>

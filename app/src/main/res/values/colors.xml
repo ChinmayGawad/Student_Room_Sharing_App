@@ -139,10 +139,74 @@
     <color name="MediumBlue">#0000CD</color>
     <color name="DarkBlue">#00008B</color>
     <color name="Navy">#000080</color>
-    <color name="black">#000000</color>
+
     <color name="item_message_sent">#EE1809</color>
     <color name="item_message_received">#0091FF</color>
     <color name="final_white">#E6E1E1</color>
     <color name="ic_launcher_background">@color/final_white</color>
     <color name="C_color">#BA3D0BF3</color>
+
+
+
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Material Design 3 Light Theme Colors -->
+    <!-- Primary branding color (Trustworthy Blue) -->
+    <color name="md_theme_light_primary">#0061A4</color>
+    <color name="md_theme_light_onPrimary">#FFFFFF</color>
+
+    <!-- Background colors (Premium off-white/gray for whitespace) -->
+    <color name="md_theme_light_background">#FDFBFF</color>
+    <color name="md_theme_light_onBackground">#1A1C1E</color>
+
+    <!-- Surface colors (For cards and sheets) -->
+    <color name="md_theme_light_surface">#FDFBFF</color>
+    <color name="md_theme_light_onSurface">#1A1C1E</color>
+
+    <!-- Variant text colors (For subtitles and hints to reduce cognitive load) -->
+    <color name="md_theme_light_onSurfaceVariant">#43474E</color>
+
+    <!-- Outline color (For text fields and borders) -->
+    <color name="md_theme_light_outline">#73777F</color>
+
+        <!-- Primary -->
+        <color name="primary">#2563EB</color>
+        <color name="primary_dark">#1D4ED8</color>
+        <color name="primary_light">#DBEAFE</color>
+
+        <!-- Secondary -->
+        <color name="secondary">#14B8A6</color>
+
+        <!-- Accent -->
+        <color name="accent">#F97316</color>
+
+        <!-- Success -->
+        <color name="success">#22C55E</color>
+
+        <!-- Error -->
+        <color name="error">#EF4444</color>
+
+        <!-- Warning -->
+        <color name="warning">#F59E0B</color>
+
+        <!-- Background -->
+        <color name="background">#F8FAFC</color>
+
+        <color name="surface">#FFFFFF</color>
+
+        <color name="surface2">#F1F5F9</color>
+
+        <!-- Text -->
+
+        <color name="textPrimary">#111827</color>
+
+        <color name="textSecondary">#6B7280</color>
+
+        <color name="textHint">#9CA3AF</color>
+
+        <!-- Divider -->
+
+        <color name="divider">#E5E7EB</color>
+
 </resources>

@@ -19,22 +19,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MaterialComponents"
+        android:theme="@style/Theme.StudentRoomSharingApp"
         tools:targetApi="31">
         <activity
             android:name=".PaymentActivity"
             android:exported="false" />
         <activity
             android:name=".EditProfile"
-            android:exported="false" />
-        <activity
-            android:name=".Authentication.RegisterOwnerDetails"
-            android:label="Register Owner Details" />
-        <activity
-            android:name=".Authentication.OwnerLogin"
-            android:exported="false" />
-        <activity
-            android:name=".Authentication.OwnerSignUp"
             android:exported="false" />
         <activity
             android:name=".Authentication.ForgetPassword"
@@ -63,6 +54,11 @@
         <activity
             android:name=".Authentication.Login"
             android:exported="false" />
+
+        <activity
+            android:name=".StudentDashboardActivity"
+            android:exported="false"
+            android:theme="@style/Theme.StudentRoomSharingApp" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
