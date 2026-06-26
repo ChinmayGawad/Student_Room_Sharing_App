@@ -12,7 +12,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.pgshare.studentroomsharingapp.Authentication.Login
-import com.pgshare.studentroomsharingapp.Authentication.OwnerLogin
 
 class MainActivity : AppCompatActivity() {
     private var firebaseAuth: FirebaseAuth? = null
@@ -21,35 +20,35 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        getSupportActionBar()!!.setBackgroundDrawable(ColorDrawable(getResources().getColor(R.color.C_color)))
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.C_color)))
         // Initialize Firebase Authentication
         firebaseAuth = FirebaseAuth.getInstance()
         Log.d("temp_debug", "Testing log filter")
     }
 
-    fun Owner(view: View?) {
-        val intent = Intent(this@MainActivity, OwnerLogin::class.java)
+    fun Rent(view: View?) {
+        val intent = Intent(this@MainActivity, StudentDashboardActivity::class.java)
         startActivity(intent)
     }
 
-    fun Rent(view: View?) {
-        val intent = Intent(this@MainActivity, Login::class.java)
+    fun Owner(view: View?) {
+        val intent = Intent(this@MainActivity, Add_Room::class.java)
         startActivity(intent)
     }
 
     // Inflate the menu resource file
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        getMenuInflater().inflate(R.menu.main_menu, menu)
-        getSupportActionBar()!!.setBackgroundDrawable(ColorDrawable(getResources().getColor(R.color.C_color)))
+        menuInflater.inflate(R.menu.main_menu, menu)
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.C_color)))
         return true
     }
 
     // Handle menu item selection
     @SuppressLint("NonConstantResourceId")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.getItemId()
+        val id = item.itemId
         if (id == R.id.profile) {
-            if (firebaseAuth!!.getCurrentUser() != null) {
+            if (firebaseAuth!!.currentUser != null) {
                 openProfile()
             } else {
                 Toast.makeText(this, "Please log in to view your profile", Toast.LENGTH_SHORT)
@@ -81,9 +80,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openContactUs() {
-        /* Intent intent = new Intent(MainActivity.this, ContactUs.class);
+      /*  val intent = Intent(this@MainActivity, ChatActivity::class.java);
         startActivity(intent);*/
         Toast.makeText(this, "Working on it", Toast.LENGTH_SHORT).show()
+
     }
 
     /*   private void openContactUs() {
