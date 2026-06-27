@@ -74,8 +74,8 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun openAbout() {
-        /*Intent intent = new Intent(MainActivity.this, About.class);
-        startActivity(intent);*/
+        val  intent = Intent(this@MainActivity, Login::class.java);
+        startActivity(intent);
         Toast.makeText(this, "Working on it", Toast.LENGTH_SHORT).show()
     }
 

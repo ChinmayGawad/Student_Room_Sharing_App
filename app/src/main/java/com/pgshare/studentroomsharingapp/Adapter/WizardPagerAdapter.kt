@@ -3,9 +3,9 @@ package com.pgshare.studentroomsharingapp.Adapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.pgshare.studentroomsharingapp.AddRoomStep1Fragment
-import com.pgshare.studentroomsharingapp.AddRoomStep2Fragment
-import com.pgshare.studentroomsharingapp.AddRoomStep3Fragment
+import com.pgshare.studentroomsharingapp.Fragments.AddRoomStep1Fragment
+import com.pgshare.studentroomsharingapp.fragments.AddRoomStep2Fragment
+import com.pgshare.studentroomsharingapp.fragments.AddRoomStep3Fragment
 
 class WizardPagerAdapter(activity: AppCompatActivity) : FragmentStateAdapter(activity) {
 
@@ -21,3 +21,4 @@ class WizardPagerAdapter(activity: AppCompatActivity) : FragmentStateAdapter(act
         }
     }
 }
+

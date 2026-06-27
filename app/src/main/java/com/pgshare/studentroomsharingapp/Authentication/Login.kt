@@ -9,8 +9,9 @@ import androidx.core.graphics.drawable.toDrawable
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.pgshare.studentroomsharingapp.Display_Room
+
 import com.pgshare.studentroomsharingapp.R
+import com.pgshare.studentroomsharingapp.StudentDashboardActivity
 import com.pgshare.studentroomsharingapp.databinding.ActivityLoginBinding
 
 class Login : AppCompatActivity() {
@@ -48,7 +49,7 @@ class Login : AppCompatActivity() {
                     .addOnCompleteListener { task: Task<AuthResult?>? ->
                         if (task!!.isSuccessful) {
                             Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
-                            val intent = Intent(this@Login, Display_Room::class.java)
+                            val intent = Intent(this@Login, StudentDashboardActivity::class.java)
                             startActivity(intent)
                             finish()
                         } else {
@@ -97,7 +98,7 @@ class Login : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         if (authLogin!!.currentUser != null) {
-            val intent = Intent(this@Login, Display_Room::class.java)
+            val intent = Intent(this@Login, StudentDashboardActivity::class.java)
             startActivity(intent)
             finish()
         }

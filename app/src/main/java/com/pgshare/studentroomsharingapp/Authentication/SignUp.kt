@@ -90,7 +90,8 @@ class SignUp : AppCompatActivity() {
                         // User registration failed
                         // Handle the failure, display an error message, etc.
                         // You can check task.getException().getMessage() for the error message.
-                        Objects.requireNonNull<Exception?>(task.exception).message
+                        val errorMessage = task.exception?.message ?: "Registration failed"
+                        // You can show this error to the user, e.g., via Toast or Snackbar
                         // Hide progress bar
                         progressBar?.visibility = View.GONE
                     }

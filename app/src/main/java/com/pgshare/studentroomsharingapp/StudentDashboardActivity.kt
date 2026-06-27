@@ -3,7 +3,7 @@ package com.pgshare.studentroomsharingapp
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.pgshare.studentroomsharingapp.Fragments.ExploreFragment
 import com.pgshare.studentroomsharingapp.databinding.ActivityStudentDashboardBinding
 
 class StudentDashboardActivity : AppCompatActivity() {

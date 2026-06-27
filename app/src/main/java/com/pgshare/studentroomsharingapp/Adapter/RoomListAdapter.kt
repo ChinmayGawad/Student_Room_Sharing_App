@@ -1,93 +1,78 @@
 package com.pgshare.studentroomsharingapp.Adapter
 
-import android.content.Context
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.pgshare.studentroomsharingapp.Adapter.RoomListAdapter.RoomViewHolder
-import com.pgshare.studentroomsharingapp.R
-
-
+import com.pgshare.studentroomsharingapp.databinding.ItemRoomBinding
 
 class RoomListAdapter(
-    protected var roomData: MutableList<Room>,
-    private val context: Context,
-    private val listener: OnItemClickListener?
-) : RecyclerView.Adapter<RoomViewHolder?>() {
-    fun setFilteredList(filteredList: MutableList<Room?>) {
-        this.roomData = filteredList as MutableList<Room>
-        notifyDataSetChanged()
+    private var roomList: List<Room>,
+    private val clickListener: OnRoomClickListener
+) : RecyclerView.Adapter<RoomListAdapter.RoomViewHolder>() {
+
+    // Interface to handle clicks cleanly
+    interface OnRoomClickListener {
+        fun onRoomClick(room: Room)
+        fun onSaveClick(room: Room)
     }
 
-    override fun onCreateViewHolder(
-        p0: ViewGroup,
-        p1: Int
-    ): RoomViewHolder {
-        val inflater = LayoutInflater.from(context)
-        val view = inflater.inflate(R.layout.item_room, p0, false)
-        return RoomViewHolder(view)
-    }
+    inner class RoomViewHolder(val binding: ItemRoomBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(room: Room) {
+            // 1. Bind Text Data
+            binding.tvRoomTitle.text = room.roomName
 
-    override fun onBindViewHolder(holder: RoomViewHolder, position: Int) {
-        val room = roomData.get(position)
+            // Format location and room type (description holds the room type from our previous step)
+            val type = room.description?.replace("Type: ", "")?.uppercase() ?: "ROOM"
+            binding.tvRoomLocation.text = "$type • ${room.location?.uppercase()}"
 
-        // Bind common fields
-        holder.roomTitle.text = room.roomName
-        holder.roomRent.text = room.formatPrice
-        holder.roomLocation.text = room.location
+            // Your Room model already has a formatPrice getter!
+            binding.tvRoomPrice.text = room.formatPrice
 
-        // Load image using Glide
-        if (!room.imageUrls!!.isEmpty()) {
-            val imageUrl = room.imageUrls!!.get(0) // Assuming you're loading the first image
-            Glide.with(context)
-                .load(imageUrl)
-                .placeholder(R.drawable.imageplaceholder)
-                .error(R.drawable.imageplaceholder)
-                .into(holder.roomImage)
-        } else {
-            // Handle case where there are no image URLs
-            holder.roomImage.setImageResource(R.drawable.imageplaceholder)
-        }
+            // 2. Decode the Base64 Image back to a Bitmap
+            val base64String = room.imageUrls?.firstOrNull() // Grab the first photo for the thumbnail
+            if (!base64String.isNullOrEmpty()) {
+                try {
+                    val imageBytes = Base64.decode(base64String, Base64.DEFAULT)
+                    val decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+                    binding.imgRoomThumbnail.setImageBitmap(decodedImage)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    // Optional: Set a fallback drawable here if decoding fails
+                    // binding.imgRoomThumbnail.setImageResource(R.drawable.imageplaceholder)
+                }
+            } else {
+                // If the user uploaded no images somehow, use a placeholder
+                // binding.imgRoomThumbnail.setImageResource(R.drawable.imageplaceholder)
+            }
 
-        // Set click listener
-        holder.itemView.setOnClickListener { v: View? ->
-            if (listener != null) {
-                listener.onItemClick(room)
+            // 3. Handle Clicks
+            binding.root.setOnClickListener {
+                clickListener.onRoomClick(room)
+            }
+
+            binding.btnSaveRoom.setOnClickListener {
+                clickListener.onSaveClick(room)
+                // We can add logic to swap the heart icon to a filled heart here later
             }
         }
     }
 
-
-    override fun getItemCount(): Int {
-        return roomData.size
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RoomViewHolder {
+        val binding = ItemRoomBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return RoomViewHolder(binding)
     }
 
-    fun updateData(newData: MutableList<Room?>) {
-        roomData.clear() // Clear the existing data
-        roomData.addAll(newData as Collection<Room>) // Add the new data to the list
-        notifyDataSetChanged() // Notify the adapter that the data has changed
+    override fun onBindViewHolder(holder: RoomViewHolder, position: Int) {
+        holder.bind(roomList[position])
     }
 
+    override fun getItemCount(): Int = roomList.size
 
-    interface OnItemClickListener {
-        fun onItemClick(room: Room?)
-    }
-
-    class RoomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val roomTitle: TextView
-        val roomRent: TextView
-        val roomImage: ImageView
-        val roomLocation: TextView
-
-        init {
-            roomTitle = itemView.findViewById<TextView>(R.id.tv_room_title)
-            roomRent = itemView.findViewById<TextView>(R.id.tv_room_price)
-            roomImage = itemView.findViewById<ImageView>(R.id.img_room_hero)
-            roomLocation = itemView.findViewById<TextView>(R.id.tv_room_location)
-        }
+    // Helper function to update the list when Firebase pushes new data
+    fun updateData(newRooms: List<Room>) {
+        roomList = newRooms
+        notifyDataSetChanged()
     }
 }
