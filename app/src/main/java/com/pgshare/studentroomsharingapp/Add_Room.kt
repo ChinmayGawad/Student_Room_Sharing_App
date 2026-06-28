@@ -14,7 +14,6 @@ import com.pgshare.studentroomsharingapp.Adapter.Room
 import com.pgshare.studentroomsharingapp.Adapter.WizardPagerAdapter
 import com.pgshare.studentroomsharingapp.Fragments.AddRoomStep1Fragment
 import com.pgshare.studentroomsharingapp.databinding.ActivityAddRoomBinding
-import com.pgshare.studentroomsharingapp.fragments.AddRoomStep2Fragment
 import com.pgshare.studentroomsharingapp.fragments.AddRoomStep3Fragment
 import com.pgshare.studentroomsharingapp.interfaces.ValidatableFragment
 import java.io.ByteArrayOutputStream
@@ -111,6 +110,7 @@ class Add_Room : AppCompatActivity() {
         val location = step1?.binding?.etRoomLocation?.text.toString().trim()
         val rent = step3?.binding?.etMonthlyRent?.text.toString().trim()
         val imageUris = step2?.selectedImageUris ?: emptyList()
+        val deposit = step3?.binding?.etSecurityDeposit?.text.toString().trim()
 
         val checkedChipId = step1?.binding?.chipGroupRoomType?.checkedChipId ?: View.NO_ID
         val roomType = if (checkedChipId != View.NO_ID && step1 != null) {
@@ -137,6 +137,7 @@ class Add_Room : AppCompatActivity() {
                 location,
                 "Type: $roomType",
                 rent,
+                deposit,
                 base64Images,
                 0
             )
