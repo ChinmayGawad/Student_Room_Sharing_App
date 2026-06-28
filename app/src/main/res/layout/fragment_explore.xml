@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     android:background="@color/md_theme_light_background">
 
-    <!-- AppBarLayout handles the scroll behavior for the Search Bar and Filters -->
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,7 +14,6 @@
         android:layout_marginTop="20dp"
         app:elevation="0dp">
 
-        <!-- MD3 Floating Search Bar -->
         <com.google.android.material.search.SearchBar
             android:id="@+id/search_bar"
             android:layout_width="match_parent"
@@ -25,7 +23,6 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp" />
 
-        <!-- Horizontal Scrollable Filter Chips -->
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -69,14 +66,42 @@
         </HorizontalScrollView>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- The Feed (List of Rooms) -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_rooms"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:paddingBottom="80dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:listitem="@layout/item_room" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_rooms"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="80dp"
+            tools:listitem="@layout/item_room" />
+
+        <ProgressBar
+            android:id="@+id/progressBarLoading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/tvEmptyState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No rooms available right now."
+            android:textAppearance="?attr/textAppearanceBodyLarge"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

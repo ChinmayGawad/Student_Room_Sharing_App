@@ -2,6 +2,7 @@ package com.pgshare.studentroomsharingapp.Adapter
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.google.firebase.database.PropertyName
 
 class Room : Parcelable {
     var id: String? = null
@@ -10,14 +11,16 @@ class Room : Parcelable {
     @JvmField
     var location: String? = null
     var description: String? = null
-    private var price: String? = null
+    var price: String? = null
+    var deposit: String? = null
     @JvmField
     var imageUrls: ArrayList<String?>? = ArrayList<String?>()
     var imageResourceId: Int = 0
+    @get:PropertyName("roomBooked")
+    @set:PropertyName("roomBooked")
     var isRoomBooked: Boolean = false // Add new field for booking status
 
-    // Getters and setters
-    val owner: Owner? = null
+    // Getters and setter
 
     // Default constructor with no arguments (required by Firebase)
     constructor()
@@ -28,6 +31,7 @@ class Room : Parcelable {
         location: String?,
         description: String?,
         price: String?,
+        deposit: String?,
         imageUrls: ArrayList<String?>?,
         imageResourceId: Int
     ) {
@@ -36,6 +40,7 @@ class Room : Parcelable {
         this.location = location
         this.description = description
         this.price = price
+        this.deposit = deposit
         this.imageUrls = imageUrls
         this.imageResourceId = imageResourceId
         this.isRoomBooked = false // Initialize booked status to false
@@ -47,6 +52,7 @@ class Room : Parcelable {
         location = `in`.readString()
         description = `in`.readString()
         price = `in`.readString()
+        deposit = `in`.readString()
         imageUrls = ArrayList<String?>() // Initialize the ArrayList
         `in`.readStringList(imageUrls!!)
         imageResourceId = `in`.readInt()
@@ -63,22 +69,15 @@ class Room : Parcelable {
         out.writeString(location)
         out.writeString(description)
         out.writeString(price)
+        out.writeString(deposit)
         out.writeStringList(imageUrls)
         out.writeInt(imageResourceId)
         out.writeByte((if (isRoomBooked) 1 else 0).toByte()) // Write booking status to Parcel
     }
 
-    fun getPrice(): String {
-        return price!!
-    }
-
-    fun setPrice(price: String?) {
-        this.price = price
-    }
-
     val formatPrice: String
         get() =// Format price to display with two decimal places and currency symbol
-            "₹" + getPrice()
+            "₹" + price
 
     companion object {
         @JvmField

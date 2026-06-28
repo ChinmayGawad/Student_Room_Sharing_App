@@ -1,32 +1,40 @@
-package com.pgshare.studentroomsharingapp.Fragments
+package com.pgshare.studentroomsharingapp
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.database.*
+import com.google.android.material.chip.Chip
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.pgshare.studentroomsharingapp.Adapter.Room
 import com.pgshare.studentroomsharingapp.Adapter.RoomListAdapter
-import com.pgshare.studentroomsharingapp.RoomDetailsActivity
 import com.pgshare.studentroomsharingapp.databinding.FragmentExploreBinding
 
 class ExploreFragment : Fragment() {
 
     private var _binding: FragmentExploreBinding? = null
-    // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
 
-    private lateinit var databaseRef: DatabaseReference
-    private lateinit var roomList: ArrayList<Room>
     private lateinit var roomAdapter: RoomListAdapter
 
+    // Master list holds everything from Firebase
+    private val allRoomsList = ArrayList<Room>()
+    // Display list holds what the user actually sees based on filters
+    private val displayRoomList = ArrayList<Room>()
+
+    private val databaseReference = FirebaseDatabase.getInstance().getReference("Rooms")
+
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentExploreBinding.inflate(inflater, container, false)
@@ -36,68 +44,152 @@ class ExploreFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // 1. Initialize RecyclerView with a vertical layout manager
+        setupRecyclerView()
+        setupFilters()
+        fetchRoomListings()
+    }
+
+    private fun setupRecyclerView() {
         binding.recyclerViewRooms.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerViewRooms.setHasFixedSize(true)
 
-        roomList = arrayListOf()
-
-        // 2. Initialize Adapter with a trailing lambda to handle item clicks
-        roomAdapter = RoomListAdapter(roomList, object : RoomListAdapter.OnRoomClickListener {
-            override fun onRoomClick(selectedRoom: Room) {
-                val intent = Intent(requireContext(), RoomDetailsActivity::class.java)
-                intent.putExtra("Rooms", selectedRoom)
-                startActivity(intent)
+        // Pass the display list to the adapter, not the master list
+        roomAdapter = RoomListAdapter(displayRoomList,object : RoomListAdapter.OnRoomClickListener {
+            override fun onRoomClick(room: Room) {
+                navigateToDetails(room)
             }
 
             override fun onSaveClick(room: Room) {
-                TODO("Not yet implemented")
+                if (FirebaseAuth.getInstance().currentUser == null) {
+                    Toast.makeText(requireContext(), "Please login to save rooms", Toast.LENGTH_SHORT).show()
+                }
             }
         })
-
         binding.recyclerViewRooms.adapter = roomAdapter
-
-        // 3. Fetch data
-        fetchRoomsFromFirebase()
     }
 
-    private fun fetchRoomsFromFirebase() {
-        // Pointing to the "Rooms" node where Add_Room.kt pushes data
-        databaseRef = FirebaseDatabase.getInstance().getReference("Rooms")
+    private fun setupFilters() {
+        // Listen for when the user taps on any filter chip
+        binding.chipGroupFilters.setOnCheckedStateChangeListener { group, checkedIds ->
+            if (checkedIds.isEmpty()) {
+                // No chip selected, show all rooms
+                updateDisplayList(allRoomsList)
+            } else {
+                // Single line chip group returns one ID in the list
+                val selectedChipId = checkedIds.first()
+                val selectedChip = group.findViewById<Chip>(selectedChipId)
+                val filterCriteria = selectedChip.text.toString()
 
-        databaseRef.addValueEventListener(object : ValueEventListener {
+                applyFilter(filterCriteria)
+            }
+        }
+    }
+
+    private fun applyFilter(criteria: String) {
+        val filteredList = ArrayList<Room>()
+
+        for (room in allRoomsList) {
+            when (criteria) {
+                "Under ₹8,000" -> {
+                    // Assuming your Room object has a price property stored as a String or Int
+                    // Adjust this logic to match your exact variable name (e.g., room.rent)
+                    val price = room.price?.toString()?.replace("[^0-9]".toRegex(), "")?.toIntOrNull() ?: 0
+                    if (price in 1..8000) {
+                        filteredList.add(room)
+                    }
+                }
+                "Private Room" -> {
+                    // Based on your setup, room type is stored in the description field
+                    if (room.description?.contains("Private Room", ignoreCase = true) == true) {
+                        filteredList.add(room)
+                    }
+                }
+                "AC" -> {
+                    // Check if AC is in amenities or description
+                    if (room.description?.contains("AC", ignoreCase = true) == true) {
+                        filteredList.add(room)
+                    }
+                }
+                "Student Friendly" -> {
+                    if (room.description?.contains("Student", ignoreCase = true) == true) {
+                        filteredList.add(room)
+                    }
+                }
+            }
+        }
+
+        updateDisplayList(filteredList)
+    }
+
+    private fun updateDisplayList(newList: List<Room>) {
+        displayRoomList.clear()
+        displayRoomList.addAll(newList)
+        roomAdapter.notifyDataSetChanged()
+
+        // Toggle empty state if the filter resulted in 0 matches
+        if (displayRoomList.isEmpty()) {
+            binding.recyclerViewRooms.visibility = View.GONE
+            binding.tvEmptyState.visibility = View.VISIBLE
+            binding.tvEmptyState.text = "No rooms match your filter."
+        } else {
+            binding.recyclerViewRooms.visibility = View.VISIBLE
+            binding.tvEmptyState.visibility = View.GONE
+        }
+    }
+
+    private fun fetchRoomListings() {
+        binding.progressBarLoading.visibility = View.VISIBLE
+        binding.recyclerViewRooms.visibility = View.GONE
+        binding.tvEmptyState.visibility = View.GONE
+
+        databaseReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                roomList.clear() // Clear list to prevent duplicates on data refresh
+                allRoomsList.clear()
 
                 if (snapshot.exists()) {
                     for (roomSnapshot in snapshot.children) {
-                        val room = roomSnapshot.getValue(Room::class.java)
-                        if (room != null) {
-                            roomList.add(room)
+                        try {
+                            val room = roomSnapshot.getValue(Room::class.java)
+                            if (room != null) {
+                                allRoomsList.add(room)
+                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
                         }
                     }
-                    // Notify the adapter that the Firebase data has been fully loaded
-                    roomAdapter.notifyDataSetChanged()
+
+                    // Initially show all rooms (unless a chip was already selected during a refresh)
+                    val checkedIds = binding.chipGroupFilters.checkedChipIds
+                    if (checkedIds.isEmpty()) {
+                        updateDisplayList(allRoomsList)
+                    } else {
+                        val selectedChip = binding.chipGroupFilters.findViewById<Chip>(checkedIds.first())
+                        applyFilter(selectedChip.text.toString())
+                    }
+
+                    binding.progressBarLoading.visibility = View.GONE
                 } else {
-                    Log.d("ExploreFragment", "No rooms found in database.")
+                    binding.progressBarLoading.visibility = View.GONE
+                    updateDisplayList(emptyList()) // Will trigger the empty state UI
+                    binding.tvEmptyState.text = "No rooms available right now."
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
-                // Safely handle database read failures
-                Toast.makeText(
-                    requireContext(),
-                    "Failed to load rooms: ${error.message}",
-                    Toast.LENGTH_SHORT
-                ).show()
-                Log.e("ExploreFragment", "Database error: ${error.message}")
+                binding.progressBarLoading.visibility = View.GONE
+                Toast.makeText(requireContext(), "Failed to load listings: ${error.message}", Toast.LENGTH_SHORT).show()
             }
         })
     }
 
+    private fun navigateToDetails(room: Room) {
+        val intent = Intent(requireContext(), RoomDetailsActivity::class.java).apply {
+            putExtra("Rooms", room)
+        }
+        startActivity(intent)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
-        // Prevent memory leaks by nullifying the binding when the view is destroyed
         _binding = null
     }
 }
