@@ -31,6 +31,7 @@ captures/
 .idea/caches
 .idea/modules.xml
 .idea/deploymentTargetDropDown.xml
+.idea/deploymentTargetSelector.xml
 
 # Local configuration file (sdk path, etc)
 local.properties
