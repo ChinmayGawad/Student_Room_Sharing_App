@@ -3,7 +3,7 @@ package com.pgshare.studentroomsharingapp
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.pgshare.studentroomsharingapp.Fragments.ExploreFragment
+
 import com.pgshare.studentroomsharingapp.databinding.ActivityStudentDashboardBinding
 
 class StudentDashboardActivity : AppCompatActivity() {
@@ -34,7 +34,7 @@ class StudentDashboardActivity : AppCompatActivity() {
                 }
                 R.id.nav_saved -> {
                     // Replace with your actual SavedFragment
-                    // loadFragment(SavedFragment())
+                    loadFragment(SavedFragment())
                     true
                 }
                 R.id.nav_inbox -> {
@@ -61,3 +61,5 @@ class StudentDashboardActivity : AppCompatActivity() {
             .commit()
     }
 }
+
+

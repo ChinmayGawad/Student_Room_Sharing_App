@@ -7,3 +7,5 @@ interface ValidatableFragment {
      */
     fun isValid(): Boolean
 }
+
+
