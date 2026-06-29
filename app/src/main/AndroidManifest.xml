@@ -39,9 +39,9 @@
         <activity
             android:name=".RoomDetailsActivity"
             android:exported="false" />
-        <activity
+   <!--     <activity
             android:name=".Display_Room"
-            android:exported="false" />
+            android:exported="false" />-->
         <activity
             android:name=".Add_Room"
             android:exported="false" />

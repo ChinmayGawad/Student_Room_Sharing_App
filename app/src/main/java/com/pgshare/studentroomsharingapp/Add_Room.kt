@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.chip.Chip
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.pgshare.studentroomsharingapp.Adapter.Room
 import com.pgshare.studentroomsharingapp.Adapter.WizardPagerAdapter
@@ -131,15 +132,21 @@ class Add_Room : AppCompatActivity() {
             val databaseRef = FirebaseDatabase.getInstance().getReference("Rooms")
             val newRoomId = databaseRef.push().key ?: return@Thread
 
+            // 1. Grab the Current User's ID
+            val currentUserId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+
+            // 2. Create the room using our new optimized Data Class
             val newRoom = Room(
-                newRoomId,
-                title,
-                location,
-                "Type: $roomType",
-                rent,
-                deposit,
-                base64Images,
-                0
+                id = newRoomId,
+                userId = currentUserId, // Bind the owner to the room!
+                roomName = title,
+                location = location,
+                description = "Type: $roomType",
+                price = rent,
+                deposit = deposit,
+                imageUrls = base64Images,
+                imageResourceId = 0,
+                isRoomBooked = false
             )
 
             databaseRef.child(newRoomId).setValue(newRoom).addOnCompleteListener { task ->

@@ -2,7 +2,6 @@ package com.pgshare.studentroomsharingapp
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.tabs.TabLayoutMediator
 import com.pgshare.studentroomsharingapp.Adapter.ImagePagerAdapter
@@ -29,40 +28,36 @@ class RoomDetailsActivity : AppCompatActivity() {
 
         if (room != null) {
             // 3. Initialize the Image Gallery
-            // Safely grab the image list, defaulting to an empty list if null
             val imageUrls = room.imageUrls ?: arrayListOf()
-
-            // Pass the Base64 strings to the adapter we just updated
             val imagePagerAdapter = ImagePagerAdapter(imageUrls)
             binding.viewpagerRoomImages.adapter = imagePagerAdapter
 
             // 4. Synchronize Pagination Dots
-            // This connects the TabLayout dots to the ViewPager swiping action
             TabLayoutMediator(binding.tabLayoutImageIndicator, binding.viewpagerRoomImages) { _, _ ->
-                // Leave empty: the custom visual behavior is handled by your tab_indicator_selector.xml
             }.attach()
 
             // 5. Populate the Text Views with Firebase Data
             binding.tvDetailTitle.text = room.roomName
             binding.tvDescriptionBody.text = room.description ?: "No description provided."
 
-            // Format the pricing string securely
             val formattedPrice = "₹${room.price}"
             binding.tvRentAmount.text = formattedPrice
-
-            // Push the same price to the persistent bottom CTA
             binding.tvCtaPrice.text = formattedPrice
 
             val formattedDeposit = "₹${room.deposit}"
             binding.tvDepositAmount.text = formattedDeposit
 
-
-            // 6. Handle Chat Button Navigation
+            // 6. Handle Chat Button Navigation (FIXED)
             binding.btnChatOwner.setOnClickListener {
-                // When you are ready to link the Chat UI, uncomment this!
-                // val intent = Intent(this, ChatActivity::class.java)
-                // startActivity(intent)
-                Toast.makeText(this,"Soon will Work ", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, ChatActivity::class.java)
+
+                // Assuming your Room data class uses 'userId' for the owner and 'roomId' for the key.
+                // If your variables are named differently in Room.kt (like ownerId or roomKey), update them here!
+                intent.putExtra("RECEIVER_ID", room.userId)
+                intent.putExtra("ROOM_ID", room.id)
+
+                // You are already inside an Activity, so you just call startActivity() directly
+                startActivity(intent)
             }
         }
     }

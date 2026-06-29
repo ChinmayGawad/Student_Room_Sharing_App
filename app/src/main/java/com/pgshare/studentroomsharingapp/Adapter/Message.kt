@@ -1,30 +1,11 @@
 package com.pgshare.studentroomsharingapp.Adapter
 
-class Message {
-    var message: String? = null
-        private set
-    var isSentByUser: Boolean = false
-        private set
-    var timestamp: String? = null
-        private set
-
-    var username: String? = null
-        private set
-
-    var email: String? = null
-        private set
-
-    val roomId: String? = null
-
-    constructor()
-
-
-    constructor(message: String?, sentByUser: Boolean, username: String?, email: String?) {
-        this.message = message
-        this.isSentByUser = sentByUser
-        // Set timestamp when the message is created
-        // Example timestamp, you can use your own logic to set the timestamp
-        this.email = email
-        this.username = username
-    }
-}
+data class Message(
+    var messageId: String? = null,
+    var message: String? = null,
+    var senderId: String? = null,    // Replaces isSentByUser
+    var username: String? = null,
+    var email: String? = null,
+    var roomId: String? = null,
+    var timestamp: Long = System.currentTimeMillis() // Long is better for chronological sorting
+)

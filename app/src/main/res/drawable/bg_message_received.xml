@@ -1,46 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingHorizontal="16dp"
-    android:paddingVertical="4dp">
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card_received"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/md_theme_light_surface"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="1dp"
-        app:strokeColor="@color/md_theme_light_outline"
-        app:strokeWidth="1dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_max="wrap">
-
-        <TextView
-            android:id="@+id/tv_received_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxWidth="260dp"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="12dp"
-            android:text="Yes Aarav, it is available. Would you like to visit today?"
-            android:textColor="@color/md_theme_light_onSurface"
-            android:textSize="16sp" />
-    </com.google.android.material.card.MaterialCardView>
-
-    <TextView
-        android:id="@+id/tv_received_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="10:45 AM"
-        android:textSize="11sp"
-        android:textColor="@color/md_theme_light_outline"
-        android:layout_marginTop="4dp"
-        app:layout_constraintTop_toBottomOf="@id/card_received"
-        app:layout_constraintStart_toStartOf="@id/card_received" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#E5E5EA" />
+    <corners
+        android:topLeftRadius="16dp"
+        android:topRightRadius="16dp"
+        android:bottomLeftRadius="4dp"
+        android:bottomRightRadius="16dp" />
+    <padding android:left="12dp" android:top="10dp" android:right="12dp" android:bottom="10dp" />
+</shape>
