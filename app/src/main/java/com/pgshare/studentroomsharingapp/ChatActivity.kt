@@ -1,5 +1,7 @@
 package com.pgshare.studentroomsharingapp
 
+import android.app.PendingIntent
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -9,6 +11,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.pgshare.studentroomsharingapp.Adapter.Message
 import com.pgshare.studentroomsharingapp.Adapter.MessageAdapter
+import com.pgshare.studentroomsharingapp.Adapter.RecentChat
+import com.pgshare.studentroomsharingapp.Fragments.InboxFragment
 import com.pgshare.studentroomsharingapp.databinding.ActivityChatBinding
 
 class ChatActivity : AppCompatActivity() {
@@ -22,6 +26,8 @@ class ChatActivity : AppCompatActivity() {
     private var senderId: String = ""
     private var chatRoomId: String = ""
 
+    private var roomId : String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
@@ -30,7 +36,7 @@ class ChatActivity : AppCompatActivity() {
 
         // Assume receiverId is passed via Intent from the Room listing
         receiverId = intent.getStringExtra("RECEIVER_ID") ?: ""
-        val roomId = intent.getStringExtra("ROOM_ID") ?: "UnknownRoom"
+        roomId = intent.getStringExtra("ROOM_ID") ?: "UnknownRoom"
         senderId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
 
         val userPair = if (senderId < receiverId) "${senderId}_$receiverId" else "${receiverId}_$senderId"
@@ -47,6 +53,13 @@ class ChatActivity : AppCompatActivity() {
             if (messageText.isNotEmpty()) {
                 sendMessage(messageText)
             }
+        }
+
+        binding.btnBack.setOnClickListener {
+            val intent = Intent(this, StudentDashboardActivity::class.java)
+            intent.putExtra("TARGET_FRAGMENT", "INBOX") // Send a flag
+            startActivity(intent)
+            finish() // Close the chat activity
         }
     }
 
@@ -86,13 +99,46 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun sendMessage(text: String) {
-        val messageId = databaseReference.push().key ?: return
-        val timestamp = System.currentTimeMillis()
-        val message = Message(messageId, text, senderId, timestamp = timestamp)
+        // 1. SAFETY NET: Check if Android Studio swallowed our Intent data
+        if (receiverId.isEmpty() || roomId.isEmpty() || senderId.isEmpty()) {
+            Log.e("ChatDebug", "CRITICAL ERROR: Missing IDs! Sender: '$senderId', Receiver: '$receiverId', Room: '$roomId'")
+            Toast.makeText(this, "Session expired. Please go back to the Room screen and click Chat again.", Toast.LENGTH_LONG).show()
+            return
+        }
 
-        databaseReference.child(messageId).setValue(message)
-            .addOnSuccessListener {
-                binding.etMessageInput.text?.clear()
-            }
+        val rootRef = FirebaseDatabase.getInstance().reference
+
+        // 2. Generate a unique ID for the new message
+        val messageId = rootRef.child("chats").child(chatRoomId).child("messages").push().key ?: return
+        val timestamp = System.currentTimeMillis()
+
+        // 3. Create the Message object
+        val message = Message(
+            messageId = messageId,
+            message = text,
+            senderId = senderId,
+            timestamp = timestamp
+        )
+
+        // 4. Create the lightweight Inbox summaries for both users
+        val senderInboxPreview = RecentChat(chatRoomId, roomId, receiverId, text, timestamp)
+        val receiverInboxPreview = RecentChat(chatRoomId, roomId, senderId, text, timestamp)
+
+        // 5. Map out the multiple database paths (REMOVED LEADING SLASHES)
+        val databaseUpdates = hashMapOf<String, Any>()
+
+        databaseUpdates["chats/$chatRoomId/messages/$messageId"] = message
+        databaseUpdates["inbox/$senderId/$chatRoomId"] = senderInboxPreview
+        databaseUpdates["inbox/$receiverId/$chatRoomId"] = receiverInboxPreview
+
+        Log.d("ChatDebug", "Attempting batch update to paths: ${databaseUpdates.keys}")
+
+        // 6. Execute the batch update
+        rootRef.updateChildren(databaseUpdates).addOnSuccessListener {
+            binding.etMessageInput.text?.clear()
+            Log.d("ChatDebug", "Batch update SUCCESSFUL!")
+        }.addOnFailureListener { e ->
+            Log.e("ChatDebug", "Batch update FAILED: ${e.message}")
+        }
     }
 }
