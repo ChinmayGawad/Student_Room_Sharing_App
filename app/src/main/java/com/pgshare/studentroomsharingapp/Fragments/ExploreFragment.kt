@@ -1,4 +1,4 @@
-package com.pgshare.studentroomsharingapp
+package com.pgshare.studentroomsharingapp.Fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -16,6 +16,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.pgshare.studentroomsharingapp.Adapter.Room
 import com.pgshare.studentroomsharingapp.Adapter.RoomListAdapter
+import com.pgshare.studentroomsharingapp.RoomDetailsActivity
 import com.pgshare.studentroomsharingapp.databinding.FragmentExploreBinding
 
 class ExploreFragment : Fragment() {
@@ -143,40 +144,39 @@ class ExploreFragment : Fragment() {
 
         databaseReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+
+                // 1. SAFETY CHECK (Perfectly executed)
+                if (!isAdded || _binding == null) {
+                    return
+                }
+
                 allRoomsList.clear()
+                for (dataSnapshot in snapshot.children) {
+                    val room = dataSnapshot.getValue(Room::class.java)
+                    room?.let { allRoomsList.add(it) }
+                }
 
-                if (snapshot.exists()) {
-                    for (roomSnapshot in snapshot.children) {
-                        try {
-                            val room = roomSnapshot.getValue(Room::class.java)
-                            if (room != null) {
-                                allRoomsList.add(room)
-                            }
-                        } catch (e: Exception) {
-                            e.printStackTrace()
-                        }
-                    }
+                // 2. HIDE the loading spinner now that data has arrived
+                binding.progressBarLoading.visibility = View.GONE
 
-                    // Initially show all rooms (unless a chip was already selected during a refresh)
-                    val checkedIds = binding.chipGroupFilters.checkedChipIds
-                    if (checkedIds.isEmpty()) {
-                        updateDisplayList(allRoomsList)
-                    } else {
-                        val selectedChip = binding.chipGroupFilters.findViewById<Chip>(checkedIds.first())
-                        applyFilter(selectedChip.text.toString())
-                    }
-
-                    binding.progressBarLoading.visibility = View.GONE
+                // 3. CHECK if a filter is currently active
+                val checkedIds = binding.chipGroupFilters.checkedChipIds
+                if (checkedIds.isEmpty()) {
+                    // No filter active, show everything!
+                    updateDisplayList(allRoomsList)
                 } else {
-                    binding.progressBarLoading.visibility = View.GONE
-                    updateDisplayList(emptyList()) // Will trigger the empty state UI
-                    binding.tvEmptyState.text = "No rooms available right now."
+                    // Re-apply the active filter to the newly downloaded data
+                    val selectedChip = binding.chipGroupFilters.findViewById<Chip>(checkedIds.first())
+                    applyFilter(selectedChip.text.toString())
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
-                binding.progressBarLoading.visibility = View.GONE
-                Toast.makeText(requireContext(), "Failed to load listings: ${error.message}", Toast.LENGTH_SHORT).show()
+                // Safely hide the progress bar and show the error
+                if (isAdded && _binding != null) {
+                    binding.progressBarLoading.visibility = View.GONE
+                    Toast.makeText(requireContext(), "Failed to load: ${error.message}", Toast.LENGTH_SHORT).show()
+                }
             }
         })
     }
