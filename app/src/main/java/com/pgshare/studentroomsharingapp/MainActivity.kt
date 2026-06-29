@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent);
     }*/
     private fun openProfile() {
-        val intent = Intent(this@MainActivity, Profile_Page::class.java)
+        val intent = Intent(this@MainActivity, StudentDashboardActivity::class.java)
         Toast.makeText(this, "Opening Profile", Toast.LENGTH_SHORT).show()
         startActivity(intent)
     }

@@ -1,106 +1,102 @@
 package com.pgshare.studentroomsharingapp.Authentication
 
 import android.content.Intent
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Patterns
-import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
-import com.google.android.material.textfield.TextInputLayout
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.pgshare.studentroomsharingapp.R
 import com.pgshare.studentroomsharingapp.databinding.ActivitySignUpBinding
-import java.util.Objects
 
 class SignUp : AppCompatActivity() {
-    private var emailLayout: TextInputLayout? = null
-    private var passwordLayout: TextInputLayout? = null
-    private var confirmPasswordLayout: TextInputLayout? = null
-    private var editTextEmail: EditText? = null
-    private var passwordEditText: EditText? = null
-    private var editTextConfirmPassword: EditText? = null
-    private var buttonNext: Button? = null
-    private var progressBar: ProgressBar? = null
-    private var userRef: DatabaseReference? = null
-    private var database: FirebaseDatabase? = null
-    private var auth: FirebaseAuth? = null
 
-    lateinit var binding : ActivitySignUpBinding
+    private lateinit var binding: ActivitySignUpBinding
+    private lateinit var auth: FirebaseAuth
+    private lateinit var database: FirebaseDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
+
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         // Initialize Firebase
-        database = FirebaseDatabase.getInstance()
         auth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance()
 
+        // Handle the Sign Up Button
+        binding.btnRegister.setOnClickListener {
+            onRegisterBtnClick()
+        }
 
-        // Button click listener
-        binding.btnRegister.setOnClickListener { v: View? -> onRegisterBtnClick() }
+        // Handle the "Log In" text at the bottom
+        binding.tvLoginLink.setOnClickListener {
+            // Close this activity and return to the Login screen
+            finish()
+        }
     }
 
     private fun onRegisterBtnClick() {
+        // 1. Grab ALL the fields from the redesigned XML
+        val name = binding.etName.text.toString().trim()
         val email = binding.etEmailSignup.text.toString().trim()
         val password = binding.etPasswordSignup.text.toString().trim()
         val confirmPassword = binding.etConfirmPasswordSignup.text.toString().trim()
 
-        // Input validation
-        if (isValidInput(email, password, confirmPassword)) {
-            // Show progress bar
-            progressBar?.visibility = View.VISIBLE
+        // 2. Validate everything including the name
+        if (isValidInput(name, email, password, confirmPassword)) {
 
-            auth?.createUserWithEmailAndPassword(email, password)
-                ?.addOnCompleteListener(this, OnCompleteListener { task: Task<AuthResult?>? ->
-                    if (task!!.isSuccessful) {
-                        // User registration success
-                        val userId = auth?.currentUser?.uid
+            // Show a simple loading toast (or keep your progress bar if you add one to XML)
+            Toast.makeText(this, "Creating account...", Toast.LENGTH_SHORT).show()
 
+            auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
 
-                        // Now, add user data to the Realtime Database
-                        userRef = database?.getReference("Users")?.child(userId.toString())
+                        val userId = auth.currentUser?.uid ?: return@addOnCompleteListener
 
-                        // Replace "users" with the desired node name
-                        userRef?.child("email")?.setValue(email)
+                        // NOTE: Ensure this matches the casing in your InboxAdapter!
+                        // I set it to lowercase "users" as that is standard for Firebase.
+                        val userRef = database.getReference("Users").child(userId)
 
+                        // 3. Save ALL data to the database simultaneously using a HashMap
+                        val userData = hashMapOf(
+                            "email" to email,
+                            "username" to name
+                        )
 
-                        // You can add more data if needed, such as name, etc.
-                        // database.getReference("users").child(userId).child("name").setValue(userName);
+                        userRef.setValue(userData).addOnCompleteListener { dbTask ->
+                            if (dbTask.isSuccessful) {
+                                Toast.makeText(this, "Account Created Successfully!", Toast.LENGTH_SHORT).show()
 
-                        // Hide progress bar
-                        progressBar?.visibility = View.GONE
-                        // Navigate to the next screen
-                        val intent = Intent(this@SignUp, RegisterUserDetails::class.java)
-                        intent.putExtra("email", email)
-                        startActivity(intent)
-                        finish()
+                                val intent = Intent(this@SignUp, Login::class.java)
+                                intent.putExtra("email", email)
+                                startActivity(intent)
+                                finish()
+                            }
+                        }
                     } else {
-                        // User registration failed
-                        // Handle the failure, display an error message, etc.
-                        // You can check task.getException().getMessage() for the error message.
                         val errorMessage = task.exception?.message ?: "Registration failed"
-                        // You can show this error to the user, e.g., via Toast or Snackbar
-                        // Hide progress bar
-                        progressBar?.visibility = View.GONE
+                        Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
                     }
-                })
+                }
         }
     }
 
-    private fun isValidInput(email: String, password: String, confirmPassword: String): Boolean {
+    private fun isValidInput(name: String, email: String, password: String, confirmPassword: String): Boolean {
         var valid = true
+
+        // Check if Name is empty
+        if (TextUtils.isEmpty(name)) {
+            binding.etName.error = "Full Name is required"
+            valid = false
+        } else {
+            binding.etName.error = null
+        }
 
         // Check if email is valid
         if (TextUtils.isEmpty(email) || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {

@@ -24,17 +24,12 @@
         <activity
             android:name=".PaymentActivity"
             android:exported="false" />
-        <activity
-            android:name=".EditProfile"
-            android:exported="false" />
+
         <activity
             android:name=".Authentication.ForgetPassword"
             android:exported="false" />
         <activity
             android:name=".ChatActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Authentication.RegisterUserDetails"
             android:exported="false" />
         <activity
             android:name=".RoomDetailsActivity"
@@ -44,9 +39,6 @@
             android:exported="false" />-->
         <activity
             android:name=".Add_Room"
-            android:exported="false" />
-        <activity
-            android:name=".Profile_Page"
             android:exported="false" />
         <activity
             android:name=".Authentication.SignUp"

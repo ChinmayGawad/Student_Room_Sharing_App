@@ -3,6 +3,8 @@ package com.pgshare.studentroomsharingapp
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.pgshare.studentroomsharingapp.Fragments.ExploreFragment
+import com.pgshare.studentroomsharingapp.Fragments.InboxFragment
 
 import com.pgshare.studentroomsharingapp.databinding.ActivityStudentDashboardBinding
 
@@ -25,6 +27,10 @@ class StudentDashboardActivity : AppCompatActivity() {
             binding.bottomNavigation.selectedItemId = R.id.nav_explore
         }
 
+        val target = intent.getStringExtra("TARGET_FRAGMENT")
+
+
+
         // Handle Bottom Navigation item clicks
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
@@ -39,7 +45,7 @@ class StudentDashboardActivity : AppCompatActivity() {
                 }
                 R.id.nav_inbox -> {
                     // Replace with your actual InboxFragment
-                    // loadFragment(InboxFragment())
+                    loadFragment(InboxFragment())
                     true
                 }
                 R.id.nav_profile -> {
@@ -50,7 +56,17 @@ class StudentDashboardActivity : AppCompatActivity() {
                 else -> false
             }
         }
+        if (target == "INBOX") {
+            // Select the tab and load the fragment
+            binding.bottomNavigation.selectedItemId = R.id.nav_inbox
+
+            // Option B: If doing it manually
+            //supportFragmentManager.beginTransaction().replace(R.id.fragment_container, InboxFragment()).commit()
+
+        }
     }
+
+
 
     /**
      * Helper function to swap fragments in the container

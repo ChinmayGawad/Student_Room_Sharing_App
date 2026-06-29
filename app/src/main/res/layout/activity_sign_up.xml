@@ -105,7 +105,7 @@
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Password"
+        android:hint="Confirm Password"
         android:layout_marginTop="16dp"
         app:endIconMode="password_toggle"
         app:boxCornerRadiusTopStart="12dp"
