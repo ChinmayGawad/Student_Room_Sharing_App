@@ -1,7 +1,5 @@
 package com.pgshare.studentroomsharingapp
 
-import android.app.PendingIntent
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -12,7 +10,6 @@ import com.google.firebase.database.*
 import com.pgshare.studentroomsharingapp.Adapter.Message
 import com.pgshare.studentroomsharingapp.Adapter.MessageAdapter
 import com.pgshare.studentroomsharingapp.Adapter.RecentChat
-import com.pgshare.studentroomsharingapp.Fragments.InboxFragment
 import com.pgshare.studentroomsharingapp.databinding.ActivityChatBinding
 
 class ChatActivity : AppCompatActivity() {
@@ -25,7 +22,6 @@ class ChatActivity : AppCompatActivity() {
     private var receiverId: String = ""
     private var senderId: String = ""
     private var chatRoomId: String = ""
-
     private var roomId : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +42,11 @@ class ChatActivity : AppCompatActivity() {
         databaseReference = FirebaseDatabase.getInstance().getReference("chats").child(chatRoomId).child("messages")
 
         setupRecyclerView()
+        chatAdapter.setReceiverId(receiverId)
         listenForMessages()
+
+        // --- NEW ADDITION: Fetch and display the user's name ---
+        loadReceiverName()
 
         binding.fabSend.setOnClickListener {
             val messageText = binding.etMessageInput.text.toString().trim()
@@ -55,11 +55,9 @@ class ChatActivity : AppCompatActivity() {
             }
         }
 
+        // --- NEW ADDITION: Fixed the back button to prevent memory leaks ---
         binding.btnBack.setOnClickListener {
-            val intent = Intent(this, StudentDashboardActivity::class.java)
-            intent.putExtra("TARGET_FRAGMENT", "INBOX") // Send a flag
-            startActivity(intent)
-            finish() // Close the chat activity
+            finish() // Simply close this screen to go back to the Dashboard
         }
     }
 
@@ -140,5 +138,32 @@ class ChatActivity : AppCompatActivity() {
         }.addOnFailureListener { e ->
             Log.e("ChatDebug", "Batch update FAILED: ${e.message}")
         }
+    }
+
+    // --- NEW ADDITION: Function to load the name from Firebase ---
+    private fun loadReceiverName() {
+        val userRef = FirebaseDatabase.getInstance().getReference("Users").child(receiverId)
+
+        userRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    val username = snapshot.child("username").getValue(String::class.java)
+                    val email = snapshot.child("email").getValue(String::class.java)
+
+                    val finalName = when {
+                        !username.isNullOrEmpty() -> username
+                        !email.isNullOrEmpty() -> email.substringBefore("@").replaceFirstChar { it.titlecase() }
+                        else -> "Unknown User"
+                    }
+
+                    binding.tvChatTitle.text = finalName
+                    chatAdapter.setReceiverName(finalName)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("ChatDebug", "Failed to load user name: ${error.message}")
+            }
+        })
     }
 }

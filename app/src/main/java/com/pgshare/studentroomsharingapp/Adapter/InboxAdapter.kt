@@ -5,8 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -37,6 +39,7 @@ class InboxAdapter(
         private val tvLastMessage: TextView = itemView.findViewById(R.id.tvLastMessage)
         private val tvTimestamp: TextView = itemView.findViewById(R.id.tvTimestamp)
         private val tvAvatarInitial: TextView = itemView.findViewById(R.id.tvAvatarInitial)
+        private val ivAvatar: ImageView = itemView.findViewById(R.id.ivAvatar)
 
         fun bind(chat: RecentChat) {
             Log.d("InboxDebug", "Trying to load User ID: '${chat.targetUserId}' for chat: ${chat.lastMessage}")
@@ -49,6 +52,8 @@ class InboxAdapter(
             // 1. PREVENT RECYCLING BUG: Reset the UI
             tvUserName.text = "Loading..."
             tvAvatarInitial.text = "?"
+            tvAvatarInitial.visibility = View.VISIBLE
+            ivAvatar.visibility = View.GONE
 
             // 2. Look ONLY at your official "Users" node
             val usersRef =
@@ -56,29 +61,15 @@ class InboxAdapter(
 
             usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    // --- START DATA INSPECTOR ---
-                    if (snapshot.exists()) {
-                        Log.d(
-                            "InboxDebug",
-                            "--- Inspecting Data for User ID: ${chat.targetUserId} ---"
-                        )
-                        for (child in snapshot.children) {
-                            Log.d(
-                                "InboxDebug",
-                                "Found Key: '${child.key}', Value: '${child.value}'"
-                            )
-                        }
-                        Log.d("InboxDebug", "--- End Inspection ---")
-                    } else {
-                        Log.d(
-                            "InboxDebug",
-                            "User snapshot does not exist for ID: ${chat.targetUserId}!"
-                        )
+                    if (!snapshot.exists()) {
+                        tvUserName.text = "Unknown User"
+                        tvAvatarInitial.text = "?"
+                        return
                     }
-                    // --- END DATA INSPECTOR ---
 
                     val username = snapshot.child("username").getValue(String::class.java)
                     val email = snapshot.child("email").getValue(String::class.java)
+                    val profileImageUrl = snapshot.child("profileImageUrl").getValue(String::class.java)
 
                     // 3. Smart Name Extraction
                     val finalName = when {
@@ -87,23 +78,39 @@ class InboxAdapter(
                             val extracted = email.substringBefore("@")
                             extracted.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
                         }
-
                         else -> "Unknown User"
                     }
 
                     tvUserName.text = finalName
-                    tvAvatarInitial.text =
-                        if (finalName != "Unknown User" && finalName.isNotEmpty()) {
-                            finalName.take(1).uppercase(Locale.getDefault())
-                        } else {
-                            "?"
-                        }
+
+                    // 4. Load profile image or show initial
+                    if (!profileImageUrl.isNullOrEmpty()) {
+                        tvAvatarInitial.visibility = View.GONE
+                        ivAvatar.visibility = View.VISIBLE
+                        Glide.with(itemView.context)
+                            .load(profileImageUrl)
+                            .placeholder(R.drawable.ic_person_placeholder)
+                            .error(R.drawable.ic_person_placeholder)
+                            .circleCrop()
+                            .into(ivAvatar)
+                    } else {
+                        tvAvatarInitial.visibility = View.VISIBLE
+                        ivAvatar.visibility = View.GONE
+                        tvAvatarInitial.text =
+                            if (finalName != "Unknown User" && finalName.isNotEmpty()) {
+                                finalName.take(1).uppercase(Locale.getDefault())
+                            } else {
+                                "?"
+                            }
+                    }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
                     android.util.Log.e("InboxDebug", "Fetch failed: ${error.message}")
                     tvUserName.text = "Unknown User"
                     tvAvatarInitial.text = "?"
+                    tvAvatarInitial.visibility = View.VISIBLE
+                    ivAvatar.visibility = View.GONE
                 }
             })
 
@@ -115,33 +122,6 @@ class InboxAdapter(
                 }
                 itemView.context.startActivity(intent)
             }
-        }
-
-
-
-        // Helper function to extract the best possible name
-        private fun extractAndSetUser(snapshot: DataSnapshot) {
-            val username = snapshot.child("username").getValue(String::class.java)
-            val email = snapshot.child("email").getValue(String::class.java)
-
-            val finalName = when {
-                !username.isNullOrEmpty() -> username
-                !email.isNullOrEmpty() -> {
-                    // Extract name from email (e.g., "john.doe@email.com" -> "John.doe")
-                    val extracted = email.substringBefore("@")
-                    extracted.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
-                }
-                else -> "Unknown User"
-            }
-
-            tvUserName.text = finalName
-            tvAvatarInitial.text = if (finalName != "Unknown User") finalName.substring(0, 1).uppercase(Locale.getDefault()) else "?"
-        }
-
-        // Helper function for missing users
-        private fun setUnknownUser() {
-            tvUserName.text = "Unknown User"
-            tvAvatarInitial.text = "?"
         }
     }
 }

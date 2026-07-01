@@ -8,19 +8,34 @@
     android:focusable="true"
     android:padding="16dp">
 
-    <TextView
-        android:id="@+id/tvAvatarInitial"
+    <FrameLayout
+        android:id="@+id/frameLayout2"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:background="@drawable/circle_background"
-        android:gravity="center"
-        android:text="O"
-        android:textColor="@android:color/white"
-        android:textSize="20sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tvAvatarInitial"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/circle_background"
+            android:gravity="center"
+            android:text="O"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_person_placeholder" />
+
+    </FrameLayout>
 
     <TextView
         android:id="@+id/tvUserName"
@@ -33,8 +48,8 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/tvTimestamp"
-        app:layout_constraintStart_toEndOf="@+id/tvAvatarInitial"
-        app:layout_constraintTop_toTopOf="@+id/tvAvatarInitial" />
+        app:layout_constraintStart_toEndOf="@+id/frameLayout2"
+        app:layout_constraintTop_toTopOf="@+id/frameLayout2" />
 
     <TextView
         android:id="@+id/tvLastMessage"
