@@ -21,6 +21,7 @@ class RoomListAdapter(
     // Initialize Firebase references at the adapter level
     private val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
     private val favoritesRef = FirebaseDatabase.getInstance().getReference("Users")
+    private val usersRef = FirebaseDatabase.getInstance().getReference("Users")
 
     // Interface to handle clicks cleanly
     interface OnRoomClickListener {
@@ -40,7 +41,30 @@ class RoomListAdapter(
             // Your custom Room model getter
             binding.tvRoomPrice.text = room.formatPrice
 
-            // 2. Decode the Base64 Image back to a Bitmap
+            // 2. Fetch and display Owner Name
+            val ownerId = room.userId
+            if (!ownerId.isNullOrEmpty()) {
+                usersRef.child(ownerId).addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (!binding.root.isAttachedToWindow) return // Prevent RecyclerView recycling issues
+
+                        val username = snapshot.child("username").value as? String
+                        val email = snapshot.child("email").value as? String
+                        val displayName = getDisplayName(username, email)
+                        binding.tvRoomOwner.text = "Listed by $displayName"
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        if (binding.root.isAttachedToWindow) {
+                            binding.tvRoomOwner.text = "Listed by Unknown User"
+                        }
+                    }
+                })
+            } else {
+                binding.tvRoomOwner.text = "Listed by Unknown User"
+            }
+
+            // 3. Decode the Base64 Image back to a Bitmap
             val base64String = room.imageUrls?.firstOrNull()
             if (!base64String.isNullOrEmpty()) {
                 try {
@@ -54,6 +78,8 @@ class RoomListAdapter(
             } else {
                 binding.imgRoomThumbnail.setImageResource(R.drawable.imageplaceholder)
             }
+
+
 
             // 3. Handle Firebase Save Logic & UI Toggle
             // Sanitize the roomName so Firebase accepts it as a valid database key
@@ -128,5 +154,11 @@ class RoomListAdapter(
     fun updateData(newRooms: List<Room>) {
         roomList = newRooms
         notifyDataSetChanged()
+    }
+    // Helper function for name extraction (same logic as InboxAdapter)
+    fun getDisplayName(username: String?, email: String?): String {
+        return if (!username.isNullOrBlank()) username
+        else if (!email.isNullOrBlank()) email.substringBefore("@")
+        else "Unknown User"
     }
 }

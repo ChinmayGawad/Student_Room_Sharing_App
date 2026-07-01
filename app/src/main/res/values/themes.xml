@@ -25,4 +25,10 @@
 
     </style>
 
+    <!-- Circular shape for avatar -->
+    <style name="CircularShape">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
 </resources>

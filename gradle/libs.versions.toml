@@ -1,8 +1,10 @@
 [versions]
 kotlin = "2.4.0"
 agp = "8.13.2"
+firebaseCrashlyticsBuildtools = "3.0.7"
 
 [libraries]
+firebase-crashlytics-buildtools = { group = "com.google.firebase", name = "firebase-crashlytics-buildtools", version.ref = "firebaseCrashlyticsBuildtools" }
 
 [plugins]
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

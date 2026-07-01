@@ -34,4 +34,17 @@
     <string name="enter_otp">Enter OTP</string>
     <string name="book_room">Book Room</string>
 
+    <!-- Profile Fragment Strings -->
+    <string name="edit_profile_picture">Edit profile picture</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="log_out">Log Out</string>
+    <string name="loading_profile">Loading profile...</string>
+    <string name="profile_updated">Profile updated successfully</string>
+    <string name="error_updating_profile">Error updating profile: %s</string>
+    <string name="error_uploading_image">Error uploading image: %s</string>
+    <string name="error_loading_profile">Error loading profile: %s</string>
+    <string name="please_enter_username">Please enter a username</string>
+    <string name="logged_out">Logged out successfully</string>
+    <string name="select_image">Select Image</string>
+
 </resources>

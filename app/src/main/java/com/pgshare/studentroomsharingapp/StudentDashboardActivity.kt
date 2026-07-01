@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.pgshare.studentroomsharingapp.Fragments.ExploreFragment
 import com.pgshare.studentroomsharingapp.Fragments.InboxFragment
+import com.pgshare.studentroomsharingapp.Fragments.ProfileFragment
 
 import com.pgshare.studentroomsharingapp.databinding.ActivityStudentDashboardBinding
 
@@ -49,8 +50,7 @@ class StudentDashboardActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_profile -> {
-                    // Replace with your actual ProfileFragment
-                    // loadFragment(ProfileFragment())
+                    loadFragment(ProfileFragment())
                     true
                 }
                 else -> false
