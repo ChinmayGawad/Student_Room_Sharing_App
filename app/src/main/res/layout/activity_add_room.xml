@@ -1,133 +1,77 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:padding="16dp"
-    tools:context=".Add_Room"
-    android:background="@color/final_white">
+    android:background="?attr/colorSurface">
 
-    <!-- LinearLayout to hold multiple selected images -->
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPager"
-        android:layout_width="360dp"
-        android:layout_height="200dp"
-        android:layout_marginLeft="10dp"
-        android:contentDescription="@string/add_room">
-
-        <LinearLayout
-            android:id="@+id/linear"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" />
-
-    </androidx.viewpager.widget.ViewPager>
-
-    <androidx.cardview.widget.CardView
+    <!-- Top App Bar with Close Button -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_add_room"
         android:layout_width="match_parent"
-        android:layout_height="450dp"
-        android:layout_marginTop="210dp"
-        app:cardCornerRadius="20dp"
-        android:backgroundTint="@color/C_color">
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorSurface"
+        app:title="Add New Room"
+        app:titleTextColor="?attr/colorOnBackground"
+        app:navigationIcon="@drawable/baseline_close_24"
+        app:navigationIconTint="?attr/colorOnSurface"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/editTextRoomName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="28dp"
-            android:padding="15dp"
-            android:autofillHints="@string/room_name"
-            android:background="@color/final_white"
-            android:hint="1RK 1BHK 2BHK"
-            android:minHeight="48dp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black"
-            tools:ignore="TextFields" />
-
-    <EditText
-        android:id="@+id/editTextLocation"
+    <!-- Material 3 Linear Progress Indicator -->
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progress_add_room"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="28dp"
-        android:autofillHints="@string/location"
-        android:background="@color/final_white"
-        android:padding="15dp"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black"
-        android:hint="@string/location"
-        android:minHeight="48dp"
-        tools:ignore="TextFields" />
+        android:progress="25"
+        app:indicatorColor="?attr/colorPrimary"
+        app:trackColor="?attr/colorSurfaceVariant"
+        app:trackCornerRadius="@dimen/shapeCornerSmall"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_add_room" />
 
-    <EditText
-        android:id="@+id/editTextDescription"
+    <!-- ViewPager to hold the steps (Swiping will be disabled in Kotlin) -->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewpager_add_room_steps"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/progress_add_room"
+        app:layout_constraintBottom_toTopOf="@id/layout_bottom_actions" />
+
+    <!-- Persistent Bottom Action Bar -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_bottom_actions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="170dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginEnd="28dp"
-        android:background="@color/final_white"
-        android:padding="15dp"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black"
-        android:autofillHints="@string/description"
-        android:hint="@string/description"
-        android:minHeight="48dp"
-        tools:ignore="TextFields" />
+        android:background="?attr/colorSurface"
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="16dp"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-    <EditText
-        android:id="@+id/editTextPrice"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="240dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginEnd="28dp"
-        android:background="@color/final_white"
-        android:padding="15dp"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black"
-        android:autofillHints="@string/price"
-        android:hint="@string/price"
-        android:inputType="numberDecimal"
-        android:minHeight="48dp" />
+        <!-- Back Button (Hidden on Step 1) -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_wizard_back"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="56dp"
+            android:text="Back"
+            android:textAppearance="?attr/textAppearanceLabelLarge"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/BtnGallery"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="310dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginEnd="28dp"
-        android:background="@color/C_color"
-        android:text="@string/select_form_gallery" />
+        <!-- Next / Publish Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_wizard_next"
+            style="@style/Widget.Material3.Button"
+            android:layout_width="140dp"
+            android:layout_height="56dp"
+            android:text="Next"
+            android:textAppearance="?attr/textAppearanceLabelLarge"
+            app:cornerRadius="@dimen/shapeCornerLarge"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-
-
-    <Button
-        android:id="@+id/buttonSave"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="370dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginEnd="100dp"
-        android:background="#E6E1E1"
-        android:text="@string/save" />
-
-        <ProgressBar
-        android:id="@+id/Add_roomProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="220dp"
-        android:visibility="gone" />
-
-    </androidx.cardview.widget.CardView>
-
-
-
-
-</RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

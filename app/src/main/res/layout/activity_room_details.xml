@@ -1,92 +1,259 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    tools:context=".RoomDetailsActivity"
-    android:background="@color/final_white">
-    <RelativeLayout
-        android:padding="16dp"
-        tools:context=".RoomDetailsActivity"
-        android:background="@color/final_white"
+    android:background="?attr/colorSurface">
+
+    <!-- The Collapsing Header (Hero Image) -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:contentScrim="?attr/colorSurface"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:titleCollapseMode="fade">
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewpager_room_images"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.7" />
+
+            <!-- Pagination Dots (So the user knows they can swipe) -->
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout_image_indicator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="@android:color/transparent"
+                app:layout_collapseMode="pin"
+                app:tabBackground="@android:color/transparent"
+                app:tabGravity="center"
+                app:tabIndicatorHeight="0dp"
+                android:layout_marginBottom="48dp"/>
+
+            <!-- A subtle gradient overlay so the white back button is always visible -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@drawable/scrim_top_down"
+                app:layout_collapseMode="pin" />
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:navigationIcon="@drawable/baseline_arrow_back_24" />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Scrollable Room Details Content -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:paddingBottom="100dp"> <!-- Padding to prevent CTA from covering content -->
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="24dp">
+
+            <!-- Title & Badge -->
+            <TextView
+                android:id="@+id/tv_detail_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Private Room in 3BHK"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnBackground"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/layout_owner_badge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_title"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/baseline_check_circle_24"
+                    app:tint="?attr/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/tv_owner_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Listed by Rajesh (Verified Owner)"
+                    android:textSize="14sp"
+                    android:textColor="?attr/colorPrimary"
+                    android:textStyle="bold"
+                    android:layout_marginStart="8dp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divider_1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?attr/colorOutline"
+                android:alpha="0.2"
+                android:layout_marginTop="24dp"
+                app:layout_constraintTop_toBottomOf="@id/layout_owner_badge" />
+
+            <!-- Transparent Pricing Breakdown (UX Commandment #5) -->
+            <TextView
+                android:id="@+id/tv_pricing_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pricing Breakdown"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnBackground"
+                android:layout_marginTop="24dp"
+                app:layout_constraintTop_toBottomOf="@id/divider_1"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_rent_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Monthly Rent"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_pricing_header"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_rent_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="₹8,500"
+                android:textColor="?attr/colorOnBackground"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="@id/tv_rent_label"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_deposit_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Security Deposit (Refundable)"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_rent_label"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_deposit_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="₹10,000"
+                android:textColor="?attr/colorOnBackground"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="@id/tv_deposit_label"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <View
+                android:id="@+id/divider_2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?attr/colorOutline"
+                android:alpha="0.2"
+                android:layout_marginTop="24dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_deposit_label" />
+
+            <!-- Description -->
+            <TextView
+                android:id="@+id/tv_description_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="About this room"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnBackground"
+                android:layout_marginTop="24dp"
+                app:layout_constraintTop_toBottomOf="@id/divider_2"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_description_body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Spacious, well-ventilated private room in a 3BHK apartment. High-speed WiFi included. Looking for a quiet, clean roommate. Only 10 mins walking distance to the main university campus."
+                android:textColor="?attr/colorOnSurfaceVariant"
+                android:lineSpacingExtra="4dp"
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_description_header" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Persistent Bottom Call-to-Action (CTA) Sheet -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+        android:layout_gravity="bottom"
+        app:cardElevation="16dp"
+        app:cardCornerRadius="@dimen/shapeCornerNone"
+        app:strokeWidth="0dp">
 
-        <!-- TextViews for room details -->
-        <TextView
-            android:id="@+id/roomNameTextView"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="30sp"
-            android:textStyle="bold" />
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="16dp"
+            android:background="?attr/colorSurface">
 
-        <TextView
-            android:id="@+id/locationTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/roomNameTextView"
-            android:layout_marginTop="8dp"
-            android:textColor="@color/black"
-            android:textSize="24sp" />
+            <TextView
+                android:id="@+id/tv_cta_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="₹8,500"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnBackground"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/descriptionTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/locationTextView"
-            android:layout_marginTop="8dp"
-            android:textColor="@color/black"
-            android:textSize="24sp" />
+            <TextView
+                android:id="@+id/tv_cta_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="/ month"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                app:layout_constraintTop_toBottomOf="@id/tv_cta_price"
+                app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/priceTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/descriptionTextView"
-            android:layout_marginTop="8dp"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_chat_owner"
+                style="@style/Widget.Material3.Button"
+                android:layout_width="160dp"
+                android:layout_height="56dp"
+                android:text="Chat with Owner"
+                app:cornerRadius="16dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
 
-        <!-- RecyclerView to display multiple images -->
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/imageRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/priceTextView"
-            android:layout_marginTop="136dp" />
-
-        <Button
-            android:id="@+id/ChatWithRoomMate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/priceTextView"
-            android:layout_marginTop="26dp"
-            android:text="Chat Room Mate"
-            android:textSize="12sp"
-            android:background="@drawable/button_curve"
-            android:backgroundTint="@color/MediumPurple"
-            android:layout_marginStart="200dp"/>
-
-        <Button
-            android:id="@+id/bookRoomButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/priceTextView"
-            android:layout_marginTop="26dp"
-            android:backgroundTint="@color/MediumPurple"
-            android:onClick="bookRoom"
-            android:text="@string/book_room"
-            android:background="@drawable/button_curve"
-            android:textColor="@color/black" />
-
-
-
-    </RelativeLayout>
-
-</ScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,32 +1,32 @@
-<!-- item_message_sent.xml -->
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    android:gravity="right"
+    android:gravity="end"
     android:orientation="horizontal"
-    android:paddingLeft="80dp">
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="4dp">
 
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:gravity="right"
-        android:orientation="vertical">
-
+        android:layout_marginStart="60dp"
+        app:cardBackgroundColor="@color/item_message_sent"
+        app:cardCornerRadius="@dimen/shapeCornerLarge"
+        app:cardElevation="0dp"
+        app:strokeWidth="0dp">
 
         <TextView
             android:id="@+id/messageTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:background="@drawable/bg_message_sent"
-            android:padding="8dp"
-            android:textColor="@android:color/white" />
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="10dp"
+            android:text="Sent Message"
+            android:textColor="?attr/colorOnPrimary"
+            android:textAppearance="?attr/textAppearanceBodyLarge" />
 
-    </LinearLayout>
-
+    </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>
-

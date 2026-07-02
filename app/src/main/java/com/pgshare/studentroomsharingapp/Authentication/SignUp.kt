@@ -1,135 +1,113 @@
 package com.pgshare.studentroomsharingapp.Authentication
 
 import android.content.Intent
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Patterns
-import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
-import com.google.android.material.textfield.TextInputLayout
-import com.google.firebase.auth.AuthResult
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.pgshare.studentroomsharingapp.R
-import java.util.Objects
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.pgshare.studentroomsharingapp.databinding.ActivitySignUpBinding
+import com.pgshare.studentroomsharingapp.viewmodel.SignUpEvent
+import com.pgshare.studentroomsharingapp.viewmodel.SignUpViewModel
+import kotlinx.coroutines.launch
 
 class SignUp : AppCompatActivity() {
-    private var emailLayout: TextInputLayout? = null
-    private var passwordLayout: TextInputLayout? = null
-    private var confirmPasswordLayout: TextInputLayout? = null
-    private var editTextEmail: EditText? = null
-    private var passwordEditText: EditText? = null
-    private var editTextConfirmPassword: EditText? = null
-    private var buttonNext: Button? = null
-    private var progressBar: ProgressBar? = null
-    private var userRef: DatabaseReference? = null
-    private var database: FirebaseDatabase? = null
-    private var auth: FirebaseAuth? = null
+
+    private lateinit var binding: ActivitySignUpBinding
+    private lateinit var viewModel: SignUpViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_up)
-        getSupportActionBar()!!.setBackgroundDrawable(ColorDrawable(getResources().getColor(R.color.C_color)))
+        supportActionBar?.hide()
 
-        // Initialize Firebase
-        database = FirebaseDatabase.getInstance()
-        auth = FirebaseAuth.getInstance()
+        binding = ActivitySignUpBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
+        viewModel = SignUpViewModel()
 
-        // Find views
-        emailLayout = findViewById<TextInputLayout>(R.id.EmailLayout)
-        passwordLayout = findViewById<TextInputLayout>(R.id.PasswordLayout)
-        confirmPasswordLayout = findViewById<TextInputLayout>(R.id.ConfirmPasswordLayout)
+        binding.btnRegister.setOnClickListener { onRegisterBtnClick() }
 
-        editTextEmail = findViewById<EditText>(R.id.editTextEmail)
-        passwordEditText = findViewById<EditText>(R.id.passwordEditText)
-        editTextConfirmPassword = findViewById<EditText>(R.id.editTextConfirmPassword)
+        binding.tvLoginLink.setOnClickListener { finish() }
 
-        buttonNext = findViewById<Button>(R.id.buttonNext)
-        progressBar = findViewById<ProgressBar>(R.id.SignUpProgressBar)
+        observeEvents()
+    }
 
-        // Button click listener
-        buttonNext!!.setOnClickListener(View.OnClickListener { v: View? -> onRegisterBtnClick() })
+    private fun observeEvents() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.events.collect { event ->
+                    when (event) {
+                        is SignUpEvent.Success -> {
+                            Toast.makeText(this@SignUp, "Account Created Successfully!", Toast.LENGTH_SHORT).show()
+                            val intent = Intent(this@SignUp, Login::class.java)
+                            intent.putExtra("email", binding.etEmailSignup.text.toString().trim())
+                            startActivity(intent)
+                            finish()
+                        }
+                        is SignUpEvent.Error -> {
+                            Toast.makeText(this@SignUp, event.message, Toast.LENGTH_LONG).show()
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun onRegisterBtnClick() {
-        val email = editTextEmail!!.getText().toString().trim { it <= ' ' }
-        val password = passwordEditText!!.getText().toString().trim { it <= ' ' }
-        val confirmPassword = editTextConfirmPassword!!.getText().toString().trim { it <= ' ' }
+        val name = binding.etName.text.toString().trim()
+        val email = binding.etEmailSignup.text.toString().trim()
+        val password = binding.etPasswordSignup.text.toString().trim()
+        val confirmPassword = binding.etConfirmPasswordSignup.text.toString().trim()
 
-        // Input validation
-        if (isValidInput(email, password, confirmPassword)) {
-            // Show progress bar
-            progressBar!!.setVisibility(View.VISIBLE)
+        val role = when (binding.cgRole.checkedChipId) {
+            binding.chipStudent.id -> "student"
+            binding.chipOwner.id -> "owner"
+            else -> ""
+        }
 
-            auth!!.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, OnCompleteListener { task: Task<AuthResult?>? ->
-                    if (task!!.isSuccessful()) {
-                        // User registration success
-                        val userId = auth!!.getCurrentUser()!!.getUid()
-
-
-                        // Now, add user data to the Realtime Database
-                        userRef = database!!.getReference("Users").child(userId)
-
-                        // Replace "users" with the desired node name
-                        userRef!!.child("email").setValue(email)
-
-
-                        // You can add more data if needed, such as name, etc.
-                        // database.getReference("users").child(userId).child("name").setValue(userName);
-
-                        // Hide progress bar
-                        progressBar!!.setVisibility(View.GONE)
-                        // Navigate to the next screen
-                        val intent = Intent(this@SignUp, RegisterUserDetails::class.java)
-                        intent.putExtra("email", email)
-                        startActivity(intent)
-                        finish()
-                    } else {
-                        // User registration failed
-                        // Handle the failure, display an error message, etc.
-                        // You can check task.getException().getMessage() for the error message.
-                        Objects.requireNonNull<Exception?>(task.getException()).message
-                        // Hide progress bar
-                        progressBar!!.setVisibility(View.GONE)
-                    }
-                })
+        if (isValidInput(name, email, password, confirmPassword, role)) {
+            Toast.makeText(this, "Creating account...", Toast.LENGTH_SHORT).show()
+            viewModel.signUp(name, email, password, role)
         }
     }
 
-    private fun isValidInput(email: String?, password: String, confirmPassword: String?): Boolean {
+    private fun isValidInput(name: String, email: String, password: String, confirmPassword: String, role: String): Boolean {
         var valid = true
 
-        // Check if email is valid
+        if (TextUtils.isEmpty(name)) {
+            binding.etName.error = "Full Name is required"
+            valid = false
+        } else {
+            binding.etName.error = null
+        }
+
         if (TextUtils.isEmpty(email) || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            emailLayout!!.setError("Invalid email address")
+            binding.etEmailSignup.error = "Invalid email address"
             valid = false
         } else {
-            emailLayout!!.setError(null)
+            binding.etEmailSignup.error = null
         }
 
-        // Check if password is empty or meets minimum length
         if (TextUtils.isEmpty(password) || password.length < 6) {
-            passwordLayout!!.setError("Password must be at least 6 characters")
+            binding.etPasswordSignup.error = "Password must be at least 6 characters"
             valid = false
         } else {
-            passwordLayout!!.setError(null)
+            binding.etPasswordSignup.error = null
         }
 
-        // Check if passwords match
         if (password != confirmPassword) {
-            confirmPasswordLayout!!.setError("Passwords do not match")
+            binding.etConfirmPasswordSignup.error = "Passwords do not match"
             valid = false
         } else {
-            confirmPasswordLayout!!.setError(null)
+            binding.etConfirmPasswordSignup.error = null
+        }
+
+        if (role.isEmpty()) {
+            Toast.makeText(this, "Please select if you are a Student or an Owner", Toast.LENGTH_SHORT).show()
+            valid = false
         }
 
         return valid

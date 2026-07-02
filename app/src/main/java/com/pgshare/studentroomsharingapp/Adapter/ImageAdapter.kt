@@ -1,46 +1,47 @@
 package com.pgshare.studentroomsharingapp.Adapter
 
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.pgshare.studentroomsharingapp.Adapter.ImageAdapter.ImageViewHolder
 import com.pgshare.studentroomsharingapp.R
 
-class ImageAdapter : RecyclerView.Adapter<ImageViewHolder?>() {
-    private var imageUrls: MutableList<String?>? = null
+class ImagePagerAdapter(private val imageUrls: List<String?>) :
+    RecyclerView.Adapter<ImagePagerAdapter.ImageViewHolder>() {
 
-    fun setImageUrls(imageUrls: MutableList<String?>?) {
-        this.imageUrls = imageUrls
-        notifyDataSetChanged()
+    class ImageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        // Ensure this ID matches the ImageView inside your item_image.xml
+        val imageView: ImageView = view.findViewById(R.id.img_single_room_photo)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
-        val view =
-            LayoutInflater.from(parent.getContext()).inflate(R.layout.item_image, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_image, parent, false)
         return ImageViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
-        val imageUrl = imageUrls!!.get(position)
-        Glide.with(holder.itemView.getContext())
-            .load(imageUrl)
-            .placeholder(R.drawable.imageplaceholder)
-            .error(R.drawable.imageplaceholder)
-            .into(holder.imageView)
-    }
+        val base64String = imageUrls[position]
 
-    override fun getItemCount(): Int {
-        return if (imageUrls != null) imageUrls!!.size else 0
-    }
-
-    class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var imageView: ImageView
-
-        init {
-            imageView = itemView.findViewById<ImageView>(R.id.imageView)
+        if (!base64String.isNullOrEmpty()) {
+            try {
+                // Convert the Base64 string back into raw bytes
+                val decodedBytes = Base64.decode(base64String, Base64.DEFAULT)
+                // Compile bytes into a renderable Bitmap image
+                val bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
+                holder.imageView.setImageBitmap(bitmap)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                // Fallback safe asset if decoding fails safely
+                holder.imageView.setImageResource(R.drawable.imageplaceholder)
+            }
+        } else {
+            holder.imageView.setImageResource(R.drawable.imageplaceholder)
         }
     }
+
+    override fun getItemCount(): Int = imageUrls.size
 }

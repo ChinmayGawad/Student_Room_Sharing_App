@@ -1,90 +1,72 @@
 package com.pgshare.studentroomsharingapp
 
 import android.content.Intent
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.pgshare.studentroomsharingapp.Adapter.ImageAdapter
-import com.pgshare.studentroomsharingapp.Adapter.Room
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.google.android.material.tabs.TabLayoutMediator
+import com.pgshare.studentroomsharingapp.Adapter.ImagePagerAdapter
+import com.pgshare.studentroomsharingapp.databinding.ActivityRoomDetailsBinding
+import com.pgshare.studentroomsharingapp.model.Room
+import com.pgshare.studentroomsharingapp.viewmodel.RoomDetailViewModel
+import kotlinx.coroutines.launch
 
 class RoomDetailsActivity : AppCompatActivity() {
-    protected var room: Room? = null
-    private var bookRoomButton: Button? = null
-    private var isRoomBooked = false
+
+    private lateinit var binding: ActivityRoomDetailsBinding
+    private val viewModel = RoomDetailViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_room_details)
-        getSupportActionBar()!!.setBackgroundDrawable(ColorDrawable(getResources().getColor(R.color.C_color)))
+        supportActionBar?.hide()
+        binding = ActivityRoomDetailsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        // Initialize views
-        val roomNameTextView = findViewById<TextView>(R.id.roomNameTextView)
-        val locationTextView = findViewById<TextView>(R.id.locationTextView)
-        val descriptionTextView = findViewById<TextView>(R.id.descriptionTextView)
-        val priceTextView = findViewById<TextView>(R.id.priceTextView)
-        val recyclerView = findViewById<RecyclerView>(R.id.imageRecyclerView)
-        val chatWithRoomMate = findViewById<Button>(R.id.ChatWithRoomMate)
-        bookRoomButton = findViewById<Button>(R.id.bookRoomButton)
-
-        // Set layout manager for RecyclerView
-        recyclerView.setLayoutManager(
-            LinearLayoutManager(
-                this,
-                LinearLayoutManager.VERTICAL,
-                false
-            )
-        )
-
-        // Get the Room object from the intent
-        room = getIntent().getParcelableExtra<Room?>("Rooms")
-
-        // Check if room object is not null
-        if (room != null) {
-            // Set room details
-            roomNameTextView.setText(room!!.roomName)
-            locationTextView.setText(room!!.location)
-            descriptionTextView.setText(room!!.description)
-            priceTextView.setText(room!!.getFormatPrice())
-
-            // Load images into RecyclerView
-            val imageUrls: MutableList<String?>? = room!!.imageUrls
-            if (imageUrls != null && !imageUrls.isEmpty()) {
-                val imageAdapter = ImageAdapter()
-                recyclerView.setAdapter(imageAdapter)
-                imageAdapter.setImageUrls(imageUrls)
-            }
-
-            // Retrieve booking status of the room from the database
-            // Check if the room is booked
-            isRoomBooked = room!!.isRoomBooked // Example: Retrieve booked status from Room object
-            if (isRoomBooked) {
-                // If room is booked, disable the book button and display a message
-                bookRoomButton!!.setText("Room Booked")
-                bookRoomButton!!.setEnabled(false)
-            }
-        } else {
-            // Handle case where room object is null
-            Toast.makeText(this, "Failed to load room details", Toast.LENGTH_SHORT).show()
+        binding.toolbar.setNavigationOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
         }
 
-        // Set onClickListener for chat button
-        chatWithRoomMate.setOnClickListener(View.OnClickListener { v: View? ->
-            val intent = Intent(this, ChatActivity::class.java)
-            intent.putExtra("roomId", room!!.id)
-            startActivity(intent)
-        })
+        val room = intent.getParcelableExtra<Room>("Rooms")
+
+        if (room != null) {
+            val imageUrls = room.imageUrls ?: arrayListOf()
+            val imagePagerAdapter = ImagePagerAdapter(imageUrls)
+            binding.viewpagerRoomImages.adapter = imagePagerAdapter
+
+            TabLayoutMediator(binding.tabLayoutImageIndicator, binding.viewpagerRoomImages) { _, _ ->
+            }.attach()
+
+            binding.tvDetailTitle.text = room.roomName
+            binding.tvDescriptionBody.text = room.description ?: "No description provided."
+
+            val formattedPrice = "\u20B9${room.price}"
+            binding.tvRentAmount.text = formattedPrice
+            binding.tvCtaPrice.text = formattedPrice
+
+            val formattedDeposit = "\u20B9${room.deposit}"
+            binding.tvDepositAmount.text = formattedDeposit
+
+            observeOwnerName()
+            viewModel.loadOwnerName(room.userId)
+
+            binding.btnChatOwner.setOnClickListener {
+                val intent = Intent(this, ChatActivity::class.java)
+                intent.putExtra("RECEIVER_ID", room.userId)
+                intent.putExtra("ROOM_ID", room.id)
+                startActivity(intent)
+            }
+        }
     }
 
-    // Method to handle booking of the room
-    fun bookRoom(view: View?) {
-        val intent = Intent(this@RoomDetailsActivity, PaymentActivity::class.java)
-        startActivity(intent)
-        finish()
+    private fun observeOwnerName() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { state ->
+                    binding.tvOwnerName.text = "Listed by ${state.ownerName}"
+                }
+            }
+        }
     }
 }

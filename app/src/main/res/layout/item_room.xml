@@ -1,87 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:padding="@dimen/card_padding">
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="12dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="2dp"
+    app:strokeWidth="0dp">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp">
 
+        <ImageView
+            android:id="@+id/img_room_thumbnail"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            android:background="?attr/colorSurfaceVariant"
+            app:layout_constraintDimensionRatio="4:3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/backgrounds/scenic" />
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:background="@drawable/scrim_top_down"
+            app:layout_constraintTop_toTopOf="@id/img_room_thumbnail"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
+        <ImageView
+            android:id="@+id/btn_save_room"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_margin="12dp"
+            android:src="@drawable/baseline_favorite_border_24"
+            app:tint="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-       <androidx.cardview.widget.CardView
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="190dp"
-           android:layout_marginLeft="20dp"
-           android:layout_marginRight="20dp"
-           app:cardBackgroundColor="#B4D3ED"
-           app:cardCornerRadius="15dp">
+        <TextView
+            android:id="@+id/tv_room_location"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="12dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="?attr/textAppearanceOverline"
+            android:textColor="?android:attr/textColorSecondary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/img_room_thumbnail"
+            tools:text="SHARED ROOM • BHIWANDI, MAHARASHTRA" />
 
+        <TextView
+            android:id="@+id/tv_room_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="?attr/textAppearanceSubtitle1"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_room_location"
+            tools:text="Spacious Room near Campus" />
 
-           <AbsoluteLayout
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content">
+         <TextView
+        android:id="@+id/tv_room_owner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="2dp"
+        android:textAppearance="?attr/textAppearanceCaption"
+        android:textColor="?android:attr/textColorSecondary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_room_title"
+        tools:text="Listed by John Doe" />
 
-           <ImageView
-               android:id="@+id/room_image"
-               android:layout_width="200dp"
-               android:layout_height="150dp"
-               android:layout_y="1dp"
-               android:layout_x="1dp"
-               android:scaleType="fitXY"
-               android:padding="8dp"
-               android:background="@drawable/image_corner"
-               android:backgroundTint="#B4D3ED"
+        <TextView
+            android:id="@+id/tv_room_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="4dp"
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_room_owner"
+            tools:text="₹5000" />
 
-               android:contentDescription="Images of rooms" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="/ month"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="?android:attr/textColorSecondary"
+            app:layout_constraintBottom_toBottomOf="@id/tv_room_price"
+            app:layout_constraintStart_toEndOf="@id/tv_room_price" />
 
-           <TextView
-               android:id="@+id/room_title"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_x="220dp"
-               android:layout_y="20dp"
-               android:textSize="20sp"
-               android:textColor="@color/black"
-               android:layout_marginTop="@dimen/item_margin"
-
-               android:textStyle="bold" />
-
-           <TextView
-               android:id="@+id/roomAddress"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:textColor="@color/black"
-               android:layout_x="220dp"
-               android:layout_y="50dp"
-               android:textSize="20sp"
-               android:maxLines="2" />
-
-           <TextView
-               android:id="@+id/room_rent"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:textColor="@color/black"
-               android:layout_x="220dp"
-               android:textSize="20sp"
-               android:layout_y="80dp"/>
-
-           <TextView
-               android:id="@+id/room_description"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:textColor="@color/black"
-               android:layout_x="220dp"
-               android:layout_y="110dp"
-               android:textSize="20sp"
-               android:maxLines="2" />
-
-           </AbsoluteLayout>
-
-       </androidx.cardview.widget.CardView>
-
-
-
-</AbsoluteLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

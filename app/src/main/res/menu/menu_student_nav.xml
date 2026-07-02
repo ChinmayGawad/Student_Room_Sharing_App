@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Tab 1: Home/Explore -->
+    <item
+        android:id="@+id/nav_explore"
+        android:icon="@drawable/baseline_search_24"
+        android:title="Explore" />
+
+    <!-- Tab 2: Saved/Wishlist -->
+    <item
+        android:id="@+id/nav_saved"
+        android:icon="@drawable/baseline_favorite_border_24"
+        android:title="Saved" />
+
+    <!-- Tab 3: Inbox/Chat -->
+    <item
+        android:id="@+id/nav_inbox"
+        android:icon="@drawable/baseline_chat_24"
+        android:title="Inbox" />
+
+    <!-- Tab 4: Profile -->
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/ic_user"
+        android:title="Profile" />
+</menu>

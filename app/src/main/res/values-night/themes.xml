@@ -1,7 +1,73 @@
-<resources>
-    <!-- Base application theme. -->
-    <style name="Base.Theme.StudentRoomSharingApp" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="Theme.StudentRoomSharingApp" parent="Theme.Material3.DayNight.NoActionBar">
+
+        <!-- Primary -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/onPrimary</item>
+        <item name="colorPrimaryContainer">@color/primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/onPrimaryContainer</item>
+
+        <!-- Secondary -->
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorOnSecondary">@color/onSecondary</item>
+        <item name="colorSecondaryContainer">@color/secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/onSecondaryContainer</item>
+
+        <!-- Tertiary -->
+        <item name="colorTertiary">@color/tertiary</item>
+        <item name="colorOnTertiary">@color/onTertiary</item>
+
+        <!-- Error -->
+        <item name="colorError">@color/error</item>
+        <item name="colorOnError">@color/onError</item>
+        <item name="colorErrorContainer">@color/errorContainer</item>
+        <item name="colorOnErrorContainer">@color/onErrorContainer</item>
+
+        <!-- Background -->
+        <item name="android:colorBackground">@color/background</item>
+        <item name="colorOnBackground">@color/onBackground</item>
+
+        <!-- Surface -->
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnSurface">@color/onSurface</item>
+        <item name="colorSurfaceVariant">@color/surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/onSurfaceVariant</item>
+
+        <!-- Outline -->
+        <item name="colorOutline">@color/outline</item>
+
+        <!-- Ripple -->
+        <item name="colorControlHighlight">@color/primaryContainer</item>
+
+        <!-- Status & Nav Bars (edge-to-edge) -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">false</item>
+
+        <!-- Background -->
+        <item name="android:windowBackground">@color/background</item>
+
+        <!-- Typography -->
+        <item name="textAppearanceHeadlineLarge">@style/TextAppearance.StudentRoomSharingApp.HeadlineLarge</item>
+        <item name="textAppearanceHeadlineMedium">@style/TextAppearance.StudentRoomSharingApp.HeadlineMedium</item>
+        <item name="textAppearanceTitleLarge">@style/TextAppearance.StudentRoomSharingApp.TitleLarge</item>
+        <item name="textAppearanceTitleMedium">@style/TextAppearance.StudentRoomSharingApp.TitleMedium</item>
+        <item name="textAppearanceTitleSmall">@style/TextAppearance.StudentRoomSharingApp.TitleSmall</item>
+        <item name="textAppearanceBodyLarge">@style/TextAppearance.StudentRoomSharingApp.BodyLarge</item>
+        <item name="textAppearanceBodyMedium">@style/TextAppearance.StudentRoomSharingApp.BodyMedium</item>
+        <item name="textAppearanceBodySmall">@style/TextAppearance.StudentRoomSharingApp.BodySmall</item>
+        <item name="textAppearanceLabelLarge">@style/TextAppearance.StudentRoomSharingApp.LabelLarge</item>
+        <item name="textAppearanceLabelMedium">@style/TextAppearance.StudentRoomSharingApp.LabelMedium</item>
+        <item name="textAppearanceLabelSmall">@style/TextAppearance.StudentRoomSharingApp.LabelSmall</item>
+
     </style>
+
+    <!-- Circular shape for avatar -->
+    <style name="CircularShape">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
 </resources>

@@ -4,7 +4,7 @@
     <string name="userimage">UserImage</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
-    <string name="create_account">Didn\'t have an account?  Create  One</string>
+    <string name="create_account">Create One</string>
     <string name="name">Name</string>
     <string name="email_id">Email_id</string>
     <string name="phone_number">Phone No</string>
@@ -33,5 +33,23 @@
     <string name="select_form_gallery">Select Form Gallery</string>
     <string name="enter_otp">Enter OTP</string>
     <string name="book_room">Book Room</string>
+
+    <!-- Profile Fragment Strings -->
+    <string name="edit_profile_picture">Edit profile picture</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="log_out">Log Out</string>
+    <string name="loading_profile">Loading profile...</string>
+    <string name="profile_updated">Profile updated successfully</string>
+    <string name="error_updating_profile">Error updating profile: %s</string>
+    <string name="error_uploading_image">Error uploading image: %s</string>
+    <string name="error_loading_profile">Error loading profile: %s</string>
+    <string name="please_enter_username">Please enter a username</string>
+    <string name="logged_out">Logged out successfully</string>
+    <string name="select_image">Select Image</string>
+
+    <!-- Sign Up Role Selection -->
+    <string name="i_am_a">I am a:</string>
+    <string name="role_student">Student (looking to rent)</string>
+    <string name="role_owner">Owner (listing my property)</string>
 
 </resources>

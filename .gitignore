@@ -1,43 +1,54 @@
-# Built artifacts
+# Gradle and Build artifacts
+.gradle/
+build/
 bin/
 gen/
 out/
-build/
-
-# Gradle
-.gradle/
+app/build/
+.navigation/
 gradle-app.setting
 !gradle-wrapper.jar
-.navigation/
 
-# IntelliJ IDEA
+# Kotlin
+*.gradle.kts.swp
+
+# Android Studio / IntelliJ IDEA
 .idea/
 *.iml
 *.iws
 *.ipr
-
-# Android Studio
 captures/
 .externalNativeBuild/
 .cxx/
-*.apk
-*.aar
-*.ap_
-*.dex
+
+# Specific IDE files to ignore (often not covered by .idea/)
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/gradle.xml
+.idea/assetWizardSettings.xml
+.idea/dictionaries
+.idea/libraries
+.idea/caches
+.idea/modules.xml
+.idea/deploymentTargetDropDown.xml
+.idea/deploymentTargetSelector.xml
+.idea/navEditor.xml
 
 # Local configuration file (sdk path, etc)
 local.properties
 
+# Keystore files
+*.jks
+*.keystore
+*.p12
+*.key
+*.pem
+
 # Log files
 *.log
 
-# Keystore files
-# Uncomment the line below if you want to avoid checking in your keystore
-# *.jks
-# *.keystore
-
-# Google Services file (if you want to keep it private)
-google-services.json
+# Google Services file (Uncomment if you want to keep it private)
+# google-services.json
 
 # Device specific files
 .DS_Store
@@ -45,3 +56,7 @@ Thumbs.db
 
 # Misc
 .shelf/
+.sapient/
+build_output.txt
+
+.codebuddy

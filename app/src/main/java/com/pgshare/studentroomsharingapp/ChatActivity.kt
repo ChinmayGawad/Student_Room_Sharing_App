@@ -1,133 +1,86 @@
 package com.pgshare.studentroomsharingapp
 
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import com.pgshare.studentroomsharingapp.Adapter.Message
-import com.pgshare.studentroomsharingapp.Adapter.MessageAdapt
-import com.pgshare.studentroomsharingapp.Adapter.UserHelper
+import com.pgshare.studentroomsharingapp.Adapter.MessageAdapter
+import com.pgshare.studentroomsharingapp.databinding.ActivityChatBinding
+import com.pgshare.studentroomsharingapp.model.Message
+import com.pgshare.studentroomsharingapp.viewmodel.ChatViewModel
+import kotlinx.coroutines.launch
 
 class ChatActivity : AppCompatActivity() {
-    private var messageEditText: EditText? = null
-    private var sendButton: Button? = null
-    private var messageListView: ListView? = null
-    private var messages: ArrayList<Message?>? = null
-    private var messageAdapt: MessageAdapt? = null
-    private var messagesRef: DatabaseReference? = null
 
-    private val firebaseAuth: FirebaseAuth? = null
+    private lateinit var binding: ActivityChatBinding
+    private lateinit var chatAdapter: MessageAdapter
+    private lateinit var messageList: ArrayList<Message>
 
-    private var roomId: String? = null // Variable to store the room ID
+    private val viewModel = ChatViewModel()
 
-    // Override onCreate method
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_chat)
-        getSupportActionBar()!!.setBackgroundDrawable(ColorDrawable(getResources().getColor(R.color.C_color)))
+        supportActionBar?.hide()
+        binding = ActivityChatBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        // Initialize views
-        messageEditText = findViewById<EditText>(R.id.messageEditText)
-        sendButton = findViewById<Button>(R.id.sendButton)
-        messageListView = findViewById<ListView>(R.id.messageListView)
+        val receiverId = intent.getStringExtra("RECEIVER_ID") ?: ""
+        val roomId = intent.getStringExtra("ROOM_ID") ?: "UnknownRoom"
+        val senderId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
 
-        // Check if intent has extras
-        val intent = getIntent()
-        if (intent != null && intent.hasExtra("roomId")) {
-            roomId = intent.getStringExtra("roomId") // Get room ID from intent
-            // Initialize other components and set up Firebase database reference
-            initializeComponents()
-        } else {
-            // Handle case where room ID is not provided
-            Toast.makeText(this, "Room ID not provided", Toast.LENGTH_SHORT).show()
-            finish() // Close the activity
+        if (receiverId.isEmpty() || senderId.isEmpty()) {
+            Toast.makeText(this, "Session expired. Please go back.", Toast.LENGTH_LONG).show()
+            finish()
+            return
+        }
+
+        setupRecyclerView()
+        chatAdapter.setReceiverId(receiverId)
+        observeUiState()
+
+        viewModel.initialize(senderId, receiverId, roomId)
+
+        binding.fabSend.setOnClickListener {
+            val text = binding.etMessageInput.text.toString().trim()
+            if (text.isNotEmpty()) {
+                viewModel.sendMessage(text)
+                binding.etMessageInput.text?.clear()
+            }
+        }
+
+        binding.btnBack.setOnClickListener {
+            finish()
         }
     }
 
-    // Method to initialize other components and set up Firebase database reference
-    private fun initializeComponents() {
-        // Initialize messages list and adapter
-        messages = ArrayList<Message?>()
-        messageAdapt = MessageAdapt(this, messages)
-        messageListView!!.setAdapter(messageAdapt)
-
-        // Initialize Firebase database reference for the specific room
-        val database = FirebaseDatabase.getInstance()
-        messagesRef = database.getReference("messages").child(roomId!!)
-
-        // Set up send button click listener
-        sendButton!!.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                sendMessage()
-            }
-        })
-
-        // Set up Firebase database listener to fetch messages
-        messagesRef!!.addChildEventListener(object : ChildEventListener {
-            override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
-                val message = dataSnapshot.getValue<Message?>(Message::class.java)
-                messages!!.add(message)
-                messageAdapt!!.notifyDataSetChanged()
-                Log.d(
-                    "temp_debug",
-                    "Msg Sent: " + message!!.getMessage() + ":" + message.isSentByUser() + ":" + message.getUsername() + ":" + message.getEmail()
-                )
-            }
-
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-            }
-
-            override fun onChildRemoved(snapshot: DataSnapshot) {
-            }
-
-            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-            }
-        })
+    private fun setupRecyclerView() {
+        messageList = ArrayList()
+        chatAdapter = MessageAdapter(messageList, FirebaseAuth.getInstance().currentUser?.uid ?: "")
+        binding.recyclerViewChat.apply {
+            layoutManager = LinearLayoutManager(this@ChatActivity)
+            adapter = chatAdapter
+        }
     }
 
-    private fun sendMessage() {
-        val messageText = messageEditText!!.getText().toString().trim { it <= ' ' }
+    private fun observeUiState() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { state ->
+                    messageList.clear()
+                    messageList.addAll(state.messages)
+                    chatAdapter.notifyDataSetChanged()
+                    chatAdapter.setReceiverName(state.receiverName)
+                    binding.tvChatTitle.text = state.receiverName
 
-        if (!messageText.isEmpty()) {
-            val userId = FirebaseAuth.getInstance().getCurrentUser()!!.getUid()
-            val database = FirebaseDatabase.getInstance()
-            val usersRef = database.getReference("Users").child(userId)
-
-            //            UserHelper user =  database.getReference("Users").child(userId).getReference
-            usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val user = snapshot.getValue<UserHelper?>(UserHelper::class.java)
-                    val displayName = user!!.name
-                    val email = user.email
-
-                    //                    String displayName = usersRef.child("name").get().toString();
-//                    String email = usersRef.child("email").get().toString();
-                    val message = Message(messageText, true, displayName, email)
-                    messagesRef!!.push()
-                        .setValue(message) // Push message to the specific room's messages
-                    messageEditText!!.setText("")
+                    if (messageList.isNotEmpty()) {
+                        binding.recyclerViewChat.scrollToPosition(messageList.size - 1)
+                    }
                 }
-
-                override fun onCancelled(error: DatabaseError) {
-                }
-            })
-        } else {
-            Toast.makeText(this, "Please enter a message", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }
