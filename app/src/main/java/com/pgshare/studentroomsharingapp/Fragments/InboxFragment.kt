@@ -4,27 +4,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.pgshare.studentroomsharingapp.Adapter.InboxAdapter
-import com.pgshare.studentroomsharingapp.Adapter.RecentChat
+import com.pgshare.studentroomsharingapp.model.RecentChat
 import com.pgshare.studentroomsharingapp.databinding.FragmentInboxBinding
+import com.pgshare.studentroomsharingapp.viewmodel.InboxViewModel
+import kotlinx.coroutines.launch
 
 class InboxFragment : Fragment() {
 
     private var _binding: FragmentInboxBinding? = null
     private val binding get() = _binding!!
 
+    private val viewModel: InboxViewModel by viewModels { InboxViewModel.Factory() }
+
     private lateinit var inboxAdapter: InboxAdapter
     private val inboxList = ArrayList<RecentChat>()
-
-    private val currentUserId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,14 +38,8 @@ class InboxFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupRecyclerView()
-
-        if (currentUserId.isNotEmpty()) {
-            fetchInboxMessages()
-        } else {
-            // User is not logged in
-            binding.progressBarInbox.visibility = View.GONE
-            binding.layoutEmptyState.visibility = View.VISIBLE
-        }
+        observeUiState()
+        observeUserProfiles()
     }
 
     private fun setupRecyclerView() {
@@ -54,50 +48,36 @@ class InboxFragment : Fragment() {
         binding.recyclerViewInbox.adapter = inboxAdapter
     }
 
-    private fun fetchInboxMessages() {
-        binding.progressBarInbox.visibility = View.VISIBLE
-        binding.recyclerViewInbox.visibility = View.GONE
-        binding.layoutEmptyState.visibility = View.GONE
+    private fun observeUiState() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { state ->
+                    binding.progressBarInbox.visibility = if (state.isLoading) View.VISIBLE else View.GONE
 
-        // Point directly to the current user's personal inbox node
-        val inboxRef = FirebaseDatabase.getInstance().getReference("inbox").child(currentUserId)
+                    inboxList.clear()
+                    inboxList.addAll(state.inboxList)
+                    inboxAdapter.notifyDataSetChanged()
 
-        inboxRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                // Safety check to prevent crashes if fragment is hidden
-                if (!isAdded || _binding == null) return
-
-                inboxList.clear()
-
-                for (dataSnapshot in snapshot.children) {
-                    val chatPreview = dataSnapshot.getValue(RecentChat::class.java)
-                    if (chatPreview != null) {
-                        inboxList.add(chatPreview)
+                    if (!state.isLoggedIn || (state.inboxList.isEmpty() && !state.isLoading)) {
+                        binding.recyclerViewInbox.visibility = View.GONE
+                        binding.layoutEmptyState.visibility = View.VISIBLE
+                    } else {
+                        binding.recyclerViewInbox.visibility = View.VISIBLE
+                        binding.layoutEmptyState.visibility = View.GONE
                     }
                 }
+            }
+        }
+    }
 
-                // Sort the list so the most recent messages are at the very top
-                inboxList.sortByDescending { it.timestamp }
-
-                binding.progressBarInbox.visibility = View.GONE
-
-                if (inboxList.isEmpty()) {
-                    binding.recyclerViewInbox.visibility = View.GONE
-                    binding.layoutEmptyState.visibility = View.VISIBLE
-                } else {
-                    binding.layoutEmptyState.visibility = View.GONE
-                    binding.recyclerViewInbox.visibility = View.VISIBLE
-                    inboxAdapter.notifyDataSetChanged()
+    private fun observeUserProfiles() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.userProfiles.collect { profiles ->
+                    inboxAdapter.setUserProfiles(profiles)
                 }
             }
-
-            override fun onCancelled(error: DatabaseError) {
-                if (isAdded && _binding != null) {
-                    binding.progressBarInbox.visibility = View.GONE
-                    Toast.makeText(requireContext(), "Failed to load inbox", Toast.LENGTH_SHORT).show()
-                }
-            }
-        })
+        }
     }
 
     override fun onDestroyView() {

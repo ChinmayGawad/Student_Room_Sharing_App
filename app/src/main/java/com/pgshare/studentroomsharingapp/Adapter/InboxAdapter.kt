@@ -1,7 +1,6 @@
 package com.pgshare.studentroomsharingapp.Adapter
 
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,18 +8,27 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.pgshare.studentroomsharingapp.ChatActivity
 import com.pgshare.studentroomsharingapp.R
+import com.pgshare.studentroomsharingapp.model.RecentChat
 import java.text.SimpleDateFormat
 import java.util.*
+
+data class InboxUserInfo(
+    val displayName: String,
+    val profileImageUrl: String?
+)
 
 class InboxAdapter(
     private val inboxList: ArrayList<RecentChat>
 ) : RecyclerView.Adapter<InboxAdapter.InboxViewHolder>() {
+
+    private var userProfiles: Map<String, InboxUserInfo> = emptyMap()
+
+    fun setUserProfiles(profiles: Map<String, InboxUserInfo>) {
+        userProfiles = profiles
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InboxViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_inbox, parent, false)
@@ -29,7 +37,7 @@ class InboxAdapter(
 
     override fun onBindViewHolder(holder: InboxViewHolder, position: Int) {
         val recentChat = inboxList[position]
-        holder.bind(recentChat)
+        holder.bind(recentChat, userProfiles)
     }
 
     override fun getItemCount(): Int = inboxList.size
@@ -41,80 +49,39 @@ class InboxAdapter(
         private val tvAvatarInitial: TextView = itemView.findViewById(R.id.tvAvatarInitial)
         private val ivAvatar: ImageView = itemView.findViewById(R.id.ivAvatar)
 
-        fun bind(chat: RecentChat) {
-            Log.d("InboxDebug", "Trying to load User ID: '${chat.targetUserId}' for chat: ${chat.lastMessage}")
+        fun bind(chat: RecentChat, profiles: Map<String, InboxUserInfo>) {
             tvLastMessage.text = chat.lastMessage
 
-            // Format the timestamp
             val sdf = SimpleDateFormat("MMM dd, h:mm a", Locale.getDefault())
             tvTimestamp.text = sdf.format(Date(chat.timestamp))
 
-            // 1. PREVENT RECYCLING BUG: Reset the UI
-            tvUserName.text = "Loading..."
-            tvAvatarInitial.text = "?"
-            tvAvatarInitial.visibility = View.VISIBLE
-            ivAvatar.visibility = View.GONE
+            val info = profiles[chat.targetUserId]
 
-            // 2. Look ONLY at your official "Users" node
-            val usersRef =
-                FirebaseDatabase.getInstance().getReference("Users").child(chat.targetUserId)
-
-            usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if (!snapshot.exists()) {
-                        tvUserName.text = "Unknown User"
-                        tvAvatarInitial.text = "?"
-                        return
-                    }
-
-                    val username = snapshot.child("username").getValue(String::class.java)
-                    val email = snapshot.child("email").getValue(String::class.java)
-                    val profileImageUrl = snapshot.child("profileImageUrl").getValue(String::class.java)
-
-                    // 3. Smart Name Extraction
-                    val finalName = when {
-                        !username.isNullOrEmpty() -> username
-                        !email.isNullOrEmpty() -> {
-                            val extracted = email.substringBefore("@")
-                            extracted.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
-                        }
-                        else -> "Unknown User"
-                    }
-
-                    tvUserName.text = finalName
-
-                    // 4. Load profile image or show initial
-                    if (!profileImageUrl.isNullOrEmpty()) {
-                        tvAvatarInitial.visibility = View.GONE
-                        ivAvatar.visibility = View.VISIBLE
-                        Glide.with(itemView.context)
-                            .load(profileImageUrl)
-                            .placeholder(R.drawable.ic_person_placeholder)
-                            .error(R.drawable.ic_person_placeholder)
-                            .circleCrop()
-                            .into(ivAvatar)
-                    } else {
-                        tvAvatarInitial.visibility = View.VISIBLE
-                        ivAvatar.visibility = View.GONE
-                        tvAvatarInitial.text =
-                            if (finalName != "Unknown User" && finalName.isNotEmpty()) {
-                                finalName.take(1).uppercase(Locale.getDefault())
-                            } else {
-                                "?"
-                            }
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    android.util.Log.e("InboxDebug", "Fetch failed: ${error.message}")
-                    tvUserName.text = "Unknown User"
-                    tvAvatarInitial.text = "?"
+            if (info != null) {
+                tvUserName.text = info.displayName
+                if (!info.profileImageUrl.isNullOrEmpty()) {
+                    tvAvatarInitial.visibility = View.GONE
+                    ivAvatar.visibility = View.VISIBLE
+                    Glide.with(itemView.context)
+                        .load(info.profileImageUrl)
+                        .placeholder(R.drawable.ic_person_placeholder)
+                        .error(R.drawable.ic_person_placeholder)
+                        .circleCrop()
+                        .into(ivAvatar)
+                } else {
                     tvAvatarInitial.visibility = View.VISIBLE
                     ivAvatar.visibility = View.GONE
+                    tvAvatarInitial.text =
+                        if (info.displayName.isNotEmpty()) info.displayName.take(1).uppercase(Locale.getDefault())
+                        else "?"
                 }
-            })
+            } else {
+                tvUserName.text = "Loading..."
+                tvAvatarInitial.text = "?"
+                tvAvatarInitial.visibility = View.VISIBLE
+                ivAvatar.visibility = View.GONE
+            }
 
-            // Handle clicking the row to open the Chat
             itemView.setOnClickListener {
                 val intent = Intent(itemView.context, ChatActivity::class.java).apply {
                     putExtra("RECEIVER_ID", chat.targetUserId)
