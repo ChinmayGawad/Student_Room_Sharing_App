@@ -6,16 +6,18 @@ import android.text.TextUtils
 import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.pgshare.studentroomsharingapp.databinding.ActivitySignUpBinding
+import com.pgshare.studentroomsharingapp.viewmodel.SignUpEvent
+import com.pgshare.studentroomsharingapp.viewmodel.SignUpViewModel
+import kotlinx.coroutines.launch
 
 class SignUp : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
-    private lateinit var auth: FirebaseAuth
-    private lateinit var database: FirebaseDatabase
+    private lateinit var viewModel: SignUpViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,73 +26,57 @@ class SignUp : AppCompatActivity() {
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Initialize Firebase
-        auth = FirebaseAuth.getInstance()
-        database = FirebaseDatabase.getInstance()
+        viewModel = SignUpViewModel()
 
-        // Handle the Sign Up Button
-        binding.btnRegister.setOnClickListener {
-            onRegisterBtnClick()
-        }
+        binding.btnRegister.setOnClickListener { onRegisterBtnClick() }
 
-        // Handle the "Log In" text at the bottom
-        binding.tvLoginLink.setOnClickListener {
-            // Close this activity and return to the Login screen
-            finish()
+        binding.tvLoginLink.setOnClickListener { finish() }
+
+        observeEvents()
+    }
+
+    private fun observeEvents() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.events.collect { event ->
+                    when (event) {
+                        is SignUpEvent.Success -> {
+                            Toast.makeText(this@SignUp, "Account Created Successfully!", Toast.LENGTH_SHORT).show()
+                            val intent = Intent(this@SignUp, Login::class.java)
+                            intent.putExtra("email", binding.etEmailSignup.text.toString().trim())
+                            startActivity(intent)
+                            finish()
+                        }
+                        is SignUpEvent.Error -> {
+                            Toast.makeText(this@SignUp, event.message, Toast.LENGTH_LONG).show()
+                        }
+                    }
+                }
+            }
         }
     }
 
     private fun onRegisterBtnClick() {
-        // 1. Grab ALL the fields from the redesigned XML
         val name = binding.etName.text.toString().trim()
         val email = binding.etEmailSignup.text.toString().trim()
         val password = binding.etPasswordSignup.text.toString().trim()
         val confirmPassword = binding.etConfirmPasswordSignup.text.toString().trim()
 
-        // 2. Validate everything including the name
-        if (isValidInput(name, email, password, confirmPassword)) {
+        val role = when (binding.cgRole.checkedChipId) {
+            binding.chipStudent.id -> "student"
+            binding.chipOwner.id -> "owner"
+            else -> ""
+        }
 
-            // Show a simple loading toast (or keep your progress bar if you add one to XML)
+        if (isValidInput(name, email, password, confirmPassword, role)) {
             Toast.makeText(this, "Creating account...", Toast.LENGTH_SHORT).show()
-
-            auth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-
-                        val userId = auth.currentUser?.uid ?: return@addOnCompleteListener
-
-                        // NOTE: Ensure this matches the casing in your InboxAdapter!
-                        // I set it to lowercase "users" as that is standard for Firebase.
-                        val userRef = database.getReference("Users").child(userId)
-
-                        // 3. Save ALL data to the database simultaneously using a HashMap
-                        val userData = hashMapOf(
-                            "email" to email,
-                            "username" to name
-                        )
-
-                        userRef.setValue(userData).addOnCompleteListener { dbTask ->
-                            if (dbTask.isSuccessful) {
-                                Toast.makeText(this, "Account Created Successfully!", Toast.LENGTH_SHORT).show()
-
-                                val intent = Intent(this@SignUp, Login::class.java)
-                                intent.putExtra("email", email)
-                                startActivity(intent)
-                                finish()
-                            }
-                        }
-                    } else {
-                        val errorMessage = task.exception?.message ?: "Registration failed"
-                        Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
-                    }
-                }
+            viewModel.signUp(name, email, password, role)
         }
     }
 
-    private fun isValidInput(name: String, email: String, password: String, confirmPassword: String): Boolean {
+    private fun isValidInput(name: String, email: String, password: String, confirmPassword: String, role: String): Boolean {
         var valid = true
 
-        // Check if Name is empty
         if (TextUtils.isEmpty(name)) {
             binding.etName.error = "Full Name is required"
             valid = false
@@ -98,7 +84,6 @@ class SignUp : AppCompatActivity() {
             binding.etName.error = null
         }
 
-        // Check if email is valid
         if (TextUtils.isEmpty(email) || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             binding.etEmailSignup.error = "Invalid email address"
             valid = false
@@ -106,7 +91,6 @@ class SignUp : AppCompatActivity() {
             binding.etEmailSignup.error = null
         }
 
-        // Check if password is empty or meets minimum length
         if (TextUtils.isEmpty(password) || password.length < 6) {
             binding.etPasswordSignup.error = "Password must be at least 6 characters"
             valid = false
@@ -114,12 +98,16 @@ class SignUp : AppCompatActivity() {
             binding.etPasswordSignup.error = null
         }
 
-        // Check if passwords match
         if (password != confirmPassword) {
             binding.etConfirmPasswordSignup.error = "Passwords do not match"
             valid = false
         } else {
             binding.etConfirmPasswordSignup.error = null
+        }
+
+        if (role.isEmpty()) {
+            Toast.makeText(this, "Please select if you are a Student or an Owner", Toast.LENGTH_SHORT).show()
+            valid = false
         }
 
         return valid

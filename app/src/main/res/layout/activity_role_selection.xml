@@ -5,16 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="24dp"
-    android:background="@color/md_theme_light_background">
+    android:background="?attr/colorSurface">
 
     <TextView
         android:id="@+id/tv_role_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="How will you use RoomShare?"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:textColor="@color/md_theme_light_onBackground"
+        android:textAppearance="?attr/textAppearanceHeadlineMedium"
+        android:textColor="?attr/colorOnBackground"
         android:layout_marginTop="64dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,9 +28,9 @@
         android:layout_marginTop="48dp"
         android:clickable="true"
         android:focusable="true"
-        app:cardCornerRadius="24dp"
+        app:cardCornerRadius="@dimen/shapeCornerExtraLarge"
         app:cardElevation="2dp"
-        app:strokeColor="@color/md_theme_light_outline"
+        app:strokeColor="?attr/colorOutline"
         app:strokeWidth="1dp"
         app:layout_constraintTop_toBottomOf="@id/tv_role_title">
 
@@ -46,16 +45,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="I'm a Student"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@color/md_theme_light_primary" />
+                android:textAppearance="?attr/textAppearanceTitleLarge"
+                android:textColor="?attr/colorPrimary" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Looking for a PG or room to rent"
-                android:textSize="14sp"
-                android:textColor="@color/md_theme_light_onSurfaceVariant"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                android:textColor="?attr/colorOnSurfaceVariant"
                 android:layout_marginTop="8dp" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
@@ -68,9 +66,9 @@
         android:layout_marginTop="24dp"
         android:clickable="true"
         android:focusable="true"
-        app:cardCornerRadius="24dp"
+        app:cardCornerRadius="@dimen/shapeCornerExtraLarge"
         app:cardElevation="2dp"
-        app:strokeColor="@color/md_theme_light_outline"
+        app:strokeColor="?attr/colorOutline"
         app:strokeWidth="1dp"
         app:layout_constraintTop_toBottomOf="@id/card_role_student">
 
@@ -85,16 +83,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="I'm an Owner"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@color/md_theme_light_primary" />
+                android:textAppearance="?attr/textAppearanceTitleLarge"
+                android:textColor="?attr/colorPrimary" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Looking to list and manage my rooms"
-                android:textSize="14sp"
-                android:textColor="@color/md_theme_light_onSurfaceVariant"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                android:textColor="?attr/colorOnSurfaceVariant"
                 android:layout_marginTop="8dp" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

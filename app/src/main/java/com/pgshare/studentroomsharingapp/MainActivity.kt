@@ -1,6 +1,5 @@
 package com.pgshare.studentroomsharingapp
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -10,11 +9,16 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.pgshare.studentroomsharingapp.Authentication.Login
+import com.pgshare.studentroomsharingapp.repository.FirebaseRepository
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private var firebaseAuth: FirebaseAuth? = null
+    private val repository = FirebaseRepository()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +28,22 @@ class MainActivity : AppCompatActivity() {
         // Initialize Firebase Authentication
         firebaseAuth = FirebaseAuth.getInstance()
         Log.d("temp_debug", "Testing log filter")
+
+        checkUserRole()
+    }
+
+    private fun checkUserRole() {
+        val user = firebaseAuth?.currentUser
+        if (user != null) {
+            lifecycleScope.launch {
+                val role = repository.getUserRole(user.uid)
+                if (role == "student") {
+                    findViewById<View>(R.id.cardView4)?.visibility = View.GONE
+                } else {
+                    findViewById<View>(R.id.cardView4)?.visibility = View.VISIBLE
+                }
+            }
+        }
     }
 
     fun Rent(view: View?) {
@@ -32,8 +52,27 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun Owner(view: View?) {
-        val intent = Intent(this@MainActivity, Add_Room::class.java)
-        startActivity(intent)
+        val user = firebaseAuth?.currentUser
+        if (user != null) {
+            lifecycleScope.launch {
+                val role = repository.getUserRole(user.uid)
+                if (role == "owner") {
+                    val intent = Intent(this@MainActivity, Add_Room::class.java)
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(this@MainActivity, "Only property owners can list rooms", Toast.LENGTH_SHORT).show()
+                }
+            }
+        } else {
+            MaterialAlertDialogBuilder(this)
+                .setTitle("Login Required")
+                .setMessage("You need to log in to list a room. Would you like to log in?")
+                .setPositiveButton("Log In") { _, _ ->
+                    startActivity(Intent(this@MainActivity, Login::class.java))
+                }
+                .setNegativeButton("Cancel", null)
+                .show()
+        }
     }
 
     // Inflate the menu resource file
@@ -43,12 +82,10 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    // Handle menu item selection
-    @SuppressLint("NonConstantResourceId")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
         if (id == R.id.profile) {
-            if (firebaseAuth!!.currentUser != null) {
+            if (firebaseAuth?.currentUser != null) {
                 openProfile()
             } else {
                 Toast.makeText(this, "Please log in to view your profile", Toast.LENGTH_SHORT)
@@ -96,10 +133,8 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    // Method to log out the current user
     private fun logoutUser() {
-        // Sign out the user
-        firebaseAuth!!.signOut()
+        firebaseAuth?.signOut()
 
         // Redirect to the login activity
         Toast.makeText(this, "Logging out", Toast.LENGTH_SHORT).show()
