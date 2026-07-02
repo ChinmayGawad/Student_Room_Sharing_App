@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import com.pgshare.studentroomsharingapp.Fragments.ExploreFragment
 import com.pgshare.studentroomsharingapp.Fragments.InboxFragment
 import com.pgshare.studentroomsharingapp.Fragments.ProfileFragment
+import com.pgshare.studentroomsharingapp.Fragments.SavedFragment
 
 import com.pgshare.studentroomsharingapp.databinding.ActivityStudentDashboardBinding
 

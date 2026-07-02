@@ -1,4 +1,4 @@
-package com.pgshare.studentroomsharingapp.interfaces
+package com.pgshare.studentroomsharingapp.Fragments
 
 interface ValidatableFragment {
     /**

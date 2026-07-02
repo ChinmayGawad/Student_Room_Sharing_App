@@ -8,7 +8,7 @@
         android:layout_height="match_parent"
         android:id="@+id/UploadGallaryImage"
         android:layout_margin="5dp"
-        android:background="#DBEFDC"
+        android:background="?attr/colorSurfaceVariant"
         android:scaleType="centerCrop"
         android:layout_centerHorizontal="true"
         android:orientation="horizontal"
