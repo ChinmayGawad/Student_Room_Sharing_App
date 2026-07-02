@@ -11,9 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Show off your space"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:textColor="@color/md_theme_light_onBackground"
+        android:textAppearance="?attr/textAppearanceHeadlineMedium"
+        android:textColor="?attr/colorOnBackground"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -22,7 +21,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Students book rooms with great photos. Add at least 3 photos of the bedroom, bathroom, and amenities."
-        android:textColor="@color/md_theme_light_onSurfaceVariant"
+        android:textAppearance="?attr/textAppearanceBodyMedium"
+        android:textColor="?attr/colorOnSurfaceVariant"
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@id/tv_step2_title"
         app:layout_constraintStart_toStartOf="parent" />
@@ -37,7 +37,7 @@
         android:focusable="true"
         app:cardCornerRadius="16dp"
         app:cardElevation="0dp"
-        app:strokeColor="@color/md_theme_light_outline"
+        app:strokeColor="?attr/colorOutline"
         app:strokeWidth="2dp"
         app:layout_constraintTop_toBottomOf="@id/tv_step2_subtitle">
 
@@ -47,21 +47,20 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="center"
-            android:background="#F5F7FA">
+            android:background="?attr/colorSurfaceVariant">
 
             <ImageView
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:src="@drawable/baseline_add_a_photo_24"
-                app:tint="@color/md_theme_light_primary" />
+                app:tint="?attr/colorPrimary" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tap to add photos from gallery"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="@color/md_theme_light_primary"
+                android:textAppearance="?attr/textAppearanceTitleMedium"
+                android:textColor="?attr/colorPrimary"
                 android:layout_marginTop="12dp" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

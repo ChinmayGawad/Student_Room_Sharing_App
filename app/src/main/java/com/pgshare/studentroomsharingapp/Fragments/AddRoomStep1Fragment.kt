@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.pgshare.studentroomsharingapp.databinding.FragmentAddRoomStep1Binding
-import com.pgshare.studentroomsharingapp.interfaces.ValidatableFragment
+import com.pgshare.studentroomsharingapp.Fragments.ValidatableFragment
 
 class AddRoomStep1Fragment : Fragment(), ValidatableFragment {
 

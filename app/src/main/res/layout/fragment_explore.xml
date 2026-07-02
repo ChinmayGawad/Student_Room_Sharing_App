@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/md_theme_light_background">
+    android:background="?attr/colorSurface">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -14,14 +14,23 @@
         android:layout_marginTop="20dp"
         app:elevation="0dp">
 
-        <com.google.android.material.search.SearchBar
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/search_bar"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Search by location, college, or PG..."
             app:layout_scrollFlags="scroll|enterAlways"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="16dp"
+            app:startIconDrawable="@drawable/baseline_search_24"
+            app:endIconMode="clear_text">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <HorizontalScrollView
             android:layout_width="match_parent"

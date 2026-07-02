@@ -1,4 +1,4 @@
-package com.pgshare.studentroomsharingapp.fragments
+package com.pgshare.studentroomsharingapp.Fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.pgshare.studentroomsharingapp.databinding.FragmentAddRoomStep3Binding
-import com.pgshare.studentroomsharingapp.interfaces.ValidatableFragment // Add this import
 
 class AddRoomStep3Fragment : Fragment(), ValidatableFragment { // Implement interface
 
@@ -45,15 +44,16 @@ class AddRoomStep3Fragment : Fragment(), ValidatableFragment { // Implement inte
         val depositText = binding.etSecurityDeposit.text.toString().trim()
 
         if (depositText.isEmpty()) {
-            binding.tilSecurityDeposit.error = "Monthly rent is required"
+            binding.tilSecurityDeposit.error = "Security deposit is required" // Fixed message
             isStepValid = false
         } else {
-            val depositValue = rentText.toDoubleOrNull()
+            // BUG FIX: Changed rentText to depositText
+            val depositValue = depositText.toDoubleOrNull()
             if (depositValue == null || depositValue <= 0) {
-                binding.etSecurityDeposit.error = "Enter a valid amount"
+                binding.tilSecurityDeposit.error = "Enter a valid amount"
                 isStepValid = false
             } else {
-                binding.etSecurityDeposit.error = null // Clear error
+                binding.tilSecurityDeposit.error = null
             }
         }
 

@@ -1,4 +1,4 @@
-package com.pgshare.studentroomsharingapp
+package com.pgshare.studentroomsharingapp.Fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,29 +7,27 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import com.pgshare.studentroomsharingapp.Adapter.Room
 import com.pgshare.studentroomsharingapp.Adapter.RoomListAdapter
+import com.pgshare.studentroomsharingapp.RoomDetailsActivity
+import com.pgshare.studentroomsharingapp.model.Room
 import com.pgshare.studentroomsharingapp.databinding.FragmentSavedBinding
+import com.pgshare.studentroomsharingapp.viewmodel.SavedViewModel
+import kotlinx.coroutines.launch
 
 class SavedFragment : Fragment() {
 
     private var _binding: FragmentSavedBinding? = null
     private val binding get() = _binding!!
 
+    private val viewModel: SavedViewModel by viewModels { SavedViewModel.Factory() }
+
     private lateinit var roomAdapter: RoomListAdapter
     private val savedRoomList = ArrayList<Room>()
-
-    // Grab the authenticated user's ID
-    private val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
-    // Point the reference to the users node
-    private val databaseReference = FirebaseDatabase.getInstance().getReference("Users")
-    private var favoritesListener: ValueEventListener? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,16 +41,14 @@ class SavedFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupRecyclerView()
-        fetchSavedRooms()
+        observeUiState()
     }
 
     private fun setupRecyclerView() {
         binding.rvSavedRooms.layoutManager = LinearLayoutManager(requireContext())
 
-        // We use your exact adapter and interface here
         roomAdapter = RoomListAdapter(savedRoomList, object : RoomListAdapter.OnRoomClickListener {
             override fun onRoomClick(room: Room) {
-                // Navigate to details just like the Explore Feed
                 val intent = Intent(requireContext(), RoomDetailsActivity::class.java).apply {
                     putExtra("Rooms", room)
                 }
@@ -60,84 +56,38 @@ class SavedFragment : Fragment() {
             }
 
             override fun onSaveClick(room: Room) {
-                if (currentUserId == null) {
-                    Toast.makeText(binding.root.context, "Not logged in!", Toast.LENGTH_SHORT).show()
-                }
+                Toast.makeText(binding.root.context, "Not logged in!", Toast.LENGTH_SHORT).show()
             }
         })
 
         binding.rvSavedRooms.adapter = roomAdapter
     }
 
-    private fun fetchSavedRooms() {
-        if (currentUserId == null) {
-            // Failsafe: User isn't logged in, show the empty state immediately
-            toggleEmptyState(true)
-            return
-        }
+    private fun observeUiState() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { state ->
+                    binding.progressBar.visibility = if (state.isLoading) View.VISIBLE else View.GONE
 
-        binding.progressBar.visibility = View.VISIBLE
-        binding.layoutEmptyState.visibility = View.GONE
-        binding.rvSavedRooms.visibility = View.GONE
-
-        // Listen exclusively to this specific user's "favorites" node
-        favoritesListener = databaseReference.child(currentUserId).child("favorites")
-            .addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if (_binding == null) return
                     savedRoomList.clear()
-
-                    if (snapshot.exists()) {
-                        for (roomSnapshot in snapshot.children) {
-                            try {
-                                val room = roomSnapshot.getValue(Room::class.java)
-                                if (room != null) {
-                                    savedRoomList.add(room)
-                                }
-                            } catch (e: Exception) {
-                                e.printStackTrace()
-                                Toast.makeText(requireContext(), "Error converting room: ${e.message}", Toast.LENGTH_LONG).show()
-                            }
-                        }
-                    }
-
-                    // Push the fresh data to your adapter using your custom updateData function
+                    savedRoomList.addAll(state.savedRooms)
+                    roomAdapter.setOwnerNames(state.ownerNames)
                     roomAdapter.updateData(savedRoomList)
 
-                    // Toggle UI states based on if the list is empty
-                    toggleEmptyState(savedRoomList.isEmpty())
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    _binding?.progressBar?.visibility = View.GONE
-                    context?.let {
-                        Toast.makeText(it, "Error: ${error.message}", Toast.LENGTH_SHORT).show()
+                    if (!state.isLoggedIn || (state.savedRooms.isEmpty() && !state.isLoading)) {
+                        binding.rvSavedRooms.visibility = View.GONE
+                        binding.layoutEmptyState.visibility = View.VISIBLE
+                    } else {
+                        binding.rvSavedRooms.visibility = View.VISIBLE
+                        binding.layoutEmptyState.visibility = View.GONE
                     }
                 }
-            })
-    }
-
-    private fun toggleEmptyState(isEmpty: Boolean) {
-        _binding?.apply {
-            progressBar.visibility = View.GONE
-            if (isEmpty) {
-                rvSavedRooms.visibility = View.GONE
-                layoutEmptyState.visibility = View.VISIBLE
-            } else {
-                rvSavedRooms.visibility = View.VISIBLE
-                layoutEmptyState.visibility = View.GONE
             }
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        // Remove the listener to prevent memory leaks and crashes
-        favoritesListener?.let {
-            currentUserId?.let { uid ->
-                databaseReference.child(uid).child("favorites").removeEventListener(it)
-            }
-        }
         _binding = null
     }
 }

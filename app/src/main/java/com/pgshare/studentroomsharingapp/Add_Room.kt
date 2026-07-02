@@ -1,52 +1,54 @@
 package com.pgshare.studentroomsharingapp
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.net.Uri
+import android.content.Intent
 import android.os.Bundle
-import android.util.Base64
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.chip.Chip
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
-import com.pgshare.studentroomsharingapp.Adapter.Room
 import com.pgshare.studentroomsharingapp.Adapter.WizardPagerAdapter
 import com.pgshare.studentroomsharingapp.Fragments.AddRoomStep1Fragment
+import com.pgshare.studentroomsharingapp.Fragments.AddRoomStep2Fragment
+import com.pgshare.studentroomsharingapp.Fragments.AddRoomStep3Fragment
+import com.pgshare.studentroomsharingapp.Fragments.ValidatableFragment
+import com.google.firebase.auth.FirebaseAuth
+import com.pgshare.studentroomsharingapp.Authentication.Login
 import com.pgshare.studentroomsharingapp.databinding.ActivityAddRoomBinding
-import com.pgshare.studentroomsharingapp.fragments.AddRoomStep3Fragment
-import com.pgshare.studentroomsharingapp.interfaces.ValidatableFragment
-import java.io.ByteArrayOutputStream
+import com.pgshare.studentroomsharingapp.viewmodel.AddRoomEvent
+import com.pgshare.studentroomsharingapp.viewmodel.AddRoomViewModel
+import kotlinx.coroutines.launch
 
 class Add_Room : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddRoomBinding
     private lateinit var wizardAdapter: WizardPagerAdapter
+    private lateinit var viewModel: AddRoomViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Hide default action bar
         supportActionBar?.hide()
 
         binding = ActivityAddRoomBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // 1. Setup the ViewPager
+        if (FirebaseAuth.getInstance().currentUser == null) {
+            startActivity(Intent(this, Login::class.java))
+            finish()
+            return
+        }
+
+        viewModel = AddRoomViewModel()
+
         wizardAdapter = WizardPagerAdapter(this)
         binding.viewpagerAddRoomSteps.adapter = wizardAdapter
-
-        // CRITICAL UX FIX: Disable swiping so the user MUST use the Next/Back buttons
         binding.viewpagerAddRoomSteps.isUserInputEnabled = false
-
-        // Initialize the UI for Step 1
         updateWizardUI(0)
 
-        // 2. Handle the "Next" Button with Validation
         binding.btnWizardNext.setOnClickListener {
             val currentStep = binding.viewpagerAddRoomSteps.currentItem
-
             val currentFragment = supportFragmentManager.findFragmentByTag("f$currentStep") as? ValidatableFragment
             val isValid = currentFragment?.isValid() ?: true
 
@@ -55,13 +57,11 @@ class Add_Room : AppCompatActivity() {
                     binding.viewpagerAddRoomSteps.currentItem = currentStep + 1
                     updateWizardUI(binding.viewpagerAddRoomSteps.currentItem)
                 } else {
-                    // Final Step - Validated!
                     submitRoomData()
                 }
             }
         }
 
-        // 3. Handle the "Back" Button
         binding.btnWizardBack.setOnClickListener {
             val currentStep = binding.viewpagerAddRoomSteps.currentItem
             if (currentStep > 0) {
@@ -70,15 +70,29 @@ class Add_Room : AppCompatActivity() {
             }
         }
 
-        // 4. Handle the top-left Close 'X' Button
-        binding.toolbarAddRoom.setNavigationOnClickListener {
-            finish()
+        binding.toolbarAddRoom.setNavigationOnClickListener { finish() }
+
+        observeEvents()
+    }
+
+    private fun observeEvents() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.events.collect { event ->
+                    when (event) {
+                        is AddRoomEvent.Success -> {
+                            Toast.makeText(this@Add_Room, "Room Published Successfully!", Toast.LENGTH_SHORT).show()
+                            finish()
+                        }
+                        is AddRoomEvent.Error -> {
+                            Toast.makeText(this@Add_Room, "Failed to publish: ${event.message}", Toast.LENGTH_LONG).show()
+                        }
+                    }
+                }
+            }
         }
     }
 
-    /**
-     * Updates the Progress Bar, Buttons, and UI based on the current step.
-     */
     private fun updateWizardUI(currentStep: Int) {
         val totalSteps = wizardAdapter.itemCount
         val progressPercentage = ((currentStep + 1).toFloat() / totalSteps.toFloat() * 100).toInt()
@@ -97,9 +111,6 @@ class Add_Room : AppCompatActivity() {
         }
     }
 
-    /**
-     * Gathers data from all 3 fragments and pushes to Firebase.
-     */
     private fun submitRoomData() {
         Toast.makeText(this, "Compressing photos and publishing...", Toast.LENGTH_LONG).show()
 
@@ -120,69 +131,6 @@ class Add_Room : AppCompatActivity() {
             "Room"
         }
 
-        Thread {
-            val base64Images = ArrayList<String?>()
-            for (uri in imageUris) {
-                val base64String = compressAndEncodeImage(uri)
-                if (base64String != null) {
-                    base64Images.add(base64String)
-                }
-            }
-
-            val databaseRef = FirebaseDatabase.getInstance().getReference("Rooms")
-            val newRoomId = databaseRef.push().key ?: return@Thread
-
-            // 1. Grab the Current User's ID
-            val currentUserId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
-
-            // 2. Create the room using our new optimized Data Class
-            val newRoom = Room(
-                id = newRoomId,
-                userId = currentUserId, // Bind the owner to the room!
-                roomName = title,
-                location = location,
-                description = "Type: $roomType",
-                price = rent,
-                deposit = deposit,
-                imageUrls = base64Images,
-                imageResourceId = 0,
-                isRoomBooked = false
-            )
-
-            databaseRef.child(newRoomId).setValue(newRoom).addOnCompleteListener { task ->
-                runOnUiThread {
-                    if (task.isSuccessful) {
-                        Toast.makeText(this@Add_Room, "Room Published Successfully!", Toast.LENGTH_SHORT).show()
-                        finish()
-                    } else {
-                        Toast.makeText(this@Add_Room, "Failed to publish: ${task.exception?.message}", Toast.LENGTH_LONG).show()
-                    }
-                }
-            }
-        }.start()
-    }
-
-    /**
-     * Shrinks the image and converts it to Base64 text.
-     */
-    private fun compressAndEncodeImage(uri: Uri): String? {
-        return try {
-            val inputStream = contentResolver.openInputStream(uri)
-            val originalBitmap = BitmapFactory.decodeStream(inputStream)
-
-            val ratio = Math.min(600.0 / originalBitmap.width, 600.0 / originalBitmap.height)
-            val width = Math.round(ratio * originalBitmap.width).toInt()
-            val height = Math.round(ratio * originalBitmap.height).toInt()
-            val resizedBitmap = Bitmap.createScaledBitmap(originalBitmap, width, height, true)
-
-            val outputStream = ByteArrayOutputStream()
-            resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 40, outputStream)
-            val imageBytes = outputStream.toByteArray()
-
-            Base64.encodeToString(imageBytes, Base64.DEFAULT)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
-        }
+        viewModel.publishRoom(title, location, roomType, rent, deposit, imageUris, contentResolver)
     }
 }
