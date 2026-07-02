@@ -1,4 +1,4 @@
-package com.pgshare.studentroomsharingapp.Adapter
+package com.pgshare.studentroomsharingapp.model
 
 data class Message(
     var messageId: String? = null,

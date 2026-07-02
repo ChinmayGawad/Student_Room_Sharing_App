@@ -1,4 +1,4 @@
-package com.pgshare.studentroomsharingapp.Adapter
+package com.pgshare.studentroomsharingapp.model
 
 class UserHelper {
     var userId: String? = null

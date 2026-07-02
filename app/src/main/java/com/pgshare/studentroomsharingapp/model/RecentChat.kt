@@ -1,4 +1,4 @@
-package com.pgshare.studentroomsharingapp.Adapter
+package com.pgshare.studentroomsharingapp.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

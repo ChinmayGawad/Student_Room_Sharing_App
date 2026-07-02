@@ -1,4 +1,4 @@
-package com.pgshare.studentroomsharingapp.Adapter
+package com.pgshare.studentroomsharingapp.model
 
 import android.os.Parcelable
 import com.google.firebase.database.PropertyName
