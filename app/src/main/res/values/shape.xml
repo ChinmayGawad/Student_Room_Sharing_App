@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="shapeCornerNone">0dp</dimen>
+    <dimen name="shapeCornerSmall">4dp</dimen>
+    <dimen name="shapeCornerMedium">8dp</dimen>
+    <dimen name="shapeCornerLarge">16dp</dimen>
+    <dimen name="shapeCornerExtraLarge">28dp</dimen>
+    <dimen name="shapeCornerFull">50%</dimen>
+</resources>
