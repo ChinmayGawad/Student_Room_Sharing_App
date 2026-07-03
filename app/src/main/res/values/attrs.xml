@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="StudentRoomSharingTheme">
+        <attr name="boxCornerRadius" format="dimension" />
+        <attr name="actionTextColor" format="color" />
+        <attr name="colorWarning" format="color" />
+    </declare-styleable>
+</resources>

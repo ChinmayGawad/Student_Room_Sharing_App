@@ -1,72 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Display -->
+    <style name="TextAppearance.DisplayLarge" parent="TextAppearance.Material3.DisplayLarge">
+        <item name="android:textSize">57sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:lineHeight">64sp</item>
+        <item name="fontFamily">sans-serif</item>
+    </style>
 
-    <!-- Headline -->
-    <style name="TextAppearance.StudentRoomSharingApp.HeadlineLarge" parent="TextAppearance.Material3.HeadlineLarge">
-        <item name="android:textSize">32sp</item>
-        <item name="android:lineSpacingExtra">0sp</item>
+    <style name="TextAppearance.DisplayMedium" parent="TextAppearance.Material3.DisplayMedium">
+        <item name="android:textSize">45sp</item>
         <item name="android:letterSpacing">0</item>
-        <item name="android:fontWeight">700</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:lineHeight">52sp</item>
+        <item name="fontFamily">sans-serif</item>
     </style>
 
-    <style name="TextAppearance.StudentRoomSharingApp.HeadlineMedium" parent="TextAppearance.Material3.HeadlineMedium">
+    <style name="TextAppearance.DisplaySmall" parent="TextAppearance.Material3.DisplaySmall">
+        <item name="android:textSize">36sp</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:lineHeight">44sp</item>
+        <item name="fontFamily">sans-serif</item>
+    </style>
+
+    <!-- Headlines -->
+    <style name="TextAppearance.HeadlineLarge" parent="TextAppearance.Material3.HeadlineLarge">
+        <item name="android:textSize">32sp</item>
+        <item name="android:textFontWeight">700</item>
+        <item name="android:lineHeight">40sp</item>
+        <item name="fontFamily">sans-serif</item>
+    </style>
+
+    <style name="TextAppearance.HeadlineMedium" parent="TextAppearance.Material3.HeadlineMedium">
         <item name="android:textSize">28sp</item>
-        <item name="android:lineSpacingExtra">0sp</item>
-        <item name="android:fontWeight">600</item>
+        <item name="android:textFontWeight">600</item>
+        <item name="android:lineHeight">36sp</item>
+        <item name="fontFamily">sans-serif</item>
     </style>
 
-    <!-- Title -->
-    <style name="TextAppearance.StudentRoomSharingApp.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
+    <style name="TextAppearance.HeadlineSmall" parent="TextAppearance.Material3.HeadlineSmall">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textFontWeight">600</item>
+        <item name="android:lineHeight">32sp</item>
+        <item name="fontFamily">sans-serif-medium</item>
+    </style>
+
+    <!-- Titles -->
+    <style name="TextAppearance.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
         <item name="android:textSize">22sp</item>
-        <item name="android:lineSpacingExtra">0sp</item>
-        <item name="android:fontWeight">600</item>
+        <item name="android:textFontWeight">600</item>
+        <item name="android:lineHeight">28sp</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="fontFamily">sans-serif-medium</item>
     </style>
 
-    <style name="TextAppearance.StudentRoomSharingApp.TitleMedium" parent="TextAppearance.Material3.TitleMedium">
+    <style name="TextAppearance.TitleMedium" parent="TextAppearance.Material3.TitleMedium">
         <item name="android:textSize">16sp</item>
-        <item name="android:lineSpacingExtra">0sp</item>
-        <item name="android:fontWeight">600</item>
+        <item name="android:textFontWeight">600</item>
+        <item name="android:lineHeight">24sp</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="fontFamily">sans-serif-medium</item>
     </style>
 
-    <style name="TextAppearance.StudentRoomSharingApp.TitleSmall" parent="TextAppearance.Material3.TitleSmall">
+    <style name="TextAppearance.TitleSmall" parent="TextAppearance.Material3.TitleSmall">
         <item name="android:textSize">14sp</item>
-        <item name="android:lineSpacingExtra">0sp</item>
-        <item name="android:fontWeight">600</item>
+        <item name="android:textFontWeight">600</item>
+        <item name="android:lineHeight">20sp</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="fontFamily">sans-serif-medium</item>
     </style>
 
     <!-- Body -->
-    <style name="TextAppearance.StudentRoomSharingApp.BodyLarge" parent="TextAppearance.Material3.BodyLarge">
+    <style name="TextAppearance.BodyLarge" parent="TextAppearance.Material3.BodyLarge">
         <item name="android:textSize">16sp</item>
-        <item name="android:lineSpacingExtra">4sp</item>
-    </style>
-
-    <style name="TextAppearance.StudentRoomSharingApp.BodyMedium" parent="TextAppearance.Material3.BodyMedium">
-        <item name="android:textSize">14sp</item>
-        <item name="android:lineSpacingExtra">4sp</item>
-    </style>
-
-    <style name="TextAppearance.StudentRoomSharingApp.BodySmall" parent="TextAppearance.Material3.BodySmall">
-        <item name="android:textSize">12sp</item>
-        <item name="android:lineSpacingExtra">4sp</item>
-    </style>
-
-    <!-- Label -->
-    <style name="TextAppearance.StudentRoomSharingApp.LabelLarge" parent="TextAppearance.Material3.LabelLarge">
-        <item name="android:textSize">14sp</item>
-        <item name="android:fontWeight">500</item>
-        <item name="android:letterSpacing">0.01</item>
-    </style>
-
-    <style name="TextAppearance.StudentRoomSharingApp.LabelMedium" parent="TextAppearance.Material3.LabelMedium">
-        <item name="android:textSize">12sp</item>
-        <item name="android:fontWeight">500</item>
-        <item name="android:letterSpacing">0.02</item>
-    </style>
-
-    <style name="TextAppearance.StudentRoomSharingApp.LabelSmall" parent="TextAppearance.Material3.LabelSmall">
-        <item name="android:textSize">11sp</item>
-        <item name="android:fontWeight">500</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:lineHeight">24sp</item>
         <item name="android:letterSpacing">0.03</item>
+        <item name="fontFamily">sans-serif</item>
     </style>
 
+    <style name="TextAppearance.BodyMedium" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:lineHeight">20sp</item>
+        <item name="android:letterSpacing">0.02</item>
+        <item name="fontFamily">sans-serif</item>
+    </style>
+
+    <style name="TextAppearance.BodySmall" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:lineHeight">16sp</item>
+        <item name="android:letterSpacing">0.03</item>
+        <item name="fontFamily">sans-serif</item>
+    </style>
+
+    <!-- Labels -->
+    <style name="TextAppearance.LabelLarge" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textFontWeight">500</item>
+        <item name="android:lineHeight">20sp</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="TextAppearance.LabelMedium" parent="TextAppearance.Material3.LabelMedium">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textFontWeight">500</item>
+        <item name="android:lineHeight">16sp</item>
+        <item name="android:letterSpacing">0.05</item>
+        <item name="fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="TextAppearance.LabelSmall" parent="TextAppearance.Material3.LabelSmall">
+        <item name="android:textSize">11sp</item>
+        <item name="android:textFontWeight">500</item>
+        <item name="android:lineHeight">16sp</item>
+        <item name="android:letterSpacing">0.05</item>
+        <item name="fontFamily">sans-serif-medium</item>
+    </style>
+
+    <!-- Circular Shape Style -->
+    <style name="CircularShape">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>
