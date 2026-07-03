@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurface">
+
+    <!-- Guideline at 55% of screen height for image boundary -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/imageGuideline"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.55" />
+
+    <!-- Hero Image -->
+    <ImageView
+        android:id="@+id/welcomeHeroImage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerCrop"
+        android:src="@drawable/logo"
+        app:layout_constraintBottom_toBottomOf="@+id/imageGuideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Gradient Scrim Overlay -->
+    <View
+        android:id="@+id/imageScrim"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/scrim_top_down"
+        app:layout_constraintBottom_toBottomOf="@+id/imageGuideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- ============================================ -->
+    <!-- Content below the image                      -->
+    <!-- ============================================ -->
+
+    <!-- Headline Line 1: "Find Your Perfect" -->
+    <TextView
+        android:id="@+id/welcomeHeadline1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
+        android:layout_marginTop="@dimen/spacing_32"
+        android:text="@string/welcome_headline_1"
+        android:textAppearance="@style/TextAppearance.DisplaySmall"
+        android:textColor="?attr/colorOnSurface"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageGuideline" />
+
+    <!-- Headline Line 2: "Room Away From Home" -->
+    <TextView
+        android:id="@+id/welcomeHeadline2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
+        android:layout_marginTop="@dimen/spacing_4"
+        android:text="@string/welcome_headline_2"
+        android:textAppearance="@style/TextAppearance.HeadlineLarge"
+        android:textColor="?attr/colorOnSurface"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeHeadline1" />
+
+    <!-- Subtitle -->
+    <TextView
+        android:id="@+id/welcomeSubtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
+        android:layout_marginTop="@dimen/spacing_8"
+        android:lineHeight="24sp"
+        android:text="@string/welcome_subtitle"
+        android:textAppearance="@style/TextAppearance.BodyLarge"
+        android:textColor="?attr/colorOnSurfaceVariant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeHeadline2" />
+
+    <!-- ============================================ -->
+    <!-- Button Stack (anchored to bottom)            -->
+    <!-- ============================================ -->
+
+    <!-- "or continue as Guest >" - Text Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/guestBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_24"
+        android:text="@string/continue_as_guest"
+        android:textAppearance="@style/TextAppearance.LabelLarge"
+        android:textColor="?attr/colorPrimary"
+        style="@style/Widget.Material3.Button.TextButton"
+        app:cornerRadius="@dimen/corner_medium"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- "I already have an account" - Outlined Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/haveAccountBtn"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
+        android:text="@string/i_have_account"
+        android:textAppearance="@style/TextAppearance.LabelLarge"
+        style="@style/Widget.StudentRoomSharing.Button.Outlined"
+        app:layout_constraintBottom_toTopOf="@+id/guestBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- "Create Account" - Primary Filled Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/createAccountBtn"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
+        android:text="@string/create_account"
+        android:textAppearance="@style/TextAppearance.LabelLarge"
+        style="@style/Widget.StudentRoomSharing.Button.Filled"
+        app:layout_constraintBottom_toTopOf="@+id/haveAccountBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- "Continue with Google" - Social Outlined Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/googleSignInBtn"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
+        android:text="@string/continue_with_google"
+        android:textAppearance="@style/TextAppearance.LabelLarge"
+        android:textColor="?attr/colorOnSurface"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        app:backgroundTint="?attr/colorSurface"
+        app:cornerRadius="@dimen/corner_medium"
+        app:icon="@drawable/ic_google"
+        app:iconGravity="textStart"
+        app:iconSize="@dimen/icon_size_large"
+        app:layout_constraintBottom_toTopOf="@+id/createAccountBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:strokeColor="@color/outline"
+        app:strokeWidth="1dp"
+        tools:ignore="MissingResource" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
