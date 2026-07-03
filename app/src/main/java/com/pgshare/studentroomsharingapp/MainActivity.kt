@@ -24,25 +24,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.C_color)))
-        // Initialize Firebase Authentication
         firebaseAuth = FirebaseAuth.getInstance()
-        Log.d("temp_debug", "Testing log filter")
 
-        checkUserRole()
-    }
-
-    private fun checkUserRole() {
-        val user = firebaseAuth?.currentUser
-        if (user != null) {
-            lifecycleScope.launch {
-                val role = repository.getUserRole(user.uid)
-                if (role == "student") {
-                    findViewById<View>(R.id.cardView4)?.visibility = View.GONE
-                } else {
-                    findViewById<View>(R.id.cardView4)?.visibility = View.VISIBLE
-                }
-            }
+        findViewById<android.widget.TextView>(R.id.tvContinueAsGuest)?.setOnClickListener {
+            startActivity(Intent(this, StudentDashboardActivity::class.java))
         }
     }
 
@@ -78,13 +63,13 @@ class MainActivity : AppCompatActivity() {
     // Inflate the menu resource file
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
-        supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.C_color)))
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.colorPrimary)))
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
-        if (id == R.id.profile) {
+        if (id == R.id.action_profile) {
             if (firebaseAuth?.currentUser != null) {
                 openProfile()
             } else {
@@ -92,16 +77,13 @@ class MainActivity : AppCompatActivity() {
                     .show()
             }
             return true
-        } else if (id == R.id.contact) {
-            // Handle contact menu item click
+        } else if (id == R.id.action_contact_us) {
             openContactUs()
             return true
-        } else if (id == R.id.menu_About) {
-            // Handle about menu item click
+        } else if (id == R.id.action_about) {
             openAbout()
             return true
-        } else if (id == R.id.menu_logout) {
-            // Handle logout menu item click
+        } else if (id == R.id.action_logout) {
             logoutUser()
             return true
         } else {

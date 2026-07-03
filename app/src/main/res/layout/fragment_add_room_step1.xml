@@ -42,19 +42,19 @@
             app:layout_constraintTop_toBottomOf="@id/tv_step1_subtitle">
 
             <com.google.android.material.chip.Chip
-                style="@style/Widget.Material3.Chip.Filter"
+                style="@style/Widget.StudentRoomSharing.Chip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Private Room" />
 
             <com.google.android.material.chip.Chip
-                style="@style/Widget.Material3.Chip.Filter"
+                style="@style/Widget.StudentRoomSharing.Chip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Shared Room (PG)" />
 
             <com.google.android.material.chip.Chip
-                style="@style/Widget.Material3.Chip.Filter"
+                style="@style/Widget.StudentRoomSharing.Chip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Entire Flat" />
