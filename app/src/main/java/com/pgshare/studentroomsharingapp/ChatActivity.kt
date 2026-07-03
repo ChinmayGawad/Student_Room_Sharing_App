@@ -44,7 +44,7 @@ class ChatActivity : AppCompatActivity() {
 
         viewModel.initialize(senderId, receiverId, roomId)
 
-        binding.fabSend.setOnClickListener {
+        binding.btnSend.setOnClickListener {
             val text = binding.etMessageInput.text.toString().trim()
             if (text.isNotEmpty()) {
                 viewModel.sendMessage(text)
@@ -52,7 +52,7 @@ class ChatActivity : AppCompatActivity() {
             }
         }
 
-        binding.btnBack.setOnClickListener {
+        binding.topToolbar.setNavigationOnClickListener {
             finish()
         }
     }
@@ -60,7 +60,7 @@ class ChatActivity : AppCompatActivity() {
     private fun setupRecyclerView() {
         messageList = ArrayList()
         chatAdapter = MessageAdapter(messageList, FirebaseAuth.getInstance().currentUser?.uid ?: "")
-        binding.recyclerViewChat.apply {
+        binding.messageList.apply {
             layoutManager = LinearLayoutManager(this@ChatActivity)
             adapter = chatAdapter
         }
@@ -74,10 +74,10 @@ class ChatActivity : AppCompatActivity() {
                     messageList.addAll(state.messages)
                     chatAdapter.notifyDataSetChanged()
                     chatAdapter.setReceiverName(state.receiverName)
-                    binding.tvChatTitle.text = state.receiverName
+                    binding.tvChatName.text = state.receiverName
 
                     if (messageList.isNotEmpty()) {
-                        binding.recyclerViewChat.scrollToPosition(messageList.size - 1)
+                        binding.messageList.scrollToPosition(messageList.size - 1)
                     }
                 }
             }
