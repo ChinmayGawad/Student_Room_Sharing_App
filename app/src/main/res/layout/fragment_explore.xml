@@ -1,116 +1,236 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorSurface">
+    android:background="?android:colorBackground"
+    android:orientation="vertical"
+    tools:context=".Fragments.ExploreFragment">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:layout_marginTop="20dp"
-        app:elevation="0dp">
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/screen_margin_horizontal"
+        android:paddingTop="@dimen/spacing_16"
+        android:paddingBottom="@dimen/spacing_8">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/search_bar"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Search by location, college, or PG..."
-            app:layout_scrollFlags="scroll|enterAlways"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="16dp"
-            app:startIconDrawable="@drawable/baseline_search_24"
-            app:endIconMode="clear_text">
+            android:text="Explore"
+            android:textAppearance="@style/TextAppearance.HeadlineMedium"
+            android:textColor="?attr/colorOnSurface" />
 
-            <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/search_bar_height"
+            android:layout_marginTop="@dimen/spacing_12"
+            app:cardBackgroundColor="?attr/colorSurfaceVariant"
+            app:cardCornerRadius="@dimen/corner_xlarge"
+            app:cardElevation="0dp"
+            app:strokeWidth="0dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="match_parent"
+                android:paddingStart="@dimen/spacing_16"
+                android:paddingEnd="@dimen/spacing_8">
+
+                <ImageView
+                    android:id="@+id/searchIcon"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:contentDescription="@null"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/baseline_search_24"
+                    app:tint="@color/onSurfaceVariant"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/searchText"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:hint="@string/search_rooms"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:paddingStart="@dimen/spacing_12"
+                    android:textAppearance="@style/TextAppearance.BodyLarge"
+                    android:textColor="?attr/colorOnSurface"
+                    android:textColorHint="?attr/colorOnSurfaceVariant"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/searchIcon"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
 
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="none"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="12dp"
-            android:clipToPadding="false"
-            app:layout_scrollFlags="scroll|enterAlways">
+            android:layout_marginTop="@dimen/spacing_12"
+            android:scrollbars="none">
 
             <com.google.android.material.chip.ChipGroup
-                android:id="@+id/chip_group_filters"
+                android:id="@+id/chipGroupFilters"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:singleLine="true">
+                app:singleLine="true"
+                app:singleSelection="true"
+                app:selectionRequired="true"
+                app:chipSpacingHorizontal="@dimen/spacing_8">
 
                 <com.google.android.material.chip.Chip
-                    style="@style/Widget.Material3.Chip.Filter"
+                    android:id="@+id/chipAny"
+                    style="@style/Widget.StudentRoomSharing.Chip"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Under ₹8,000" />
+                    android:layout_height="@dimen/chip_height"
+                    android:checked="true"
+                    android:text="@string/categories_any"
+                    app:chipBackgroundColor="@drawable/chip_bg_selector"
+                    app:chipStrokeColor="@color/chip_stroke_selector"
+                    app:chipStrokeWidth="1dp"
+                    android:textColor="@color/chip_text_selector" />
 
                 <com.google.android.material.chip.Chip
-                    style="@style/Widget.Material3.Chip.Filter"
+                    android:id="@+id/chipRoom"
+                    style="@style/Widget.StudentRoomSharing.Chip"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Private Room" />
+                    android:layout_height="@dimen/chip_height"
+                    android:text="@string/categories_room"
+                    app:chipBackgroundColor="@drawable/chip_bg_selector"
+                    app:chipStrokeColor="@color/chip_stroke_selector"
+                    app:chipStrokeWidth="1dp"
+                    android:textColor="@color/chip_text_selector" />
 
                 <com.google.android.material.chip.Chip
-                    style="@style/Widget.Material3.Chip.Filter"
+                    android:id="@+id/chipPG"
+                    style="@style/Widget.StudentRoomSharing.Chip"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="AC" />
+                    android:layout_height="@dimen/chip_height"
+                    android:text="@string/categories_pg"
+                    app:chipBackgroundColor="@drawable/chip_bg_selector"
+                    app:chipStrokeColor="@color/chip_stroke_selector"
+                    app:chipStrokeWidth="1dp"
+                    android:textColor="@color/chip_text_selector" />
 
                 <com.google.android.material.chip.Chip
-                    style="@style/Widget.Material3.Chip.Filter"
+                    android:id="@+id/chipFlat"
+                    style="@style/Widget.StudentRoomSharing.Chip"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Student Friendly" />
+                    android:layout_height="@dimen/chip_height"
+                    android:text="@string/categories_flat"
+                    app:chipBackgroundColor="@drawable/chip_bg_selector"
+                    app:chipStrokeColor="@color/chip_stroke_selector"
+                    app:chipStrokeWidth="1dp"
+                    android:textColor="@color/chip_text_selector" />
 
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipUnder8k"
+                    style="@style/Widget.StudentRoomSharing.Chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/chip_height"
+                    android:text="@string/filter_under_8k"
+                    app:chipBackgroundColor="@drawable/chip_bg_selector"
+                    app:chipStrokeColor="@color/chip_stroke_selector"
+                    app:chipStrokeWidth="1dp"
+                    android:textColor="@color/chip_text_selector" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipPrivate"
+                    style="@style/Widget.StudentRoomSharing.Chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/chip_height"
+                    android:text="@string/filter_private_room"
+                    app:chipBackgroundColor="@drawable/chip_bg_selector"
+                    app:chipStrokeColor="@color/chip_stroke_selector"
+                    app:chipStrokeWidth="1dp"
+                    android:textColor="@color/chip_text_selector" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipAC"
+                    style="@style/Widget.StudentRoomSharing.Chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/chip_height"
+                    android:text="@string/filter_ac"
+                    app:chipBackgroundColor="@drawable/chip_bg_selector"
+                    app:chipStrokeColor="@color/chip_stroke_selector"
+                    app:chipStrokeWidth="1dp"
+                    android:textColor="@color/chip_text_selector" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipStudentFriendly"
+                    style="@style/Widget.StudentRoomSharing.Chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/chip_height"
+                    android:text="@string/filter_student_friendly"
+                    app:chipBackgroundColor="@drawable/chip_bg_selector"
+                    app:chipStrokeColor="@color/chip_stroke_selector"
+                    app:chipStrokeWidth="1dp"
+                    android:textColor="@color/chip_text_selector" />
             </com.google.android.material.chip.ChipGroup>
         </HorizontalScrollView>
-    </com.google.android.material.appbar.AppBarLayout>
+    </LinearLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ProgressBar
+        android:id="@+id/progressBarLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewRooms"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingHorizontal="@dimen/screen_margin_horizontal"
+        android:paddingBottom="@dimen/spacing_16"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2"
+        tools:itemCount="6"
+        tools:listitem="@layout/item_room" />
+
+    <LinearLayout
+        android:id="@+id/tvEmptyState"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/spacing_48"
+        android:visibility="gone">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_rooms"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingBottom="80dp"
-            tools:listitem="@layout/item_room" />
-
-        <ProgressBar
-            android:id="@+id/progressBarLoading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:contentDescription="@null"
+            android:importantForAccessibility="no"
+            android:src="@drawable/baseline_search_24"
+            app:tint="@color/onSurfaceVariant" />
 
         <TextView
-            android:id="@+id/tvEmptyState"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="No rooms available right now."
+            android:layout_marginTop="@dimen/spacing_16"
+            android:text="@string/no_rooms_found"
+            android:textAlignment="center"
+            android:textAppearance="?attr/textAppearanceHeadlineSmall"
+            android:textColor="?attr/colorOnSurface" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_8"
+            android:gravity="center"
+            android:text="@string/try_adjusting_filters_message"
+            android:textAlignment="center"
             android:textAppearance="?attr/textAppearanceBodyLarge"
-            android:textColor="?attr/colorOnSurfaceVariant"
-            android:visibility="gone"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:textColor="?attr/colorOnSurfaceVariant" />
+    </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>

@@ -1,259 +1,366 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorSurface">
+    android:background="?attr/colorSurface"
+    tools:context=".RoomDetailsActivity">
 
-    <!-- The Collapsing Header (Hero Image) -->
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
-        android:layout_height="320dp"
+        android:layout_height="300dp"
         android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorSurface"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:titleCollapseMode="fade">
 
-            <androidx.viewpager2.widget.ViewPager2
+            <androidx.viewpager.widget.ViewPager
                 android:id="@+id/viewpager_room_images"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_collapseMode="parallax"
                 app:layout_collapseParallaxMultiplier="0.7" />
 
-            <!-- Pagination Dots (So the user knows they can swipe) -->
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tab_layout_image_indicator"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:background="@android:color/transparent"
-                app:layout_collapseMode="pin"
-                app:tabBackground="@android:color/transparent"
-                app:tabGravity="center"
-                app:tabIndicatorHeight="0dp"
-                android:layout_marginBottom="48dp"/>
-
-            <!-- A subtle gradient overlay so the white back button is always visible -->
             <View
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@drawable/scrim_top_down"
+                android:layout_height="120dp"
+                android:layout_gravity="bottom"
+                android:background="@drawable/scrim_bottom_up"
                 app:layout_collapseMode="pin" />
 
-            <androidx.appcompat.widget.Toolbar
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout_image_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="48dp"
+                android:background="@android:color/transparent"
+                app:layout_collapseMode="pin"
+                app:tabBackground="@drawable/carousel_indicator_selector"
+                app:tabGravity="center"
+                app:tabIndicatorHeight="0dp" />
+
+            <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                android:background="@android:color/transparent"
                 app:layout_collapseMode="pin"
-                app:navigationIcon="@drawable/baseline_arrow_back_24" />
+                app:navigationIcon="@drawable/baseline_arrow_back_24"
+                app:navigationIconTint="@android:color/white"
+                app:title="@string/app_name"
+                app:titleTextColor="@android:color/white" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- Scrollable Room Details Content -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:paddingBottom="100dp"> <!-- Padding to prevent CTA from covering content -->
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="24dp">
+            android:orientation="vertical">
 
-            <!-- Title & Badge -->
+            <!-- Room Title -->
             <TextView
-                android:id="@+id/tv_detail_title"
-                android:layout_width="0dp"
+                android:id="@+id/tv_room_title"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Private Room in 3BHK"
-                android:textSize="28sp"
-                android:textStyle="bold"
-                android:textColor="?attr/colorOnBackground"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
+                android:layout_marginTop="@dimen/spacing_24"
+                android:text="@string/app_name"
+                android:textAppearance="?attr/textAppearanceHeadlineSmall"
+                android:textColor="?attr/colorOnSurface" />
 
-            <LinearLayout
-                android:id="@+id/layout_owner_badge"
+            <!-- Price -->
+            <TextView
+                android:id="@+id/tv_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
+                android:layout_marginTop="@dimen/spacing_8"
+                android:text="$380/mo"
+                android:textAppearance="?attr/textAppearanceHeadlineMedium"
+                android:textColor="?attr/colorPrimary" />
+
+            <!-- Rating Row -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
+                android:layout_marginTop="@dimen/spacing_8"
                 android:gravity="center_vertical"
-                android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@id/tv_detail_title"
-                app:layout_constraintStart_toStartOf="parent">
+                android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/baseline_check_circle_24"
-                    app:tint="?attr/colorPrimary" />
+                    android:layout_width="@dimen/icon_size_medium"
+                    android:layout_height="@dimen/icon_size_medium"
+                    android:contentDescription="@null"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_favorites"
+                    app:tint="@color/colorWarning" />
 
                 <TextView
-                    android:id="@+id/tv_owner_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Listed by Rajesh (Verified Owner)"
-                    android:textSize="14sp"
-                    android:textColor="?attr/colorPrimary"
-                    android:textStyle="bold"
-                    android:layout_marginStart="8dp" />
+                    android:layout_marginStart="@dimen/spacing_4"
+                    android:text="4.8"
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textColor="?attr/colorOnSurfaceVariant" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_4"
+                    android:text="(24 reviews)"
+                    android:textAppearance="?attr/textAppearanceBodySmall"
+                    android:textColor="?attr/colorOnSurfaceVariant" />
             </LinearLayout>
 
+            <!-- Location -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
+                android:layout_marginTop="@dimen/spacing_12"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size_small"
+                    android:layout_height="@dimen/icon_size_small"
+                    android:contentDescription="@null"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/baseline_location_on_24"
+                    app:tint="@color/onSurfaceVariant" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_4"
+                    android:text="University Area"
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textColor="?attr/colorOnSurfaceVariant" />
+            </LinearLayout>
+
+            <!-- Divider -->
             <View
-                android:id="@+id/divider_1"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="?attr/colorOutline"
-                android:alpha="0.2"
-                android:layout_marginTop="24dp"
-                app:layout_constraintTop_toBottomOf="@id/layout_owner_badge" />
+                android:layout_marginVertical="@dimen/spacing_24"
+                android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
+                android:background="?attr/colorOutlineVariant" />
 
-            <!-- Transparent Pricing Breakdown (UX Commandment #5) -->
-            <TextView
-                android:id="@+id/tv_pricing_header"
-                android:layout_width="wrap_content"
+            <!-- Owner Info -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Pricing Breakdown"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="?attr/colorOnBackground"
-                android:layout_marginTop="24dp"
-                app:layout_constraintTop_toBottomOf="@id/divider_1"
-                app:layout_constraintStart_toStartOf="parent" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/screen_margin_horizontal">
 
-            <TextView
-                android:id="@+id/tv_rent_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Monthly Rent"
-                android:textColor="?attr/colorOnSurfaceVariant"
-                android:layout_marginTop="16dp"
-                app:layout_constraintTop_toBottomOf="@id/tv_pricing_header"
-                app:layout_constraintStart_toStartOf="parent" />
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/iv_owner_avatar"
+                    android:layout_width="@dimen/avatar_size_medium"
+                    android:layout_height="@dimen/avatar_size_medium"
+                    android:contentDescription="@string/cd_profile_picture"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_person_placeholder"
+                    app:shapeAppearanceOverlay="@style/CircularShape" />
 
-            <TextView
-                android:id="@+id/tv_rent_amount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="₹8,500"
-                android:textColor="?attr/colorOnBackground"
-                android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="@id/tv_rent_label"
-                app:layout_constraintEnd_toEndOf="parent" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_12"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_deposit_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Security Deposit (Refundable)"
-                android:textColor="?attr/colorOnSurfaceVariant"
-                android:layout_marginTop="12dp"
-                app:layout_constraintTop_toBottomOf="@id/tv_rent_label"
-                app:layout_constraintStart_toStartOf="parent" />
+                    <TextView
+                        android:id="@+id/tv_owner_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Listed by Owner"
+                        android:textAppearance="?attr/textAppearanceTitleSmall"
+                        android:textColor="?attr/colorOnSurface" />
 
-            <TextView
-                android:id="@+id/tv_deposit_amount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="₹10,000"
-                android:textColor="?attr/colorOnBackground"
-                android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="@id/tv_deposit_label"
-                app:layout_constraintEnd_toEndOf="parent" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Property Owner"
+                        android:textAppearance="?attr/textAppearanceBodySmall"
+                        android:textColor="?attr/colorOnSurfaceVariant" />
+                </LinearLayout>
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_chat"
+                    style="@style/Widget.StudentRoomSharing.Button.Outlined"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btn_chat"
+                    app:icon="@drawable/ic_chat"
+                    app:iconGravity="start" />
+            </LinearLayout>
+
+            <!-- Divider -->
             <View
-                android:id="@+id/divider_2"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="?attr/colorOutline"
-                android:alpha="0.2"
-                android:layout_marginTop="24dp"
-                app:layout_constraintTop_toBottomOf="@id/tv_deposit_label" />
+                android:layout_marginVertical="@dimen/spacing_24"
+                android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
+                android:background="?attr/colorOutlineVariant" />
 
             <!-- Description -->
             <TextView
-                android:id="@+id/tv_description_header"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="About this room"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="?attr/colorOnBackground"
-                android:layout_marginTop="24dp"
-                app:layout_constraintTop_toBottomOf="@id/divider_2"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_description_body"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Spacious, well-ventilated private room in a 3BHK apartment. High-speed WiFi included. Looking for a quiet, clean roommate. Only 10 mins walking distance to the main university campus."
-                android:textColor="?attr/colorOnSurfaceVariant"
-                android:lineSpacingExtra="4dp"
-                android:layout_marginTop="12dp"
-                app:layout_constraintTop_toBottomOf="@id/tv_description_header" />
+                android:paddingHorizontal="@dimen/screen_margin_horizontal"
+                android:text="@string/section_description"
+                android:textAppearance="?attr/textAppearanceTitleMedium"
+                android:textColor="?attr/colorOnSurface" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/tv_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_8"
+                android:paddingHorizontal="@dimen/screen_margin_horizontal"
+                android:text="No description provided."
+                android:textAppearance="?attr/textAppearanceBodyLarge"
+                android:textColor="?attr/colorOnSurfaceVariant" />
+
+            <!-- Amenities -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_24"
+                android:paddingHorizontal="@dimen/screen_margin_horizontal"
+                android:text="@string/section_amenities"
+                android:textAppearance="?attr/textAppearanceTitleMedium"
+                android:textColor="?attr/colorOnSurface" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_16"
+                android:paddingHorizontal="@dimen/screen_margin_horizontal"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_8">
+
+                    <ImageView
+                        android:layout_width="@dimen/icon_size_medium"
+                        android:layout_height="@dimen/icon_size_medium"
+                        android:contentDescription="@string/amenity_wifi"
+                        android:src="@drawable/baseline_search_24"
+                        app:tint="@color/onSurfaceVariant" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_4"
+                        android:text="@string/amenity_wifi"
+                        android:textAppearance="?attr/textAppearanceBodySmall"
+                        android:textColor="?attr/colorOnSurfaceVariant" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_8">
+
+                    <ImageView
+                        android:layout_width="@dimen/icon_size_medium"
+                        android:layout_height="@dimen/icon_size_medium"
+                        android:contentDescription="@string/amenity_ac"
+                        android:src="@drawable/baseline_search_24"
+                        app:tint="@color/onSurfaceVariant" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_4"
+                        android:text="@string/amenity_ac"
+                        android:textAppearance="?attr/textAppearanceBodySmall"
+                        android:textColor="?attr/colorOnSurfaceVariant" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_8">
+
+                    <ImageView
+                        android:layout_width="@dimen/icon_size_medium"
+                        android:layout_height="@dimen/icon_size_medium"
+                        android:contentDescription="@string/amenity_parking"
+                        android:src="@drawable/baseline_search_24"
+                        app:tint="@color/onSurfaceVariant" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_4"
+                        android:text="@string/amenity_parking"
+                        android:textAppearance="?attr/textAppearanceBodySmall"
+                        android:textColor="?attr/colorOnSurfaceVariant" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_8">
+
+                    <ImageView
+                        android:layout_width="@dimen/icon_size_medium"
+                        android:layout_height="@dimen/icon_size_medium"
+                        android:contentDescription="@string/amenity_gym"
+                        android:src="@drawable/baseline_search_24"
+                        app:tint="@color/onSurfaceVariant" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_4"
+                        android:text="@string/amenity_gym"
+                        android:textAppearance="?attr/textAppearanceBodySmall"
+                        android:textColor="?attr/colorOnSurfaceVariant" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Bottom padding for FAB -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="80dp" />
+
+        </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
-    <!-- Persistent Bottom Call-to-Action (CTA) Sheet -->
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        app:cardElevation="16dp"
-        app:cardCornerRadius="@dimen/shapeCornerNone"
-        app:strokeWidth="0dp">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="24dp"
-            android:paddingVertical="16dp"
-            android:background="?attr/colorSurface">
-
-            <TextView
-                android:id="@+id/tv_cta_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="₹8,500"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                android:textColor="?attr/colorOnBackground"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_cta_month"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="/ month"
-                android:textColor="?attr/colorOnSurfaceVariant"
-                app:layout_constraintTop_toBottomOf="@id/tv_cta_price"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_chat_owner"
-                style="@style/Widget.Material3.Button"
-                android:layout_width="160dp"
-                android:layout_height="56dp"
-                android:text="Chat with Owner"
-                app:cornerRadius="16dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
