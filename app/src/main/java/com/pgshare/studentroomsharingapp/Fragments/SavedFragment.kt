@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -56,7 +55,7 @@ class SavedFragment : Fragment() {
             }
 
             override fun onSaveClick(room: Room) {
-                Toast.makeText(binding.root.context, "Not logged in!", Toast.LENGTH_SHORT).show()
+                // handled by adapter
             }
         })
 
@@ -73,6 +72,10 @@ class SavedFragment : Fragment() {
                     savedRoomList.addAll(state.savedRooms)
                     roomAdapter.setOwnerNames(state.ownerNames)
                     roomAdapter.updateData(savedRoomList)
+                    val keys = state.savedRooms.mapNotNull { room ->
+                        room.roomName?.replace(Regex("[.#$\\[\\]]"), "")
+                    }.toSet()
+                    roomAdapter.setSavedRoomKeys(keys)
 
                     if (!state.isLoggedIn || (state.savedRooms.isEmpty() && !state.isLoading)) {
                         binding.rvSavedRooms.visibility = View.GONE

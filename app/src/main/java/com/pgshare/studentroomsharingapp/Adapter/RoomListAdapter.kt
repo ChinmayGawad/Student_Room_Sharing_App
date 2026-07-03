@@ -39,33 +39,25 @@ class RoomListAdapter(
 
     inner class RoomViewHolder(val binding: ItemRoomBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(room: Room) {
-            binding.tvRoomTitle.text = room.roomName
+            binding.roomTitle.text = room.roomName
 
             val type = room.description?.replace("Type: ", "")?.uppercase() ?: "ROOM"
-            binding.tvRoomLocation.text = "$type • ${room.location?.uppercase()}"
+            binding.roomDistance.text = "$type • ${room.location?.uppercase()}"
 
-            binding.tvRoomPrice.text = room.formatPrice
-
-            val ownerId = room.userId
-            val displayName = if (!ownerId.isNullOrEmpty()) {
-                ownerNames[ownerId] ?: "Unknown User"
-            } else {
-                "Unknown User"
-            }
-            binding.tvRoomOwner.text = "Listed by $displayName"
+            binding.roomPrice.text = room.formatPrice
 
             val base64String = room.imageUrls?.firstOrNull()
             if (!base64String.isNullOrEmpty()) {
                 try {
                     val imageBytes = Base64.decode(base64String, Base64.DEFAULT)
                     val decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-                    binding.imgRoomThumbnail.setImageBitmap(decodedImage)
+                    binding.roomImage.setImageBitmap(decodedImage)
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    binding.imgRoomThumbnail.setImageResource(R.drawable.imageplaceholder)
+                    binding.roomImage.setImageResource(R.drawable.placeholder_room)
                 }
             } else {
-                binding.imgRoomThumbnail.setImageResource(R.drawable.imageplaceholder)
+                binding.roomImage.setImageResource(R.drawable.placeholder_room)
             }
 
             val rawKey = room.roomName ?: "UnknownRoom"
@@ -77,7 +69,7 @@ class RoomListAdapter(
             if (currentUserId != null) {
                 val userFavoritesRef = favoritesRef.child(currentUserId).child("favorites").child(roomKey)
 
-                binding.btnSaveRoom.setOnClickListener {
+                binding.btnBookmark.setOnClickListener {
                     val newSaved = !isSaved
                     updateHeartIcon(newSaved)
                     if (newSaved) {
@@ -88,7 +80,7 @@ class RoomListAdapter(
                     clickListener.onSaveClick(room)
                 }
             } else {
-                binding.btnSaveRoom.setOnClickListener {
+                binding.btnBookmark.setOnClickListener {
                     clickListener.onSaveClick(room)
                 }
             }
@@ -100,9 +92,9 @@ class RoomListAdapter(
 
         private fun updateHeartIcon(isSaved: Boolean) {
             if (isSaved) {
-                binding.btnSaveRoom.setImageResource(R.drawable.baseline_favorite_24)
+                binding.btnBookmark.setImageResource(R.drawable.baseline_favorite_24)
             } else {
-                binding.btnSaveRoom.setImageResource(R.drawable.baseline_favorite_border_24)
+                binding.btnBookmark.setImageResource(R.drawable.baseline_favorite_border_24)
             }
         }
     }
