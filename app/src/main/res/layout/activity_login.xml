@@ -4,153 +4,258 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorSurface"
-    android:padding="24dp">
+    android:background="@color/colorBackground"
+    android:paddingHorizontal="@dimen/screen_margin_horizontal"
+    tools:context=".Authentication.Login">
 
-    <!-- Back Button -->
-    <ImageView
-        android:id="@+id/ivBack"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:padding="8dp"
-        android:src="@drawable/baseline_arrow_back_24"
-        android:contentDescription="Go back"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        app:layout_constraintTop_toTopOf="parent"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnBack"
+        style="@style/Widget.StudentRoomSharing.Button.Icon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:contentDescription="@string/cd_back"
+        app:icon="@drawable/baseline_arrow_back_24"
+        app:iconSize="@dimen/icon_size_large"
+        app:iconTint="@color/onSurface"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- App Logo -->
-    <ImageView
-        android:id="@+id/ivLogo"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="64dp"
-        android:src="@drawable/logo"
-        android:contentDescription="App logo"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <!-- App Name -->
-    <TextView
-        android:id="@+id/tvAppName"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSkip"
+        style="@style/Widget.StudentRoomSharing.Button.Text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="RoomShare"
-        android:textAppearance="?attr/textAppearanceHeadlineMedium"
-        android:textColor="?attr/colorPrimary"
-        app:layout_constraintTop_toBottomOf="@id/ivLogo"
+        android:text="@string/skip"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvWelcomeBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/welcome_back"
+        android:textAppearance="@style/TextAppearance.HeadlineMedium"
+        android:textColor="@color/onSurface"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <!-- Welcome Back Title -->
-    <TextView
-        android:id="@+id/tvWelcomeTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:text="Welcome Back"
-        android:textAppearance="?attr/textAppearanceTitleLarge"
-        android:textColor="?attr/colorOnBackground"
-        app:layout_constraintTop_toBottomOf="@id/tvAppName"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/btnBack" />
 
     <TextView
-        android:id="@+id/tvWelcomeSubtitle"
+        android:id="@+id/tvSubtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sign in to continue finding your perfect room."
-        android:textAppearance="?attr/textAppearanceBodyMedium"
-        android:textColor="?attr/colorOnSurfaceVariant"
-        android:layout_marginTop="4dp"
-        app:layout_constraintTop_toBottomOf="@+id/tvWelcomeTitle"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginTop="8dp"
+        android:text="@string/sign_in_to_continue"
+        android:textAppearance="@style/TextAppearance.BodyLarge"
+        android:textColor="@color/onSurfaceVariant"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvWelcomeBack" />
 
-    <!-- Email Field -->
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/editTextOwnerEmail"
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
+        android:id="@+id/tilEmail"
+        style="@style/Widget.StudentRoomSharing.TextInputLayout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:hint="@string/email_id"
-        app:startIconDrawable="@drawable/ic_user"
-        app:layout_constraintTop_toBottomOf="@+id/tvWelcomeSubtitle">
+        android:layout_marginTop="32dp"
+        android:hint="@string/email"
+        app:endIconMode="clear_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvSubtitle">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/UsernameEt"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="56dp"
             android:inputType="textEmailAddress"
-            android:importantForAutofill="yes"
-            android:textAppearance="?attr/textAppearanceBodyLarge" />
+            android:paddingHorizontal="16dp"
+            android:textAppearance="@style/TextAppearance.BodyLarge"
+            android:textColor="@color/onSurface" />
+
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Password Field -->
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/passwordTextInputLayout1"
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
+        android:id="@+id/tilPassword"
+        style="@style/Widget.StudentRoomSharing.TextInputLayout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:hint="@string/password"
         app:endIconMode="password_toggle"
-        app:startIconDrawable="@drawable/baseline_check_circle_24"
-        app:layout_constraintTop_toBottomOf="@id/editTextOwnerEmail">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tilEmail">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/PasswordEt"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="56dp"
             android:inputType="textPassword"
-            android:textAppearance="?attr/textAppearanceBodyLarge" />
+            android:paddingHorizontal="16dp"
+            android:textAppearance="@style/TextAppearance.BodyLarge"
+            android:textColor="@color/onSurface" />
+
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Forgot Password -->
-    <TextView
-        android:id="@+id/forgetPassword"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnForgotPassword"
+        style="@style/Widget.StudentRoomSharing.Button.Text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/forgot_password"
-        android:textAppearance="?attr/textAppearanceBodyMedium"
-        android:textColor="?attr/colorPrimary"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/passwordTextInputLayout1"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tilPassword" />
 
-    <!-- Sign In Button -->
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonLogin"
-        style="@style/Widget.Material3.Button"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:id="@+id/btnSignIn"
+        style="@style/Widget.StudentRoomSharing.Button.Filled"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginHorizontal="24dp"
         android:layout_marginTop="32dp"
-        android:text="@string/login"
-        android:textAppearance="?attr/textAppearanceTitleMedium"
-        app:cornerRadius="@dimen/shapeCornerMedium"
-        app:layout_constraintTop_toBottomOf="@id/forgetPassword" />
-
-    <!-- Sign Up Link -->
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginBottom="48dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/sign_in"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/btnForgotPassword" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/dividerLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginHorizontal="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnSignIn">
+
+        <View
+            android:id="@+id/dividerStart"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/outlineVariant"
+            android:layout_gravity="center_vertical"
+            app:layout_constraintBottom_toBottomOf="@id/tvOr"
+            app:layout_constraintEnd_toStartOf="@id/tvOr"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvOr" />
 
         <TextView
-            android:id="@+id/CreateAccount"
+            android:id="@+id/tvOr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/create_account"
-            android:textAppearance="?attr/textAppearanceLabelLarge"
-            android:textColor="?attr/colorPrimary" />
+            android:paddingHorizontal="12dp"
+            android:text="@string/or_continue_with"
+            android:textAppearance="@style/TextAppearance.LabelMedium"
+            android:textColor="@color/onSurfaceVariant"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/dividerEnd"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/outlineVariant"
+            android:layout_gravity="center_vertical"
+            app:layout_constraintBottom_toBottomOf="@id/tvOr"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvOr"
+            app:layout_constraintTop_toTopOf="@id/tvOr" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/socialButtons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dividerLayout">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnGoogle"
+            style="@style/Widget.StudentRoomSharing.Button.Social"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="Google"
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
+            android:padding="0dp"
+            app:cornerRadius="24dp"
+            app:icon="@drawable/ic_google"
+            app:iconGravity="textStart"
+            app:iconSize="@dimen/icon_size_large" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnFacebook"
+            style="@style/Widget.StudentRoomSharing.Button.Social"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:contentDescription="Facebook"
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
+            android:padding="0dp"
+            app:cornerRadius="24dp"
+            app:icon="@drawable/ic_facebook"
+            app:iconGravity="textStart"
+            app:iconSize="@dimen/icon_size_large" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnTwitter"
+            style="@style/Widget.StudentRoomSharing.Button.Social"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:contentDescription="X"
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
+            android:padding="0dp"
+            app:cornerRadius="24dp"
+            app:icon="@drawable/ic_x"
+            app:iconGravity="textStart"
+            app:iconSize="@dimen/icon_size_large" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/signUpRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_account"
+            android:textAppearance="@style/TextAppearance.BodyMedium"
+            android:textColor="@color/onSurfaceVariant" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSignUp"
+            style="@style/Widget.StudentRoomSharing.Button.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_up"
+            android:textColor="@color/colorPrimary" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

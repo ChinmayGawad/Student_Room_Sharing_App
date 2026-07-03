@@ -28,9 +28,9 @@ class SignUp : AppCompatActivity() {
 
         viewModel = SignUpViewModel()
 
-        binding.btnRegister.setOnClickListener { onRegisterBtnClick() }
-
-        binding.tvLoginLink.setOnClickListener { finish() }
+        binding.btnBack.setOnClickListener { finish() }
+        binding.btnLoginLink.setOnClickListener { finish() }
+        binding.btnCreateAccount.setOnClickListener { onRegisterBtnClick() }
 
         observeEvents()
     }
@@ -43,7 +43,7 @@ class SignUp : AppCompatActivity() {
                         is SignUpEvent.Success -> {
                             Toast.makeText(this@SignUp, "Account Created Successfully!", Toast.LENGTH_SHORT).show()
                             val intent = Intent(this@SignUp, Login::class.java)
-                            intent.putExtra("email", binding.etEmailSignup.text.toString().trim())
+                            intent.putExtra("email", binding.tilEmail.editText?.text.toString().trim())
                             startActivity(intent)
                             finish()
                         }
@@ -57,13 +57,14 @@ class SignUp : AppCompatActivity() {
     }
 
     private fun onRegisterBtnClick() {
-        val name = binding.etName.text.toString().trim()
-        val email = binding.etEmailSignup.text.toString().trim()
-        val password = binding.etPasswordSignup.text.toString().trim()
-        val confirmPassword = binding.etConfirmPasswordSignup.text.toString().trim()
+        val name = binding.tilName.editText?.text.toString().trim()
+        val email = binding.tilEmail.editText?.text.toString().trim()
+        val password = binding.tilPassword.editText?.text.toString().trim()
+        val confirmPassword = binding.tilConfirmPassword.editText?.text.toString().trim()
 
-        val role = when (binding.cgRole.checkedChipId) {
+        val role = when (binding.chipGroupRole.checkedChipId) {
             binding.chipStudent.id -> "student"
+            binding.chipProfessional.id -> "professional"
             binding.chipOwner.id -> "owner"
             else -> ""
         }
@@ -78,31 +79,36 @@ class SignUp : AppCompatActivity() {
         var valid = true
 
         if (TextUtils.isEmpty(name)) {
-            binding.etName.error = "Full Name is required"
+            binding.tilName.error = "Full Name is required"
             valid = false
         } else {
-            binding.etName.error = null
+            binding.tilName.error = null
         }
 
         if (TextUtils.isEmpty(email) || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            binding.etEmailSignup.error = "Invalid email address"
+            binding.tilEmail.error = "Invalid email address"
             valid = false
         } else {
-            binding.etEmailSignup.error = null
+            binding.tilEmail.error = null
         }
 
         if (TextUtils.isEmpty(password) || password.length < 6) {
-            binding.etPasswordSignup.error = "Password must be at least 6 characters"
+            binding.tilPassword.error = "Password must be at least 6 characters"
             valid = false
         } else {
-            binding.etPasswordSignup.error = null
+            binding.tilPassword.error = null
         }
 
         if (password != confirmPassword) {
-            binding.etConfirmPasswordSignup.error = "Passwords do not match"
+            binding.tilConfirmPassword.error = "Passwords do not match"
             valid = false
         } else {
-            binding.etConfirmPasswordSignup.error = null
+            binding.tilConfirmPassword.error = null
+        }
+
+        if (!binding.cbTerms.isChecked) {
+            Toast.makeText(this, "Please agree to the Terms & Conditions", Toast.LENGTH_SHORT).show()
+            valid = false
         }
 
         if (role.isEmpty()) {

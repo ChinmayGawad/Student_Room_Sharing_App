@@ -22,21 +22,21 @@ class Login : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.hide()
 
-        binding.ivBack.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
+        binding.btnBack.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
-        binding.forgetPassword.setOnClickListener {
+        binding.btnForgotPassword.setOnClickListener {
             val intent = Intent(this@Login, ForgotPassword::class.java)
             startActivity(intent)
         }
 
-        binding.CreateAccount.setOnClickListener {
+        binding.btnSignUp.setOnClickListener {
             val signUpIntent = Intent(this@Login, SignUp::class.java)
             startActivity(signUpIntent)
         }
         authLogin = FirebaseAuth.getInstance()
-        binding.buttonLogin.setOnClickListener {
-            val textEmail = binding.UsernameEt.text.toString()
-            val textPass = binding.PasswordEt.text.toString()
+        binding.btnSignIn.setOnClickListener {
+            val textEmail = binding.tilEmail.editText?.text.toString()
+            val textPass = binding.tilPassword.editText?.text.toString()
             if (validateEmail() && validatePassword()) {
                 authLogin?.signInWithEmailAndPassword(textEmail, textPass)
                     ?.addOnCompleteListener { task ->
@@ -58,32 +58,31 @@ class Login : AppCompatActivity() {
     }
 
     private fun validateEmail(): Boolean {
-        val `val` = binding.UsernameEt.text.toString()
-        if (`val`.isEmpty()) {
-            binding.UsernameEt.error = "Field Can Not be Empty"
+        val email = binding.tilEmail.editText?.text.toString()
+        if (email.isEmpty()) {
+            binding.tilEmail.error = "Field Can Not be Empty"
             return false
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(`val`).matches()) {
-            binding.UsernameEt.error ="Invalid Email Address"
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            binding.tilEmail.error ="Invalid Email Address"
             return false
         } else {
-            binding.UsernameEt.error = null
+            binding.tilEmail.error = null
             return true
         }
     }
 
     private fun validatePassword(): Boolean {
-        val `val` = binding.PasswordEt.text.toString()
+        val password = binding.tilPassword.editText?.text.toString()
 
-        if (`val`.isEmpty()) {
-            binding.PasswordEt.error = "Field can not be empty"
+        if (password.isEmpty()) {
+            binding.tilPassword.error = "Field can not be empty"
             return false
         } else {
-            binding.PasswordEt.error = null
+            binding.tilPassword.error = null
             return true
         }
     }
 
-    //Check if user is Already logged in
     override fun onStart() {
         super.onStart()
         if (authLogin?.currentUser != null) {
