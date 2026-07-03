@@ -18,7 +18,9 @@ data class ExploreUiState(
     val isLoading: Boolean = true,
     val error: String? = null,
     val ownerNames: Map<String, String> = emptyMap(),
-    val savedRoomKeys: Set<String> = emptySet()
+    val savedRoomKeys: Set<String> = emptySet(),
+    val searchQuery: String = "",
+    val filterCriteria: String? = null
 )
 
 class ExploreViewModel(
@@ -73,29 +75,61 @@ class ExploreViewModel(
         }
     }
 
-    fun applyFilter(criteria: String) {
+    private fun filterAndSearch() {
         val all = _uiState.value.allRooms
-        val filtered = when (criteria) {
-            "Under ₹8,000" -> all.filter {
-                val price = it.price?.replace("[^0-9]".toRegex(), "")?.toIntOrNull() ?: 0
-                price in 1..8000
+        val query = _uiState.value.searchQuery.lowercase()
+        val criteria = _uiState.value.filterCriteria
+
+        var filtered = all.filter { room ->
+            val matchesSearch = room.location?.lowercase()?.contains(query) == true ||
+                    room.roomName?.lowercase()?.contains(query) == true ||
+                    room.description?.lowercase()?.contains(query) == true
+            matchesSearch
+        }
+
+        if (criteria != null) {
+            filtered = when (criteria) {
+                "Under ₹8,000" -> filtered.filter {
+                    val price = it.price?.replace("[^0-9]".toRegex(), "")?.toIntOrNull() ?: 0
+                    price in 1..8000
+                }
+                "Private Room" -> filtered.filter {
+                    it.description?.contains("Private Room", ignoreCase = true) == true
+                }
+                "AC" -> filtered.filter {
+                    it.description?.contains("AC", ignoreCase = true) == true
+                }
+                "Student Friendly" -> filtered.filter {
+                    it.description?.contains("Student", ignoreCase = true) == true
+                }
+                "Room" -> filtered.filter {
+                    it.description?.contains("Room", ignoreCase = true) == true
+                }
+                "PG" -> filtered.filter {
+                    it.description?.contains("PG", ignoreCase = true) == true
+                }
+                "Flat" -> filtered.filter {
+                    it.description?.contains("Flat", ignoreCase = true) == true
+                }
+                else -> filtered
             }
-            "Private Room" -> all.filter {
-                it.description?.contains("Private Room", ignoreCase = true) == true
-            }
-            "AC" -> all.filter {
-                it.description?.contains("AC", ignoreCase = true) == true
-            }
-            "Student Friendly" -> all.filter {
-                it.description?.contains("Student", ignoreCase = true) == true
-            }
-            else -> all
         }
         _uiState.value = _uiState.value.copy(displayRooms = filtered)
     }
 
+    fun applyFilter(criteria: String) {
+        _uiState.value = _uiState.value.copy(filterCriteria = criteria)
+        filterAndSearch()
+    }
+
+    fun search(query: String) {
+        _uiState.value = _uiState.value.copy(searchQuery = query)
+        filterAndSearch()
+    }
+
     fun clearFilter() {
-        _uiState.value = _uiState.value.copy(displayRooms = _uiState.value.allRooms)
+        _uiState.value = _uiState.value.copy(filterCriteria = null)
+        filterAndSearch()
     }
 
     class Factory : ViewModelProvider.Factory {
