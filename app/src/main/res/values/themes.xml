@@ -1,73 +1,221 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Base application theme -->
     <style name="Theme.StudentRoomSharingApp" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
 
-        <!-- Primary -->
-        <item name="colorPrimary">@color/primary</item>
+        <!-- Primary Colors -->
+        <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorOnPrimary">@color/onPrimary</item>
         <item name="colorPrimaryContainer">@color/primaryContainer</item>
         <item name="colorOnPrimaryContainer">@color/onPrimaryContainer</item>
 
         <!-- Secondary -->
-        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
         <item name="colorOnSecondary">@color/onSecondary</item>
         <item name="colorSecondaryContainer">@color/secondaryContainer</item>
         <item name="colorOnSecondaryContainer">@color/onSecondaryContainer</item>
 
         <!-- Tertiary -->
-        <item name="colorTertiary">@color/tertiary</item>
+        <item name="colorTertiary">@color/colorTertiary</item>
         <item name="colorOnTertiary">@color/onTertiary</item>
+        <item name="colorTertiaryContainer">@color/tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/onTertiaryContainer</item>
+
+        <!-- Surface & Background -->
+        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="colorSurfaceVariant">@color/colorSurfaceVariant</item>
+        <item name="colorOnBackground">@color/onBackground</item>
+        <item name="colorOnSurface">@color/onSurface</item>
+        <item name="colorOnSurfaceVariant">@color/onSurfaceVariant</item>
 
         <!-- Error -->
-        <item name="colorError">@color/error</item>
+        <item name="colorError">@color/colorError</item>
         <item name="colorOnError">@color/onError</item>
         <item name="colorErrorContainer">@color/errorContainer</item>
         <item name="colorOnErrorContainer">@color/onErrorContainer</item>
 
-        <!-- Background -->
-        <item name="android:colorBackground">@color/background</item>
-        <item name="colorOnBackground">@color/onBackground</item>
-
-        <!-- Surface -->
-        <item name="colorSurface">@color/surface</item>
-        <item name="colorOnSurface">@color/onSurface</item>
-        <item name="colorSurfaceVariant">@color/surfaceVariant</item>
-        <item name="colorOnSurfaceVariant">@color/onSurfaceVariant</item>
-
-        <!-- Outline -->
-        <item name="colorOutline">@color/outline</item>
-
-        <!-- Ripple -->
-        <item name="colorControlHighlight">@color/primaryContainer</item>
-
-        <!-- Status & Nav Bars (edge-to-edge) -->
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="android:windowLightStatusBar">true</item>
-
-        <!-- Background -->
-        <item name="android:windowBackground">@color/background</item>
-
         <!-- Typography -->
-        <item name="textAppearanceHeadlineLarge">@style/TextAppearance.StudentRoomSharingApp.HeadlineLarge</item>
-        <item name="textAppearanceHeadlineMedium">@style/TextAppearance.StudentRoomSharingApp.HeadlineMedium</item>
-        <item name="textAppearanceTitleLarge">@style/TextAppearance.StudentRoomSharingApp.TitleLarge</item>
-        <item name="textAppearanceTitleMedium">@style/TextAppearance.StudentRoomSharingApp.TitleMedium</item>
-        <item name="textAppearanceTitleSmall">@style/TextAppearance.StudentRoomSharingApp.TitleSmall</item>
-        <item name="textAppearanceBodyLarge">@style/TextAppearance.StudentRoomSharingApp.BodyLarge</item>
-        <item name="textAppearanceBodyMedium">@style/TextAppearance.StudentRoomSharingApp.BodyMedium</item>
-        <item name="textAppearanceBodySmall">@style/TextAppearance.StudentRoomSharingApp.BodySmall</item>
-        <item name="textAppearanceLabelLarge">@style/TextAppearance.StudentRoomSharingApp.LabelLarge</item>
-        <item name="textAppearanceLabelMedium">@style/TextAppearance.StudentRoomSharingApp.LabelMedium</item>
-        <item name="textAppearanceLabelSmall">@style/TextAppearance.StudentRoomSharingApp.LabelSmall</item>
+        <item name="textAppearanceDisplayLarge">@style/TextAppearance.DisplayLarge</item>
+        <item name="textAppearanceDisplayMedium">@style/TextAppearance.DisplayMedium</item>
+        <item name="textAppearanceDisplaySmall">@style/TextAppearance.DisplaySmall</item>
+        <item name="textAppearanceHeadlineLarge">@style/TextAppearance.HeadlineLarge</item>
+        <item name="textAppearanceHeadlineMedium">@style/TextAppearance.HeadlineMedium</item>
+        <item name="textAppearanceHeadlineSmall">@style/TextAppearance.HeadlineSmall</item>
+        <item name="textAppearanceTitleLarge">@style/TextAppearance.TitleLarge</item>
+        <item name="textAppearanceTitleMedium">@style/TextAppearance.TitleMedium</item>
+        <item name="textAppearanceTitleSmall">@style/TextAppearance.TitleSmall</item>
+        <item name="textAppearanceBodyLarge">@style/TextAppearance.BodyLarge</item>
+        <item name="textAppearanceBodyMedium">@style/TextAppearance.BodyMedium</item>
+        <item name="textAppearanceBodySmall">@style/TextAppearance.BodySmall</item>
+        <item name="textAppearanceLabelLarge">@style/TextAppearance.LabelLarge</item>
+        <item name="textAppearanceLabelMedium">@style/TextAppearance.LabelMedium</item>
+        <item name="textAppearanceLabelSmall">@style/TextAppearance.LabelSmall</item>
 
+        <item name="dialogCornerRadius">20dp</item>
+        <item name="bottomSheetDialogTheme">@style/Theme.StudentRoomSharing.BottomSheetDialog</item>
+
+        <!-- Component Overrides -->
+        <item name="materialButtonStyle">@style/Widget.StudentRoomSharing.Button</item>
+        <item name="materialCardViewStyle">@style/Widget.StudentRoomSharing.CardView</item>
+        <item name="chipStyle">@style/Widget.StudentRoomSharing.Chip</item>
+        <item name="bottomNavigationStyle">@style/Widget.StudentRoomSharing.BottomNavigationView</item>
+        <item name="floatingActionButtonStyle">@style/Widget.StudentRoomSharing.FloatingActionButton</item>
+        <item name="textInputStyle">@style/Widget.StudentRoomSharing.TextInputLayout</item>
+        <item name="snackbarStyle">@style/Widget.StudentRoomSharing.Snackbar</item>
+        <item name="colorWarning">@color/colorWarning</item>
+        <item name="colorOutline">@color/outline</item>
     </style>
 
-    <!-- Circular shape for avatar -->
-    <style name="CircularShape">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">50%</item>
+    <!-- Button -->
+    <style name="Widget.StudentRoomSharing.Button" parent="Widget.Material3.Button">
+        <item name="android:minHeight">56dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="cornerRadius">12dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.LabelLarge</item>
+    </style>
+    <style name="Widget.StudentRoomSharing.Button.Filled" parent="Widget.StudentRoomSharing.Button">
+        <item name="backgroundTint">@color/colorPrimary</item>
+        <item name="android:textColor">@color/onPrimary</item>
+        <item name="rippleColor">@color/onPrimary_20</item>
+    </style>
+    <style name="Widget.StudentRoomSharing.Button.Outlined" parent="Widget.StudentRoomSharing.Button">
+        <item name="strokeWidth">1.5dp</item>
+        <item name="strokeColor">@color/outline</item>
+        <item name="android:textColor">@color/onSurface</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+    </style>
+    <style name="Widget.StudentRoomSharing.Button.Text" parent="Widget.StudentRoomSharing.Button">
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="rippleColor">@color/colorPrimary</item>
+    </style>
+    <style name="Widget.StudentRoomSharing.Button.Icon" parent="Widget.Material3.Button.IconButton">
+        <item name="android:minWidth">48dp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="cornerRadius">24dp</item>
+    </style>
+    <style name="Widget.StudentRoomSharing.Button.Social" parent="Widget.StudentRoomSharing.Button.Outlined">
+        <item name="strokeWidth">1dp</item>
+        <item name="strokeColor">@color/outline</item>
+        <item name="backgroundTint">@color/colorSurface</item>
+        <item name="iconSize">24dp</item>
+        <item name="iconGravity">textStart</item>
     </style>
 
+    <!-- CardView -->
+    <style name="Widget.StudentRoomSharing.CardView" parent="Base.Widget.Material3.CardView">
+        <item name="cardCornerRadius">20dp</item>
+        <item name="cardElevation">6dp</item>
+        <item name="strokeWidth">0dp</item>
+    </style>
+    <style name="Widget.StudentRoomSharing.CardView.Feature" parent="Widget.StudentRoomSharing.CardView">
+        <item name="cardCornerRadius">28dp</item>
+        <item name="cardElevation">8dp</item>
+    </style>
+    <style name="Widget.StudentRoomSharing.CardView.Info" parent="Widget.StudentRoomSharing.CardView">
+        <item name="cardElevation">0dp</item>
+        <item name="cardBackgroundColor">@color/colorSurfaceVariant</item>
+    </style>
+
+    <!-- Chip -->
+    <style name="Widget.StudentRoomSharing.Chip" parent="Widget.Material3.Chip.Filter">
+        <item name="chipCornerRadius">16dp</item>
+        <item name="android:paddingHorizontal">12dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.TitleSmall</item>
+        <item name="chipBackgroundColor">@color/chip_background_selector</item>
+        <item name="chipStrokeColor">@color/chip_stroke_selector</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="checkedIconVisible">false</item>
+        <item name="closeIconVisible">false</item>
+    </style>
+    <style name="Widget.StudentRoomSharing.Chip.Amenity" parent="Widget.Material3.Chip.Filter">
+        <item name="chipCornerRadius">16dp</item>
+        <item name="android:paddingHorizontal">16dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.LabelSmall</item>
+        <item name="chipBackgroundColor">@color/chip_background_selector</item>
+        <item name="chipStrokeColor">@color/chip_stroke_selector</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="checkedIconVisible">false</item>
+        <item name="closeIconVisible">false</item>
+    </style>
+
+    <!-- Bottom Navigation -->
+    <style name="Widget.StudentRoomSharing.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <item name="itemIconSize">24dp</item>
+        <item name="labelVisibilityMode">labeled</item>
+        <item name="itemTextAppearanceActive">@style/TextAppearance.LabelMedium</item>
+        <item name="itemTextAppearanceInactive">@style/TextAppearance.LabelMedium</item>
+        <item name="android:background">@color/colorSurface</item>
+        <item name="elevation">8dp</item>
+    </style>
+
+    <!-- Floating Action Button -->
+    <style name="Widget.StudentRoomSharing.FloatingActionButton" parent="Base.Widget.Material3.FloatingActionButton">
+        <item name="backgroundTint">@color/colorPrimary</item>
+        <item name="rippleColor">@color/onPrimary_20</item>
+        <item name="elevation">12dp</item>
+        <item name="borderWidth">0dp</item>
+    </style>
+    <style name="Widget.StudentRoomSharing.FloatingActionButton.Extended" parent="Base.Widget.Material3.ExtendedFloatingActionButton">
+        <item name="backgroundTint">@color/colorPrimary</item>
+        <item name="rippleColor">@color/onPrimary_20</item>
+        <item name="cornerRadius">28dp</item>
+        <item name="iconSize">20dp</item>
+    </style>
+
+    <!-- TextInputLayout -->
+    <style name="Widget.StudentRoomSharing.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadius">12dp</item>
+        <item name="boxStrokeWidth">1.5dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
+        <item name="boxStrokeColor">@color/text_field_stroke</item>
+        <item name="hintTextColor">@color/onSurfaceVariant</item>
+        <item name="android:textColorHint">@color/onSurfaceVariant</item>
+    </style>
+
+    <!-- Snackbar -->
+    <style name="Widget.StudentRoomSharing.Snackbar" parent="Widget.Material3.Snackbar">
+        <item name="backgroundTint">@color/onSurface</item>
+        <item name="actionTextColor">@color/colorPrimary</item>
+        <item name="cornerRadius">12dp</item>
+    </style>
+
+    <!-- Bottom Sheet Dialog -->
+    <style name="Theme.StudentRoomSharing.BottomSheetDialog" parent="Theme.Material3.DayNight.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Widget.StudentRoomSharing.BottomSheet.Modal</item>
+    </style>
+    <style name="Widget.StudentRoomSharing.BottomSheet.Modal" parent="Widget.Material3.BottomSheet.Modal">
+        <item name="shapeAppearance">@style/ShapeBottomSheet</item>
+        <item name="android:background">@color/colorSurface</item>
+    </style>
+
+    <!-- Shape for Bottom Sheet -->
+    <style name="ShapeBottomSheet">
+        <item name="cornerFamilyTopLeft">rounded</item>
+        <item name="cornerFamilyTopRight">rounded</item>
+        <item name="cornerFamilyBottomLeft">rounded</item>
+        <item name="cornerFamilyBottomRight">rounded</item>
+        <item name="cornerSizeTopLeft">28dp</item>
+        <item name="cornerSizeTopRight">28dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+    </style>
+
+    <!-- Splash Theme -->
+    <style name="Theme.StudentRoomSharing.Splash" parent="Theme.StudentRoomSharingApp">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <!-- Search Hint Color -->
+    <style name="SearchHintColor" parent="Widget.AppCompat.SearchView">
+        <item name="android:textColorHint">@color/onSurfaceVariant</item>
+    </style>
 </resources>

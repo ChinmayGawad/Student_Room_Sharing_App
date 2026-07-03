@@ -1,20 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <resources>
+    <!-- Spacing Tokens (4dp grid) -->
+    <dimen name="spacing_2">2dp</dimen>
+    <dimen name="spacing_4">4dp</dimen>
+    <dimen name="spacing_6">6dp</dimen>
+    <dimen name="spacing_8">8dp</dimen>
+    <dimen name="spacing_12">12dp</dimen>
+    <dimen name="spacing_16">16dp</dimen>
+    <dimen name="spacing_20">20dp</dimen>
+    <dimen name="spacing_24">24dp</dimen>
+    <dimen name="spacing_32">32dp</dimen>
+    <dimen name="spacing_40">40dp</dimen>
+    <dimen name="spacing_48">48dp</dimen>
+    <dimen name="spacing_64">64dp</dimen>
 
-    <dimen name="space_xs">4dp</dimen>
-    <dimen name="space_s">8dp</dimen>
-    <dimen name="space_m">16dp</dimen>
-    <dimen name="space_l">24dp</dimen>
-    <dimen name="space_xl">32dp</dimen>
+    <!-- Layout Margins -->
+    <dimen name="screen_margin_horizontal">24dp</dimen>
+    <dimen name="screen_margin_vertical">24dp</dimen>
+    <dimen name="content_margin">16dp</dimen>
+    <dimen name="card_margin">16dp</dimen>
+    <dimen name="list_item_spacing">12dp</dimen>
+    <dimen name="grid_spacing">12dp</dimen>
+    <dimen name="section_spacing">32dp</dimen>
+    <dimen name="element_spacing">16dp</dimen>
+    <dimen name="inline_spacing">8dp</dimen>
 
-    <dimen name="radius_small">12dp</dimen>
-    <dimen name="radius_medium">16dp</dimen>
-    <dimen name="radius_large">20dp</dimen>
-    <dimen name="radius_xl">28dp</dimen>
+    <!-- Avatar Sizes -->
+    <dimen name="avatar_size_small">32dp</dimen>
+    <dimen name="avatar_size_medium">48dp</dimen>
+    <dimen name="avatar_size_large">64dp</dimen>
+    <dimen name="avatar_size_xl">88dp</dimen>
 
+    <!-- Icon Sizes -->
+    <dimen name="icon_size_small">16dp</dimen>
+    <dimen name="icon_size_medium">20dp</dimen>
+    <dimen name="icon_size_large">24dp</dimen>
+    <dimen name="icon_size_xl">32dp</dimen>
+    <dimen name="icon_size_xxl">40dp</dimen>
+
+    <!-- Component Heights -->
     <dimen name="button_height">56dp</dimen>
+    <dimen name="button_min_width">48dp</dimen>
+    <dimen name="button_icon_size">24dp</dimen>
+    <dimen name="search_bar_height">56dp</dimen>
+    <dimen name="bottom_nav_height">64dp</dimen>
+    <dimen name="top_bar_height">64dp</dimen>
+    <dimen name="chip_height">32dp</dimen>
+    <dimen name="badge_size">20dp</dimen>
+    <dimen name="bottom_sheet_handle_height">4dp</dimen>
+    <dimen name="image_carousel_indicator_height">32dp</dimen>
+    <dimen name="sticky_bottom_bar_height">80dp</dimen>
 
-    <dimen name="card_elevation">2dp</dimen>
+    <!-- Corner Radii -->
+    <dimen name="corner_none">0dp</dimen>
+    <dimen name="corner_small">4dp</dimen>
+    <dimen name="corner_medium">12dp</dimen>
+    <dimen name="corner_large">20dp</dimen>
+    <dimen name="corner_xlarge">28dp</dimen>
 
+    <!-- Elevation -->
+    <dimen name="elevation_none">0dp</dimen>
+    <dimen name="elevation_subtle">1dp</dimen>
+    <dimen name="elevation_resting">2dp</dimen>
+    <dimen name="elevation_elevated">4dp</dimen>
+    <dimen name="elevation_card">6dp</dimen>
+    <dimen name="elevation_raised">8dp</dimen>
+    <dimen name="elevation_fab">12dp</dimen>
+    <dimen name="elevation_dialog">16dp</dimen>
+    <dimen name="elevation_drawer">16dp</dimen>
+    <dimen name="elevation_date_picker">24dp</dimen>
+
+    <!-- Image Aspect Ratios (used programmatically) -->
+    <string name="room_card_image_ratio">4:3</string>
+    <string name="room_detail_image_ratio">1:1</string>
+    <string name="map_aspect_ratio">16:9</string>
+    <dimen name="city_image_size">120dp</dimen>
+    <dimen name="featured_card_width">280dp</dimen>
+    <dimen name="amenity_chip_size">64dp</dimen>
+
+    <dimen name="shapeCornerLarge">20dp</dimen>
+    <dimen name="shapeCornerMedium">12dp</dimen>
+    <dimen name="shapeCornerExtraLarge">28dp</dimen>
+
+    <!-- Legacy -->
+    <dimen name="card_radius">20dp</dimen>
+    <dimen name="btn_height">56dp</dimen>
 </resources>

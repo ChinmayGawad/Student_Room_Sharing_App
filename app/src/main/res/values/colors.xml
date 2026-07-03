@@ -1,67 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <!-- ─── M3 Tonal Palette (Seed: #0891B2 Vibrant Teal) ─── -->
-    <color name="primary">#0891B2</color>
+    <!-- Primary Colors -->
+    <color name="colorPrimary">#2563EB</color>
     <color name="onPrimary">#FFFFFF</color>
-    <color name="primaryContainer">#B5EAFB</color>
-    <color name="onPrimaryContainer">#001F2A</color>
+    <color name="primaryContainer">#DBEAFE</color>
+    <color name="onPrimaryContainer">#001B3D</color>
+    <color name="onPrimary_20">#33FFFFFF</color>
 
-    <color name="secondary">#4E6A74</color>
+    <!-- Secondary Colors -->
+    <color name="colorSecondary">#06B6D4</color>
     <color name="onSecondary">#FFFFFF</color>
-    <color name="secondaryContainer">#D1F0F8</color>
-    <color name="onSecondaryContainer">#05212A</color>
+    <color name="secondaryContainer">#CFFAFE</color>
+    <color name="onSecondaryContainer">#001F29</color>
 
-    <color name="tertiary">#9B6B4C</color>
+    <!-- Tertiary Colors -->
+    <color name="colorTertiary">#14B8A6</color>
     <color name="onTertiary">#FFFFFF</color>
-    <color name="tertiaryContainer">#FFDCC5</color>
-    <color name="onTertiaryContainer">#372012</color>
+    <color name="tertiaryContainer">#D1FAE5</color>
+    <color name="onTertiaryContainer">#00201B</color>
 
-    <color name="error">#DC2626</color>
+    <!-- Surface & Background -->
+    <color name="colorBackground">#F8FAFC</color>
+    <color name="colorSurface">#FFFFFF</color>
+    <color name="colorSurfaceVariant">#F1F5F9</color>
+    <color name="colorSurfaceContainerLow">#F8FAFC</color>
+    <color name="colorSurfaceContainer">#F1F5F9</color>
+    <color name="colorSurfaceContainerHigh">#E2E8F0</color>
+    <color name="colorSurfaceContainerHighest">#CBD5E1</color>
+    <color name="onBackground">#0F172A</color>
+    <color name="onSurface">#0F172A</color>
+    <color name="onSurfaceVariant">#64748B</color>
+
+    <!-- Error -->
+    <color name="colorError">#EF4444</color>
     <color name="onError">#FFFFFF</color>
-    <color name="errorContainer">#FFDAD6</color>
+    <color name="errorContainer">#FEE2E2</color>
     <color name="onErrorContainer">#410002</color>
 
-    <color name="background">#F8FAFC</color>
-    <color name="onBackground">#0F172A</color>
+    <!-- Success -->
+    <color name="colorSuccess">#10B981</color>
+    <color name="onSuccess">#FFFFFF</color>
+    <color name="successContainer">#D1FAE5</color>
+    <color name="onSuccessContainer">#00201B</color>
 
-    <color name="surface">#FFFFFF</color>
-    <color name="onSurface">#0F172A</color>
+    <!-- Warning -->
+    <color name="colorWarning">#F59E0B</color>
+    <color name="onWarning">#FFFFFF</color>
+    <color name="warningContainer">#FEF3C7</color>
+    <color name="onWarningContainer">#4D3500</color>
 
-    <color name="surfaceVariant">#E2E8F0</color>
-    <color name="onSurfaceVariant">#475569</color>
+    <!-- Border & Outline -->
+    <color name="outline">#CBD5E1</color>
+    <color name="outlineVariant">#E2E8F0</color>
+    <color name="outlineLight">#F1F5F9</color>
 
-    <color name="outline">#94A3B8</color>
-    <color name="outlineVariant">#CBD5E1</color>
+    <!-- Scrim & Shadow -->
+    <color name="scrim">#66000000</color>
+    <color name="shadowKey">#26000000</color>
+    <color name="shadowAmbient">#14000000</color>
 
-    <!-- ─── Semantic / Utility Colors ─── -->
-    <color name="success">#22C55E</color>
-    <color name="warning">#F59E0B</color>
-    <color name="textPrimary">#0F172A</color>
-    <color name="textSecondary">#64748B</color>
+    <!-- Chat Bubbles -->
+    <color name="message_received_bg">#F1F5F9</color>
+    <color name="message_sent_bg">#2563EB</color>
+    <color name="message_received_text">#0F172A</color>
+    <color name="message_sent_text">#FFFFFF</color>
 
-    <!-- ─── Chat Bubble Colors ─── -->
-    <color name="item_message_sent">#0891B2</color>
-    <color name="item_message_received">#E2E8F0</color>
+    <!-- Legacy Support -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="colorPrimaryDark">#0891B2</color>
+    <color name="colorAccent">#14B8A6</color>
+    <color name="gray_light">#F1F5F9</color>
+    <color name="gray_medium">#94A3B8</color>
+    <color name="gray_dark">#475569</color>
+    <color name="text_primary">#0F172A</color>
+    <color name="text_secondary">#64748B</color>
+    <color name="divider_color">#E2E8F0</color>
+    <color name="bg_chat_received">#F1F5F9</color>
+    <color name="bg_chat_sent">#2563EB</color>
 
-    <!-- ─── Launcher ─── -->
-    <color name="final_white">#F8FAFC</color>
-    <color name="ic_launcher_background">@color/final_white</color>
-
-    <!-- ─── Legacy Aliases (for Phases 1→5 migration; will be removed) ─── -->
-    <color name="primary_light">@color/primaryContainer</color>
-    <color name="primary_dark">#005E77</color>
-    <color name="C_color">@color/primary</color>
-    <color name="divider">@color/outlineVariant</color>
-    <color name="md_theme_light_primary">@color/primary</color>
-    <color name="md_theme_light_onPrimary">@color/onPrimary</color>
-    <color name="md_theme_light_background">@color/background</color>
-    <color name="md_theme_light_onBackground">@color/onBackground</color>
-    <color name="md_theme_light_surface">@color/surface</color>
-    <color name="md_theme_light_onSurface">@color/onSurface</color>
-    <color name="md_theme_light_onSurfaceVariant">@color/onSurfaceVariant</color>
-    <color name="md_theme_light_outline">@color/outline</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-
+    <!-- Launcher -->
+    <color name="launcher_background">#2563EB</color>
+    <color name="launcher_foreground">#FFFFFF</color>
+    <color name="ic_launcher_background">#2563EB</color>
+    <color name="item_message_received">#F1F5F9</color>
+    <color name="item_message_sent">#DBEAFE</color>
 </resources>

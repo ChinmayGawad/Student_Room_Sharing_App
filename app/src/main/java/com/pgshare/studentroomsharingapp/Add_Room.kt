@@ -95,9 +95,6 @@ class Add_Room : AppCompatActivity() {
 
     private fun updateWizardUI(currentStep: Int) {
         val totalSteps = wizardAdapter.itemCount
-        val progressPercentage = ((currentStep + 1).toFloat() / totalSteps.toFloat() * 100).toInt()
-        binding.progressAddRoom.setProgressCompat(progressPercentage, true)
-
         if (currentStep == 0) {
             binding.btnWizardBack.visibility = View.INVISIBLE
         } else {

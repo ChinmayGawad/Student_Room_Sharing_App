@@ -1,55 +1,307 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
     <string name="app_name">Student Room Sharing</string>
-    <string name="username">Username</string>
-    <string name="userimage">UserImage</string>
+    <string name="tagline">Find your space. Live your best.</string>
+
+    <!-- Welcome -->
+    <string name="welcome_headline_1">Find Your Perfect</string>
+    <string name="welcome_headline_2">Room Away From Home</string>
+    <string name="welcome_subtitle">Discover verified rooms, PGs, and roommates near your campus</string>
+    <string name="continue_with_google">Continue with Google</string>
+    <string name="create_account">Create Account</string>
+    <string name="i_have_account">I already have an account</string>
+    <string name="continue_as_guest">or continue as Guest &gt;</string>
+
+    <!-- Auth -->
+    <string name="welcome_back">Welcome Back</string>
+    <string name="sign_in_to_continue">Sign in to continue</string>
+    <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="login">Login</string>
-    <string name="create_account">Create One</string>
-    <string name="name">Name</string>
-    <string name="email_id">Email_id</string>
-    <string name="phone_number">Phone No</string>
-    <string name="aadhar_card_no">Aadhar_card_no</string>
-    <string name="re_enter_password">Re_enter_password</string>
-    <string name="register">Register\n</string>
-    <string name="paying_guest">Paying Guest</string>
-    <string name="rent">Rent</string>
-    <string name="Owner">Owner</string>
-    <string name="room_rentals">PG Room Rent</string>
-    <string name="search_for_rooms" tools:ignore="TypographyEllipsis">Search for rooms...</string>
-    <string name="room_name">Room Name</string>
-    <string name="location">Location</string>
-    <string name="price">Price</string>
-    <string name="add_room">Add Room</string>
     <string name="forgot_password">Forgot Password?</string>
-    <string name="search">Search</string>
-    <string name="description">Description</string>
-    <string name="save">Save</string>
+    <string name="sign_in">Sign In</string>
+    <string name="or_continue_with">or continue with</string>
+    <string name="no_account">Don\'t have an account?</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="create_your_account">Create Your Account</string>
+    <string name="full_name">Full Name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="college_university">College / University</string>
+    <string name="city">City</string>
+    <string name="i_am_student">I\'m a Student</string>
+    <string name="i_am_professional">I\'m a Professional</string>
+    <string name="i_am_owner">I\'m a PG Owner</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="gender">Gender</string>
+    <string name="agree_terms">I agree to the Terms &amp; Conditions</string>
+    <string name="add_photo">Add Photo</string>
+    <string name="skip">Skip</string>
+    <string name="continue_text">Continue</string>
+    <string name="sign_up_subtitle">Create your account to get started</string>
+    <string name="already_have_account">Already have an account?</string>
+    <string name="i_am_a">I\'m a</string>
+
+    <!-- Home -->
+    <string name="good_morning">Good morning, %s</string>
+    <string name="greeting_prefix">Good morning,</string>
+    <string name="good_afternoon">Good afternoon, %s</string>
+    <string name="good_evening">Good evening, %s</string>
+    <string name="search_rooms">Search rooms, PGs, roommates…</string>
+    <string name="featured">Featured</string>
+    <string name="recommended_for_you">Recommended for You</string>
+    <string name="nearby_rooms">Nearby Rooms</string>
+    <string name="popular_cities">Popular Cities</string>
+    <string name="categories_room">Room</string>
+    <string name="categories_pg">PG</string>
+    <string name="categories_flat">Flat</string>
+    <string name="categories_any">Any</string>
+    <string name="filter_under_8k">Under ₹8,000</string>
+    <string name="filter_private_room">Private Room</string>
+    <string name="filter_ac">AC</string>
+    <string name="filter_student_friendly">Student Friendly</string>
+
+    <!-- Search -->
+    <string name="rooms_found">%d rooms found</string>
+    <string name="sort_recommended">Recommended</string>
+    <string name="sort_price_low">Price: Low to High</string>
+    <string name="sort_price_high">Price: High to Low</string>
+    <string name="sort_rating">Rating</string>
+    <string name="sort_distance">Distance</string>
+    <string name="sort_newest">Newest</string>
+    <string name="filter_all">All</string>
+    <string name="filter_price">Price</string>
+    <string name="filter_type">Type</string>
+    <string name="filter_more">More</string>
+    <string name="clear_filters">Clear Filters</string>
+    <string name="apply_filters">Apply (%d)</string>
+    <string name="reset">Reset</string>
+
+    <!-- Filter Sheet -->
+    <string name="filters">Filters</string>
+    <string name="price_range">Price Range</string>
+    <string name="gender_preference">Gender Preference</string>
+    <string name="room_type">Room Type</string>
+    <string name="amenities">Amenities</string>
+    <string name="distance_from_campus">Distance from Campus</string>
+    <string name="availability">Availability</string>
+    <string name="available_now">Available Now</string>
+    <string name="move_in_ready">Move-in Ready</string>
+    <string name="furnished">Furnished</string>
+    <string name="within_km">Within %d km</string>
+    <string name="studio">Studio</string>
+    <string name="bhk_1">1 BHK</string>
+    <string name="bhk_2">2 BHK</string>
+    <string name="bhk_3">3 BHK</string>
+    <string name="hostel">Hostel</string>
+
+    <!-- Room Details -->
+    <string name="per_month">/month</string>
+    <string name="superhost">Superhost</string>
+    <string name="view_profile">View Profile &gt;</string>
+    <string name="about_this_room">About this room</string>
+    <string name="read_more">Read more</string>
+    <string name="nearby_colleges">Nearby Colleges &amp; Landmarks</string>
+    <string name="location">Location</string>
+    <string name="reviews">Reviews</string>
+    <string name="see_all_reviews">See all %d reviews &gt;</string>
+    <string name="call">Call</string>
+    <string name="chat">Chat</string>
+    <string name="book_visit">Book a Visit</string>
+    <string name="share_room">Share Room</string>
+    <string name="bookmark_room">Bookmark this room</string>
+
+    <!-- Saved -->
+    <string name="saved_rooms">Saved Rooms</string>
+    <string name="no_saved_rooms">No Saved Rooms Yet</string>
+    <string name="no_saved_message">Start exploring and save rooms you love by tapping the ♥ icon</string>
+    <string name="explore_rooms">Explore Rooms</string>
+
+    <!-- Profile -->
+    <string name="personal_information">Personal Information</string>
+    <string name="notifications">Notifications</string>
+    <string name="english">English</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
-    <string name="gender">Gender</string>
-    <string name="profile">Profile</string>
-    <string name="room_price_format">₹ %d</string>
-    <string name="upload_from_camara">Upload From Camara</string>
-    <string name="select_form_gallery">Select Form Gallery</string>
-    <string name="enter_otp">Enter OTP</string>
-    <string name="book_room">Book Room</string>
+    <string name="pool">Pool</string>
+    <string name="reviews_title">Reviews</string>
+    <string name="payment_methods">Payment Methods</string>
+    <string name="settings">Settings</string>
+    <string name="contact_support">Contact Support</string>
+    <string name="help_center">Help Center</string>
+    <string name="about">About</string>
+    <string name="logout">Logout</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="saved">Saved</string>
+    <string name="listings">Listings</string>
+    <string name="rating">Rating</string>
 
-    <!-- Profile Fragment Strings -->
-    <string name="edit_profile_picture">Edit profile picture</string>
+    <!-- Owner Dashboard -->
+    <string name="dashboard">Dashboard</string>
+    <string name="good_morning_owner">Good morning, Owner</string>
+    <string name="total_rooms">Total Rooms</string>
+    <string name="occupied">Occupied</string>
+    <string name="income">Income</string>
+    <string name="pending">Pending</string>
+    <string name="occupancy_overview">Occupancy Overview</string>
+    <string name="quick_actions">Quick Actions</string>
+    <string name="add_new_room">Add New Room</string>
+    <string name="manage_listings">Manage Listings</string>
+    <string name="view_inquiries">View Inquiries</string>
+    <string name="recent_inquiries">Recent Inquiries</string>
+
+    <!-- Add Room -->
+    <string name="add_photos">Add Photos</string>
+    <string name="showcase_room">Showcase your room with photos</string>
+    <string name="tap_to_add">Tap + to add photos</string>
+    <string name="min_photos">Minimum 3 photos required</string>
+    <string name="room_details">Room Details</string>
+    <string name="room_title">Room Title</string>
+    <string name="description">Description</string>
+    <string name="price">Price</string>
+    <string name="capacity">Capacity</string>
+    <string name="publish_listing">Publish Listing</string>
+    <string name="uploading_photos">Uploading photos…</string>
+    <string name="room_published">Room published!</string>
+
+    <!-- My Listings -->
+    <string name="my_listings">My Listings</string>
+    <string name="active_badge">Active</string>
+    <string name="pending_badge">Pending</string>
+    <string name="booked_badge">Booked</string>
+    <string name="inactive_badge">Inactive</string>
+
+    <!-- Chat -->
+    <string name="type_message">Type a message…</string>
+    <string name="online">online</string>
+    <string name="typing">typing…</string>
+
+    <!-- Notifications -->
+    <string name="notification_title">Notifications</string>
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="this_week">This Week</string>
+    <string name="earlier">Earlier</string>
+    <string name="new_message_from">New message from %s</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="language">Language</string>
+    <string name="privacy">Privacy</string>
+    <string name="security">Security</string>
+    <string name="preferences">Preferences</string>
+    <string name="account">Account</string>
+    <string name="support">Support</string>
+    <string name="send_feedback">Send Feedback</string>
+    <string name="rate_the_app">Rate the App</string>
+    <string name="version" formatted="false">Version %s (Build %s)</string>
+    <string name="copyright">© 2026 Student Room Sharing</string>
+
+    <!-- Empty States -->
+    <string name="no_internet_title">No Internet Connection</string>
+    <string name="no_internet_message">Check your connection and try again</string>
+    <string name="try_again">Try Again</string>
+    <string name="no_results_title">No Rooms Found</string>
+    <string name="no_results_message">We couldn\'t find any rooms matching your search. Try adjusting your filters.</string>
+    <string name="no_messages_title">No Messages Yet</string>
+    <string name="no_messages_message">When you contact an owner or receive inquiries, they will appear here.</string>
+    <string name="loading">Loading…</string>
+
+    <!-- Actions -->
+    <string name="close">Close</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="save">Save</string>
+    <string name="share">Share</string>
+    <string name="search">Search</string>
+    <string name="menu">Menu</string>
+
+    <!-- Navigation -->
+    <string name="nav_explore">Explore</string>
+    <string name="nav_saved">Saved</string>
+    <string name="nav_inbox">Inbox</string>
+    <string name="nav_profile">Profile</string>
+
+    <!-- Room Details placeholders -->
+    <string name="rating_display">4.8 (24 reviews)</string>
+    <string name="room_title_placeholder">Private Room in 3BHK Apartment</string>
+    <string name="location_distance">2.3 km from University Campus</string>
+    <string name="owner_name_placeholder">Jessica Parker</string>
+    <string name="owner_rating">5.0</string>
+    <string name="room_description_placeholder">Spacious, well-ventilated private room in a 3BHK apartment. High-speed WiFi included. Looking for a quiet, clean roommate. Only 10 mins walking distance to the main university campus. Fully furnished with AC, wardrobe, and study table.</string>
+    <string name="nearby_colleges_landmarks">Nearby Colleges &amp; Landmarks</string>
+    <string name="nearby_place_1">University of Technology</string>
+    <string name="nearby_distance_1">1.2 km</string>
+    <string name="nearby_place_2">City Central Library</string>
+    <string name="nearby_distance_2">0.8 km</string>
+    <string name="nearby_place_3">Downtown Metro Station</string>
+    <string name="nearby_distance_3">0.5 km</string>
+    <string name="map_placeholder_text">Map loading…</string>
+    <string name="room_address_placeholder">123 University Avenue, Campus District</string>
+    <string name="see_all">See all</string>
+    <string name="reviewer_name_1">Sarah Johnson</string>
+    <string name="review_date_1">June 12, 2026</string>
+    <string name="review_text_1">Amazing place! Very clean and well-maintained. The location is perfect for students — just a short walk to campus. Jessica is a great host!</string>
+    <string name="reviewer_name_2">Michael Chen</string>
+    <string name="review_date_2">May 28, 2026</string>
+    <string name="review_text_2">Great room with all amenities included. The AC works perfectly and the WiFi is fast. Would definitely recommend to other students.</string>
+    <string name="reviewer_name_3">Emily Rodriguez</string>
+    <string name="review_date_3">May 15, 2026</string>
+    <string name="review_text_3">Loved staying here! The roommates are friendly and the apartment is always clean. Jessica goes above and beyond for her tenants.</string>
+    <string name="amenity_wifi">WiFi</string>
+    <string name="amenity_ac">AC</string>
+    <string name="amenity_kitchen">Kitchen</string>
+    <string name="amenity_laundry">Laundry</string>
+    <string name="amenity_parking">Parking</string>
+    <string name="amenity_gym">Gym</string>
+    <string name="amenity_security">Security</string>
+    <string name="amenity_pet">Pet</string>
+    <string name="bullet">•</string>
+    <string name="chevron">Navigate</string>
+
+    <!-- Profile placeholders -->
+    <string name="profile_name_placeholder">Chinmay Gawad</string>
+    <string name="profile_email_placeholder">chinmay@email.com</string>
+    <string name="stat_saved_count">12</string>
+    <string name="stat_saved_label">Saved</string>
+    <string name="stat_listings_count">8</string>
+    <string name="stat_listings_label">Listings</string>
+    <string name="stat_rating_count">4.8</string>
+    <string name="stat_rating_label">Rating</string>
+
+    <!-- Content Descriptions -->
+    <string name="cd_back">Navigate back</string>
+    <string name="cd_search">Search rooms</string>
+    <string name="cd_bookmark">Bookmark this room</string>
+    <string name="cd_share">Share this room</string>
+    <string name="cd_call">Call the owner</string>
+    <string name="cd_chat">Open chat</string>
+    <string name="cd_notifications">Notifications</string>
+    <string name="cd_profile_picture">Profile picture</string>
+    <string name="cd_mic">Voice search</string>
+    <string name="cd_filter">Filter results</string>
+    <string name="cd_map">View on map</string>
+    <string name="cd_send">Send message</string>
+    <string name="cd_attach">Attach file</string>
+    <string name="cd_camera">Take photo</string>
+    <string name="cd_close">Close</string>
+
+    <!-- Landing -->
+    <string name="btn_rent_room">I want to Rent a Room</string>
+    <string name="btn_list_property">I\'m a Property Owner</string>
+
+    <!-- SearchView -->
+    <string name="search_hint">Search rooms, PGs, roommates…</string>
+
+    <!-- Explore -->
+    <string name="no_rooms_found">No rooms found matching your criteria.</string>
+    <string name="try_adjusting_filters_message">Try adjusting your search or filters.</string>
+
+    <!-- Profile -->
+    <string name="username_hint">Username</string>
     <string name="save_changes">Save Changes</string>
-    <string name="log_out">Log Out</string>
-    <string name="loading_profile">Loading profile...</string>
-    <string name="profile_updated">Profile updated successfully</string>
-    <string name="error_updating_profile">Error updating profile: %s</string>
-    <string name="error_uploading_image">Error uploading image: %s</string>
-    <string name="error_loading_profile">Error loading profile: %s</string>
-    <string name="please_enter_username">Please enter a username</string>
-    <string name="logged_out">Logged out successfully</string>
-    <string name="select_image">Select Image</string>
-
-    <!-- Sign Up Role Selection -->
-    <string name="i_am_a">I am a:</string>
-    <string name="role_student">Student (looking to rent)</string>
-    <string name="role_owner">Owner (listing my property)</string>
-
+    <string name="btn_chat">Chat</string>
+    <string name="section_description">Description</string>
+    <string name="section_amenities">Amenities</string>
 </resources>

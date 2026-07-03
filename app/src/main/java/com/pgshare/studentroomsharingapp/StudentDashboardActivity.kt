@@ -26,7 +26,7 @@ class StudentDashboardActivity : AppCompatActivity() {
         // Load the ExploreFragment by default when the activity starts
         if (savedInstanceState == null) {
             loadFragment(ExploreFragment())
-            binding.bottomNavigation.selectedItemId = R.id.nav_explore
+            binding.bottomNavigation.selectedItemId = R.id.navigation_explore
         }
 
         val target = intent.getStringExtra("TARGET_FRAGMENT")
@@ -36,21 +36,21 @@ class StudentDashboardActivity : AppCompatActivity() {
         // Handle Bottom Navigation item clicks
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.nav_explore -> {
+                R.id.navigation_explore -> {
                     loadFragment(ExploreFragment())
                     true
                 }
-                R.id.nav_saved -> {
+                R.id.navigation_saved -> {
                     // Replace with your actual SavedFragment
                     loadFragment(SavedFragment())
                     true
                 }
-                R.id.nav_inbox -> {
+                R.id.navigation_inbox -> {
                     // Replace with your actual InboxFragment
                     loadFragment(InboxFragment())
                     true
                 }
-                R.id.nav_profile -> {
+                R.id.navigation_profile -> {
                     loadFragment(ProfileFragment())
                     true
                 }
@@ -58,12 +58,8 @@ class StudentDashboardActivity : AppCompatActivity() {
             }
         }
         if (target == "INBOX") {
-            // Select the tab and load the fragment
-            binding.bottomNavigation.selectedItemId = R.id.nav_inbox
-
-            // Option B: If doing it manually
-            //supportFragmentManager.beginTransaction().replace(R.id.fragment_container, InboxFragment()).commit()
-
+            loadFragment(InboxFragment())
+            binding.bottomNavigation.selectedItemId = R.id.navigation_inbox
         }
     }
 
