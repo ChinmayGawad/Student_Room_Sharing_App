@@ -8,12 +8,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewpager.widget.PagerAdapter
+import com.google.android.material.chip.Chip
 import com.pgshare.studentroomsharingapp.databinding.ActivityRoomDetailsBinding
 import com.pgshare.studentroomsharingapp.model.Room
 import com.pgshare.studentroomsharingapp.viewmodel.RoomDetailViewModel
@@ -37,24 +39,131 @@ class RoomDetailsActivity : AppCompatActivity() {
         val room = intent.getParcelableExtra<Room>("Rooms")
 
         if (room != null) {
-            binding.tvRoomTitle.text = room.roomName
-            binding.tvDescription.text = room.description ?: "No description provided."
-
-            val formattedPrice = "\u20B9${room.price}"
-            binding.tvPrice.text = formattedPrice
+            bindRoomData(room)
 
             observeOwnerName()
+
             viewModel.loadOwnerName(room.userId)
 
             binding.btnChat.setOnClickListener {
-                val intent = Intent(this, ChatActivity::class.java)
-                intent.putExtra("RECEIVER_ID", room.userId)
-                intent.putExtra("ROOM_ID", room.id)
-                startActivity(intent)
+                startChat(room)
+            }
+            binding.btnChatBottom.setOnClickListener {
+                startChat(room)
             }
 
             setupImagePager(room.imageUrls)
         }
+    }
+
+    companion object {
+        private val AMENITY_ICONS = mapOf(
+            "High-Speed WiFi" to R.drawable.baseline_wifi_24,
+            "Air Conditioning" to R.drawable.baseline_ac_unit_24,
+            "Attached Bath" to R.drawable.baseline_security_24,
+            "Fully Furnished" to R.drawable.baseline_kitchen_24,
+            "Washing Machine" to R.drawable.baseline_local_laundry_service_24,
+            "Balcony" to R.drawable.baseline_pool_24
+        )
+    }
+
+    private fun bindRoomData(room: Room) {
+        val formattedPrice = "\u20B9${room.price}"
+        binding.tvRoomTitle.text = room.roomName
+        binding.tvPrice.text = formattedPrice
+        binding.tvBottomPrice.text = formattedPrice
+        binding.tvMonthlyRent.text = formattedPrice
+        binding.tvLocation.text = room.location ?: "Location not specified"
+
+        if (!room.deposit.isNullOrEmpty()) {
+            binding.tvDeposit.text = "\u20B9${room.deposit}"
+        } else {
+            binding.tvDeposit.text = "N/A"
+        }
+
+        val roomDescription = room.description
+        if (roomDescription != null && roomDescription.startsWith("Type:")) {
+            val parts = roomDescription.split("\n\n", limit = 2)
+            val roomType = parts[0].removePrefix("Type:").trim()
+            binding.chipPropertyType.text = roomType
+            val userText = if (parts.size > 1) parts[1].trim() else ""
+            if (userText.isNotEmpty()) {
+                binding.tvDescription.text = userText
+                binding.tvDescription.visibility = View.VISIBLE
+            } else {
+                binding.tvDescription.visibility = View.GONE
+            }
+        } else {
+            binding.chipPropertyType.text = "Room"
+            binding.tvDescription.text = roomDescription ?: "No description provided."
+        }
+
+        setupAmenities(room.amenities)
+    }
+
+    private fun setupAmenities(amenityNames: List<String>?) {
+        if (amenityNames.isNullOrEmpty()) {
+            binding.layoutAmenities.visibility = View.GONE
+            return
+        }
+
+        var currentRow: LinearLayout? = null
+        var chipCount = 0
+
+        for (label in amenityNames) {
+            val iconRes = AMENITY_ICONS[label] ?: R.drawable.baseline_check_circle_24
+            if (chipCount % 2 == 0) {
+                currentRow = LinearLayout(this).apply {
+                    layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    )
+                    orientation = LinearLayout.HORIZONTAL
+                    if (chipCount > 0) {
+                        (layoutParams as LinearLayout.LayoutParams).topMargin =
+                            resources.getDimensionPixelSize(R.dimen.spacing_8)
+                    }
+                }
+                binding.layoutAmenities.addView(currentRow)
+            }
+
+            val chip = LayoutInflater.from(this).inflate(
+                R.layout.item_amenity_chip,
+                binding.layoutAmenities,
+                false
+            ) as Chip
+
+            chip.apply {
+                val iconDrawable = ContextCompat.getDrawable(this@RoomDetailsActivity, iconRes)
+                chipIcon = iconDrawable
+                text = label
+                isChecked = true
+                isClickable = false
+                isCheckable = false
+            }
+
+            val lp = LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                1f
+            )
+            if (chipCount % 2 == 0) {
+                lp.marginEnd = resources.getDimensionPixelSize(R.dimen.spacing_8)
+            } else {
+                lp.marginStart = resources.getDimensionPixelSize(R.dimen.spacing_8)
+            }
+            chip.layoutParams = lp
+
+            currentRow?.addView(chip)
+            chipCount++
+        }
+    }
+
+    private fun startChat(room: Room) {
+        val intent = Intent(this, ChatActivity::class.java)
+        intent.putExtra("RECEIVER_ID", room.userId)
+        intent.putExtra("ROOM_ID", room.id)
+        startActivity(intent)
     }
 
     private fun setupImagePager(imageUrls: List<String?>?) {

@@ -88,7 +88,8 @@ class FirebaseRepository {
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    close(error.toException())
+                    trySend(null)
+                    close()
                 }
             })
 
@@ -114,7 +115,8 @@ class FirebaseRepository {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                close(error.toException())
+                trySend(emptyList())
+                close()
             }
         })
 
@@ -158,7 +160,8 @@ class FirebaseRepository {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                close(error.toException())
+                trySend(emptyList())
+                close()
             }
         })
 
@@ -179,7 +182,8 @@ class FirebaseRepository {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                close(error.toException())
+                trySend(emptyList())
+                close()
             }
         })
 
