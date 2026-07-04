@@ -1,14 +1,11 @@
 package com.pgshare.studentroomsharingapp.Fragments
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -31,18 +28,6 @@ class ProfileFragment : Fragment() {
     private val viewModel: ProfileViewModel by viewModels { ProfileViewModel.Factory() }
 
     private lateinit var auth: FirebaseAuth
-    private var selectedImageUri: Uri? = null
-    private var initialUsername: String = ""
-
-    private val galleryLauncher = registerForActivityResult(
-        ActivityResultContracts.GetContent()
-    ) { uri: Uri? ->
-        uri?.let {
-            selectedImageUri = it
-            binding.ivProfileAvatar.setImageURI(it)
-            checkForChanges()
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,16 +50,28 @@ class ProfileFragment : Fragment() {
 
         setupClickListeners()
         observeUiState()
-
-        binding.etUsername.doAfterTextChanged {
-            checkForChanges()
-        }
     }
 
     private fun setupClickListeners() {
-        binding.fabEditAvatar.setOnClickListener { openGallery() }
-        binding.btnSaveChanges.setOnClickListener { saveProfileChanges() }
-        binding.btnLogout.setOnClickListener { showLogoutConfirmationDialog() }
+        binding.fabEditAvatar.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, PersonalInfoFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+        binding.layoutMenuPersonalInfo.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, PersonalInfoFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+        binding.layoutMenuLogout.setOnClickListener { showLogoutConfirmationDialog() }
+        binding.layoutMenuSettings.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, SettingsFragment())
+                .addToBackStack(null)
+                .commit()
+        }
     }
 
     private fun observeUiState() {
@@ -86,9 +83,8 @@ class ProfileFragment : Fragment() {
                     } else {
                         showLoading(false)
                         state.profile?.let { profile ->
-                            binding.etUsername.setText(profile.username)
-                            initialUsername = profile.username ?: ""
-                            binding.etEmail.setText(profile.email ?: "")
+                            binding.tvProfileName.text = profile.username ?: "User"
+                            binding.tvProfileEmail.text = profile.email ?: ""
 
                             profile.profileImageUrl?.let { url ->
                                 if (url.contains("http")) {
@@ -98,46 +94,13 @@ class ProfileFragment : Fragment() {
                         }
                     }
 
-                    if (state.isSaving) {
-                        showLoading(true)
-                        binding.btnSaveChanges.text = "Saving..."
-                    }
-
-                    if (state.saveSuccess) {
-                        showLoading(false)
-                        binding.btnSaveChanges.text = "Save Changes"
-                        selectedImageUri = null
-                        checkForChanges()
-                        viewModel.clearSaveSuccess()
-                    }
-
                     state.error?.let {
                         showLoading(false)
-                        binding.btnSaveChanges.text = "Save Changes"
                         Toast.makeText(requireContext(), "Error: $it", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
         }
-    }
-
-    private fun checkForChanges() {
-        val currentUsername = binding.etUsername.text.toString().trim()
-        binding.btnSaveChanges.isEnabled = currentUsername != initialUsername || selectedImageUri != null
-    }
-
-    private fun saveProfileChanges() {
-        val newUsername = binding.etUsername.text.toString().trim()
-        if (newUsername.isEmpty()) {
-            binding.tilUsername.error = "Please enter username"
-            return
-        }
-        binding.tilUsername.error = null
-        viewModel.saveProfile(newUsername, selectedImageUri, requireContext().contentResolver)
-    }
-
-    private fun openGallery() {
-        galleryLauncher.launch("image/*")
     }
 
     private fun showLogoutConfirmationDialog() {
@@ -162,8 +125,6 @@ class ProfileFragment : Fragment() {
 
     private fun showLoading(show: Boolean) {
         _binding?.apply {
-            progressBar.visibility = if (show) View.VISIBLE else View.GONE
-            btnSaveChanges.isEnabled = !show
             fabEditAvatar.isEnabled = !show
         }
     }

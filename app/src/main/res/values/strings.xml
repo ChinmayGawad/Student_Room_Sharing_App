@@ -304,4 +304,14 @@
     <string name="btn_chat">Chat</string>
     <string name="section_description">Description</string>
     <string name="section_amenities">Amenities</string>
+    <string name="price_details">Price Details</string>
+    <string name="monthly_rent">Monthly Rent</string>
+    <string name="security_deposit">Security Deposit</string>
+    <string name="property_owner">Property Owner</string>
+
+    <!-- Settings -->
+    <string name="list_property">List a Property</string>
+    <string name="admin_password_title">Admin Access</string>
+    <string name="admin_password_message">Enter your password to access this feature</string>
+    <string name="verify">Verify</string>
 </resources>

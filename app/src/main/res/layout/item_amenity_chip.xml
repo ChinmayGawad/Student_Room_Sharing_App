@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.chip.Chip xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Widget.StudentRoomSharing.Chip"
+    android:layout_width="0dp"
+    android:layout_height="@dimen/chip_height"
+    app:chipBackgroundColor="@color/chip_background_selector"
+    app:chipStrokeWidth="0dp"
+    app:chipIconVisible="true"
+    app:checkedIconVisible="false"
+    app:closeIconVisible="false"
+    app:chipIconSize="@dimen/icon_size_small"
+    app:chipEndPadding="@dimen/spacing_8"
+    app:chipStartPadding="@dimen/spacing_4"
+    app:iconStartPadding="@dimen/spacing_4"
+    app:textStartPadding="@dimen/spacing_4" />

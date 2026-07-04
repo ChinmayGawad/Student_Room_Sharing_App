@@ -16,6 +16,8 @@ data class Room(
     var imageUrls: ArrayList<String?>? = ArrayList(),
     var imageResourceId: Int = 0,
 
+    var amenities: ArrayList<String>? = ArrayList(),
+
     @get:PropertyName("roomBooked")
     @set:PropertyName("roomBooked")
     var isRoomBooked: Boolean = false

@@ -93,8 +93,8 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun openAbout() {
-        val  intent = Intent(this@MainActivity, Login::class.java);
-        startActivity(intent);
+        val  intent = Intent(this@MainActivity, Login::class.java)
+        startActivity(intent)
         Toast.makeText(this, "Working on it", Toast.LENGTH_SHORT).show()
     }
 
@@ -117,9 +117,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun logoutUser() {
         firebaseAuth?.signOut()
-
-        // Redirect to the login activity
-        Toast.makeText(this, "Logging out", Toast.LENGTH_SHORT).show()
-        // Clear the back stack to prevent the user from navigating back to the main activity after logout
+        startActivity(Intent(this, Login::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        })
+        finish()
     }
 }

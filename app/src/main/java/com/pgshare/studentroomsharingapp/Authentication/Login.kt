@@ -22,6 +22,13 @@ class Login : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.hide()
 
+
+        binding.btnSkip.setOnClickListener {
+            val intent = Intent(this@Login, StudentDashboardActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
         binding.btnBack.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
         binding.btnForgotPassword.setOnClickListener {
