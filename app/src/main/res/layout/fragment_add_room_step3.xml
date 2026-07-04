@@ -128,19 +128,45 @@
                 android:text="Balcony" />
         </com.google.android.material.chip.ChipGroup>
 
+        <!-- Custom Amenity Input -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_custom_amenity"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="Add custom amenity"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:endIconMode="custom"
+            app:endIconDrawable="@drawable/baseline_add_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/chip_group_amenities">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_custom_amenity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapSentences"
+                android:imeOptions="actionDone" />
+        </com.google.android.material.textfield.TextInputLayout>
+
         <TextView
             android:id="@+id/tv_utilities_note"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginBottom="32dp"
-            android:text="* Note: Ensure your description (in Step 1) clarifies if electricity or water bills are excluded from the monthly rent."
+            android:text="Tap the add icon to include your custom amenity above."
             android:textAppearance="?attr/textAppearanceCaption"
             android:textColor="?android:attr/textColorSecondary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/chip_group_amenities" />
+            app:layout_constraintTop_toBottomOf="@id/til_custom_amenity" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

@@ -43,7 +43,9 @@ class AddRoomViewModel(
         rent: String,
         deposit: String,
         imageUris: List<Uri>,
-        contentResolver: android.content.ContentResolver
+        contentResolver: android.content.ContentResolver,
+        amenities: List<String> = emptyList(),
+        description: String = ""
     ) {
         viewModelScope.launch {
             _uiState.value = AddRoomUiState(isLoading = true)
@@ -74,11 +76,12 @@ class AddRoomViewModel(
                 userId = currentUserId,
                 roomName = title,
                 location = location,
-                description = "Type: $roomType",
+                description = if (description.isNotEmpty()) "Type: $roomType\n\n$description" else "Type: $roomType",
                 price = rent,
                 deposit = deposit,
                 imageUrls = ArrayList(base64Images),
                 imageResourceId = 0,
+                amenities = ArrayList(amenities),
                 isRoomBooked = false
             )
 

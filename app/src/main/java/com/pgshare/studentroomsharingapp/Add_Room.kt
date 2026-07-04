@@ -106,6 +106,24 @@ class Add_Room : AppCompatActivity() {
         } else {
             binding.btnWizardNext.text = "Next"
         }
+
+        binding.tvStepLabel.text = "Step ${currentStep + 1}/$totalSteps"
+
+        val dots = listOf(binding.dotStep1, binding.dotStep2, binding.dotStep3)
+        val lines = listOf(binding.lineStep1, binding.lineStep2)
+
+        for (i in dots.indices) {
+            dots[i].setImageResource(
+                if (i <= currentStep) R.drawable.circle_primary_filled
+                else R.drawable.circle_outline_hollow
+            )
+        }
+        for (i in lines.indices) {
+            lines[i].setImageResource(
+                if (i < currentStep) R.drawable.line_primary
+                else R.drawable.line_outline
+            )
+        }
     }
 
     private fun submitRoomData() {
@@ -117,6 +135,7 @@ class Add_Room : AppCompatActivity() {
 
         val title = step1?.binding?.etRoomTitle?.text.toString().trim()
         val location = step1?.binding?.etRoomLocation?.text.toString().trim()
+        val description = step1?.binding?.etDescription?.text.toString().trim()
         val rent = step3?.binding?.etMonthlyRent?.text.toString().trim()
         val imageUris = step2?.selectedImageUris ?: emptyList()
         val deposit = step3?.binding?.etSecurityDeposit?.text.toString().trim()
@@ -128,6 +147,8 @@ class Add_Room : AppCompatActivity() {
             "Room"
         }
 
-        viewModel.publishRoom(title, location, roomType, rent, deposit, imageUris, contentResolver)
+        val amenities = step3?.getSelectedAmenities() ?: emptyList()
+
+        viewModel.publishRoom(title, location, roomType, rent, deposit, imageUris, contentResolver, amenities, description)
     }
 }
