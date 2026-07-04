@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:background="?android:colorBackground"
     android:clipToPadding="false"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    tools:context=".Fragments.SettingsFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -295,6 +296,43 @@
                 android:importantForAccessibility="no"
                 android:src="@drawable/baseline_chevron_right_24"
                 app:tint="@color/onSurfaceVariant" />
+        </LinearLayout>
+
+        <!-- List a Property -->
+        <LinearLayout
+            android:id="@+id/rowListProperty"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/icon_size_large"
+                android:layout_height="@dimen/icon_size_large"
+                android:contentDescription="@null"
+                android:importantForAccessibility="no"
+                android:src="@drawable/baseline_lock_24"
+                app:tint="?attr/colorPrimary" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_16"
+                android:layout_weight="1"
+                android:text="@string/list_property"
+                android:textAppearance="?attr/textAppearanceTitleMedium"
+                android:textColor="?attr/colorPrimary" />
+
+            <ImageView
+                android:layout_width="@dimen/icon_size_medium"
+                android:layout_height="@dimen/icon_size_medium"
+                android:contentDescription="@null"
+                android:importantForAccessibility="no"
+                android:src="@drawable/baseline_chevron_right_24"
+                app:tint="?attr/colorPrimary" />
         </LinearLayout>
 
         <!-- Divider -->
