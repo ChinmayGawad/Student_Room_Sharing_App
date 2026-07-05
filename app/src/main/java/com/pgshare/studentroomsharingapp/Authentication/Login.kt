@@ -2,11 +2,13 @@ package com.pgshare.studentroomsharingapp.Authentication
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Patterns
+import androidx.core.util.PatternsCompat
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 
+import com.pgshare.studentroomsharingapp.R
 import com.pgshare.studentroomsharingapp.StudentDashboardActivity
 import com.pgshare.studentroomsharingapp.databinding.ActivityLoginBinding
 
@@ -45,19 +47,25 @@ class Login : AppCompatActivity() {
             val textEmail = binding.tilEmail.editText?.text.toString()
             val textPass = binding.tilPassword.editText?.text.toString()
             if (validateEmail() && validatePassword()) {
+                setLoading(true)
                 authLogin?.signInWithEmailAndPassword(textEmail, textPass)
                     ?.addOnCompleteListener { task ->
+                        setLoading(false)
                         if (task.isSuccessful) {
-                            Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
                             val intent = Intent(this@Login, StudentDashboardActivity::class.java)
                             startActivity(intent)
                             finish()
                         } else {
-                            if (task.exception?.message?.contains("There is no user record corresponding to this identifier") == true) {
-                                Toast.makeText(this, "User does not exist", Toast.LENGTH_SHORT).show()
-                            } else {
-                                Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show()
+                            val message = when {
+                                task.exception?.message?.contains("There is no user record") == true ->
+                                    "User does not exist"
+                                task.exception?.message?.contains("password is invalid") == true ->
+                                    "Incorrect password"
+                                task.exception?.message?.contains("too many requests") == true ->
+                                    "Too many attempts. Try again later."
+                                else -> "Login Failed"
                             }
+                            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                         }
                     }
             }
@@ -69,7 +77,7 @@ class Login : AppCompatActivity() {
         if (email.isEmpty()) {
             binding.tilEmail.error = "Field Can Not be Empty"
             return false
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        } else if (!PatternsCompat.EMAIL_ADDRESS.matcher(email).matches()) {
             binding.tilEmail.error ="Invalid Email Address"
             return false
         } else {
@@ -84,10 +92,19 @@ class Login : AppCompatActivity() {
         if (password.isEmpty()) {
             binding.tilPassword.error = "Field can not be empty"
             return false
+        } else if (password.length < 6) {
+            binding.tilPassword.error = "Password must be at least 6 characters"
+            return false
         } else {
             binding.tilPassword.error = null
             return true
         }
+    }
+
+    private fun setLoading(isLoading: Boolean) {
+        binding.btnSignIn.isEnabled = !isLoading
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        binding.btnSignIn.text = if (isLoading) "" else getString(R.string.sign_in)
     }
 
     override fun onStart() {

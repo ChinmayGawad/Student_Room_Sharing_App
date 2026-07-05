@@ -3,12 +3,14 @@ package com.pgshare.studentroomsharingapp.Authentication
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Patterns
+import androidx.core.util.PatternsCompat
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.pgshare.studentroomsharingapp.R
 import com.pgshare.studentroomsharingapp.databinding.ActivitySignUpBinding
 import com.pgshare.studentroomsharingapp.viewmodel.SignUpEvent
 import com.pgshare.studentroomsharingapp.viewmodel.SignUpViewModel
@@ -39,9 +41,9 @@ class SignUp : AppCompatActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.events.collect { event ->
+                    setLoading(false)
                     when (event) {
                         is SignUpEvent.Success -> {
-                            Toast.makeText(this@SignUp, "Account Created Successfully!", Toast.LENGTH_SHORT).show()
                             val intent = Intent(this@SignUp, Login::class.java)
                             intent.putExtra("email", binding.tilEmail.editText?.text.toString().trim())
                             startActivity(intent)
@@ -70,9 +72,15 @@ class SignUp : AppCompatActivity() {
         }
 
         if (isValidInput(name, email, password, confirmPassword, role)) {
-            Toast.makeText(this, "Creating account...", Toast.LENGTH_SHORT).show()
+            setLoading(true)
             viewModel.signUp(name, email, password, role)
         }
+    }
+
+    private fun setLoading(isLoading: Boolean) {
+        binding.btnCreateAccount.isEnabled = !isLoading
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        binding.btnCreateAccount.text = if (isLoading) "" else getString(R.string.create_account)
     }
 
     private fun isValidInput(name: String, email: String, password: String, confirmPassword: String, role: String): Boolean {
@@ -85,7 +93,7 @@ class SignUp : AppCompatActivity() {
             binding.tilName.error = null
         }
 
-        if (TextUtils.isEmpty(email) || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        if (TextUtils.isEmpty(email) || !PatternsCompat.EMAIL_ADDRESS.matcher(email).matches()) {
             binding.tilEmail.error = "Invalid email address"
             valid = false
         } else {
