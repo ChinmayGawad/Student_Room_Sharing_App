@@ -168,34 +168,44 @@
         </HorizontalScrollView>
     </LinearLayout>
 
-    <ProgressBar
-        android:id="@+id/progressBarLoading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="gone" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewRooms"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:clipToPadding="false"
-        android:paddingHorizontal="@dimen/screen_margin_horizontal"
-        android:paddingBottom="@dimen/spacing_16"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="2"
-        tools:itemCount="6"
-        tools:listitem="@layout/item_room" />
+        android:layout_weight="1">
 
-    <LinearLayout
-        android:id="@+id/tvEmptyState"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:paddingHorizontal="@dimen/spacing_48"
-        android:visibility="gone">
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewRooms"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:animation="@anim/layout_animation_fade_slide"
+                android:clipToPadding="false"
+                android:paddingHorizontal="@dimen/screen_margin_horizontal"
+                android:paddingBottom="@dimen/spacing_16"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2"
+                tools:itemCount="6"
+                tools:listitem="@layout/item_room" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <include
+            android:id="@+id/shimmerLoading"
+            layout="@layout/layout_shimmer_explore"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:id="@+id/tvEmptyState"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/spacing_48"
+            android:visibility="gone">
 
         <ImageView
             android:layout_width="80dp"
@@ -224,5 +234,7 @@
             android:textAppearance="?attr/textAppearanceBodyLarge"
             android:textColor="?attr/colorOnSurfaceVariant" />
     </LinearLayout>
+
+    </FrameLayout>
 
 </LinearLayout>

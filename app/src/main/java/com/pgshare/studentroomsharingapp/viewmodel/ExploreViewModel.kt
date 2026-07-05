@@ -16,6 +16,7 @@ data class ExploreUiState(
     val allRooms: List<Room> = emptyList(),
     val displayRooms: List<Room> = emptyList(),
     val isLoading: Boolean = true,
+    val isRefreshing: Boolean = false,
     val error: String? = null,
     val ownerNames: Map<String, String> = emptyMap(),
     val savedRoomKeys: Set<String> = emptySet(),
@@ -32,9 +33,15 @@ class ExploreViewModel(
 
     private val currentUserId = repository.getCurrentUserId()
 
+    private val ownerNameCache = mutableMapOf<String, String>()
+
     init {
         observeRooms()
         observeSavedKeys()
+    }
+
+    fun refresh() {
+        _uiState.value = _uiState.value.copy(isRefreshing = true)
     }
 
     private fun observeRooms() {
@@ -46,6 +53,7 @@ class ExploreViewModel(
                     allRooms = rooms,
                     displayRooms = if (_uiState.value.displayRooms.isEmpty() || _uiState.value.displayRooms === _uiState.value.allRooms) rooms else _uiState.value.displayRooms,
                     isLoading = false,
+                    isRefreshing = false,
                     ownerNames = names
                 )
             }
@@ -53,13 +61,31 @@ class ExploreViewModel(
     }
 
     private suspend fun fetchOwnerNames(userIds: List<String>): Map<String, String> {
-        return coroutineScope {
-            userIds.map { uid ->
-                async {
-                    val name = repository.getUserName(uid)
-                    uid to (name ?: "Unknown User")
-                }
-            }.associate { it.await() }
+        val uncached = userIds.filter { it !in ownerNameCache }
+        if (uncached.isNotEmpty()) {
+            val fetched = coroutineScope {
+                uncached.map { uid ->
+                    async {
+                        val name = repository.getUserName(uid)
+                        uid to (name ?: "Unknown User")
+                    }
+                }.associate { it.await() }
+            }
+            ownerNameCache.putAll(fetched)
+        }
+        return ownerNameCache.filterKeys { it in userIds }
+    }
+
+    fun toggleFavorite(room: Room) {
+        val userId = currentUserId ?: return
+        val roomId = room.id ?: return
+        viewModelScope.launch {
+            val isSaved = _uiState.value.savedRoomKeys.contains(roomId)
+            if (isSaved) {
+                repository.removeFavorite(userId, roomId)
+            } else {
+                repository.addFavorite(userId, room)
+            }
         }
     }
 
@@ -67,9 +93,7 @@ class ExploreViewModel(
         if (currentUserId == null) return
         viewModelScope.launch {
             repository.observeFavorites(currentUserId).collect { favorites ->
-                val keys = favorites.mapNotNull { room ->
-                    room.roomName?.replace(Regex("[.#$\\[\\]]"), "")
-                }.toSet()
+                val keys = favorites.mapNotNull { it.id }.toSet()
                 _uiState.value = _uiState.value.copy(savedRoomKeys = keys)
             }
         }
