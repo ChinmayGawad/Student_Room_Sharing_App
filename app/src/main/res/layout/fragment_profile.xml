@@ -247,19 +247,19 @@
             android:orientation="horizontal"
             android:paddingHorizontal="@dimen/spacing_4">
 
-            <ImageView
-                android:layout_width="@dimen/icon_size_large"
-                android:layout_height="@dimen/icon_size_large"
-                android:contentDescription="@null"
-                android:src="@drawable/baseline_close_24"
-                app:tint="?attr/colorOnSurfaceVariant" />
+                <ImageView
+                    android:layout_width="@dimen/icon_size_large"
+                    android:layout_height="@dimen/icon_size_large"
+                    android:contentDescription="@null"
+                    android:src="@drawable/baseline_notifications_24"
+                    app:tint="?attr/colorOnSurfaceVariant" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_16"
-                android:layout_weight="1"
-                android:text="@string/notifications"
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_16"
+                    android:layout_weight="1"
+                    android:text="@string/notifications"
                 android:textAppearance="?attr/textAppearanceTitleMedium"
                 android:textColor="?attr/colorOnSurface" />
 

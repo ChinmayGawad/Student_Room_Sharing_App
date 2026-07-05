@@ -1,6 +1,8 @@
 package com.pgshare.studentroomsharingapp
 
+import android.os.Build
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.pgshare.studentroomsharingapp.Fragments.ExploreFragment
@@ -12,8 +14,11 @@ import com.pgshare.studentroomsharingapp.databinding.ActivityStudentDashboardBin
 
 class StudentDashboardActivity : AppCompatActivity() {
 
+    lateinit var binding: ActivityStudentDashboardBinding
 
-    lateinit var binding : ActivityStudentDashboardBinding
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { _ -> }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,57 +26,53 @@ class StudentDashboardActivity : AppCompatActivity() {
         binding = ActivityStudentDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-
-        // Load the ExploreFragment by default when the activity starts
-        if (savedInstanceState == null) {
-            loadFragment(ExploreFragment())
-            binding.bottomNavigation.selectedItemId = R.id.navigation_explore
-        }
+        requestNotificationPermission()
 
         val target = intent.getStringExtra("TARGET_FRAGMENT")
 
+        if (savedInstanceState == null) {
+            val defaultFragment = when (target) {
+                "INBOX" -> InboxFragment()
+                "PROFILE" -> ProfileFragment()
+                else -> ExploreFragment()
+            }
+            loadFragment(defaultFragment)
+            binding.bottomNavigation.selectedItemId = when (target) {
+                "INBOX" -> R.id.navigation_inbox
+                "PROFILE" -> R.id.navigation_profile
+                else -> R.id.navigation_explore
+            }
+        }
 
-
-        // Handle Bottom Navigation item clicks
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_explore -> {
-                    loadFragment(ExploreFragment())
-                    true
+                    loadFragment(ExploreFragment()); true
                 }
                 R.id.navigation_saved -> {
-                    // Replace with your actual SavedFragment
-                    loadFragment(SavedFragment())
-                    true
+                    loadFragment(SavedFragment()); true
                 }
                 R.id.navigation_inbox -> {
-                    // Replace with your actual InboxFragment
-                    loadFragment(InboxFragment())
-                    true
+                    loadFragment(InboxFragment()); true
                 }
                 R.id.navigation_profile -> {
-                    loadFragment(ProfileFragment())
-                    true
+                    loadFragment(ProfileFragment()); true
                 }
                 else -> false
             }
         }
-        if (target == "INBOX") {
-            loadFragment(InboxFragment())
-            binding.bottomNavigation.selectedItemId = R.id.navigation_inbox
-        }
     }
 
-
-
-    /**
-     * Helper function to swap fragments in the container
-     */
     private fun loadFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
             .commit()
+    }
+
+    private fun requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+        }
     }
 }
 

@@ -3,13 +3,13 @@ package com.pgshare.studentroomsharingapp
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.pgshare.studentroomsharingapp.BuildConfig
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.pgshare.studentroomsharingapp.Authentication.Login
@@ -93,25 +93,30 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun openAbout() {
-        val  intent = Intent(this@MainActivity, Login::class.java)
-        startActivity(intent)
-        Toast.makeText(this, "Working on it", Toast.LENGTH_SHORT).show()
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.about)
+            .setMessage("${getString(R.string.app_name)} v${BuildConfig.VERSION_NAME}\n\n${getString(R.string.copyright)}")
+            .setPositiveButton(R.string.close, null)
+            .show()
     }
 
     private fun openContactUs() {
-      /*  val intent = Intent(this@MainActivity, ChatActivity::class.java);
-        startActivity(intent);*/
-        Toast.makeText(this, "Working on it", Toast.LENGTH_SHORT).show()
-
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "message/rfc822"
+            putExtra(Intent.EXTRA_EMAIL, arrayOf("support@studentroomsharing.app"))
+            putExtra(Intent.EXTRA_SUBJECT, "Support Request - ${getString(R.string.app_name)}")
+        }
+        if (intent.resolveActivity(packageManager) != null) {
+            startActivity(intent)
+        } else {
+            Toast.makeText(this, R.string.no_email_app, Toast.LENGTH_SHORT).show()
+        }
     }
 
-    /*   private void openContactUs() {
-        Intent intent = new Intent(MainActivity.this, ContactUs.class);
-        startActivity(intent);
-    }*/
     private fun openProfile() {
-        val intent = Intent(this@MainActivity, StudentDashboardActivity::class.java)
-        Toast.makeText(this, "Opening Profile", Toast.LENGTH_SHORT).show()
+        val intent = Intent(this, StudentDashboardActivity::class.java).apply {
+            putExtra("TARGET_FRAGMENT", "PROFILE")
+        }
         startActivity(intent)
     }
 

@@ -1,0 +1,41 @@
+{
+  "rules": {
+    "Rooms": {
+      ".read": "auth != null",
+      ".indexOn": ["userId", "price"],
+      "": {
+        ".write": "auth != null && (data.child('userId').val() === auth.uid || !data.exists())",
+        ".validate": "newData.hasChildren(['roomName', 'price', 'userId']) && newData.child('price').isString()"
+      }
+    },
+    "Users": {
+      "": {
+        ".read": " === auth.uid",
+        ".write": " === auth.uid",
+        "favorites": {
+          "": {
+            ".read": " === auth.uid",
+            ".write": " === auth.uid"
+          }
+        }
+      }
+    },
+    "chats": {
+      "": {
+        ".read": "auth != null && .contains(auth.uid)",
+        ".write": "auth != null && .contains(auth.uid)",
+        "messages": {
+          "": {
+            ".validate": "newData.hasChildren(['message', 'senderId', 'timestamp']) && newData.child('senderId').val() === auth.uid"
+          }
+        }
+      }
+    },
+    "inbox": {
+      "": {
+        ".read": " === auth.uid",
+        ".write": " === auth.uid"
+      }
+    }
+  }
+}
