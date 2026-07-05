@@ -30,6 +30,14 @@ class SavedViewModel(
         observeFavorites()
     }
 
+    fun toggleFavorite(room: Room) {
+        val userId = repository.getCurrentUserId() ?: return
+        val roomId = room.id ?: return
+        viewModelScope.launch {
+            repository.removeFavorite(userId, roomId)
+        }
+    }
+
     private fun observeFavorites() {
         val userId = repository.getCurrentUserId()
         if (userId == null) {
