@@ -62,6 +62,10 @@ class ProfileViewModel(
         _uiState.value = _uiState.value.copy(saveSuccess = false)
     }
 
+    fun clearError() {
+        _uiState.value = _uiState.value.copy(error = null)
+    }
+
     class Factory : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

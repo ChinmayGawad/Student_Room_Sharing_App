@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
+import com.google.android.material.snackbar.Snackbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -78,13 +78,14 @@ class PersonalInfoFragment : Fragment() {
                         initialUsername = binding.etUsername.text.toString().trim()
                         checkForChanges()
                         viewModel.clearSaveSuccess()
-                        Toast.makeText(context, "Profile updated", Toast.LENGTH_SHORT).show()
+                        Snackbar.make(binding.root, "Profile updated", Snackbar.LENGTH_SHORT).show()
                     }
 
                     state.error?.let {
                         showLoading(false)
                         binding.btnSaveChanges.text = getString(R.string.save_changes)
-                        Toast.makeText(requireContext(), "Error: $it", Toast.LENGTH_SHORT).show()
+                        Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
+                        viewModel.clearError()
                     }
                 }
             }
