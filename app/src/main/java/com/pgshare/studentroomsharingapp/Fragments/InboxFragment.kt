@@ -11,7 +11,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pgshare.studentroomsharingapp.Adapter.InboxAdapter
-import com.pgshare.studentroomsharingapp.model.RecentChat
 import com.pgshare.studentroomsharingapp.databinding.FragmentInboxBinding
 import com.pgshare.studentroomsharingapp.viewmodel.InboxViewModel
 import kotlinx.coroutines.launch
@@ -24,7 +23,6 @@ class InboxFragment : Fragment() {
     private val viewModel: InboxViewModel by viewModels { InboxViewModel.Factory() }
 
     private lateinit var inboxAdapter: InboxAdapter
-    private val inboxList = ArrayList<RecentChat>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,7 +42,8 @@ class InboxFragment : Fragment() {
 
     private fun setupRecyclerView() {
         binding.recyclerViewInbox.layoutManager = LinearLayoutManager(requireContext())
-        inboxAdapter = InboxAdapter(inboxList)
+        binding.recyclerViewInbox.setHasFixedSize(true)
+        inboxAdapter = InboxAdapter()
         binding.recyclerViewInbox.adapter = inboxAdapter
     }
 
@@ -54,9 +53,7 @@ class InboxFragment : Fragment() {
                 viewModel.uiState.collect { state ->
                     binding.progressBarInbox.visibility = if (state.isLoading) View.VISIBLE else View.GONE
 
-                    inboxList.clear()
-                    inboxList.addAll(state.inboxList)
-                    inboxAdapter.notifyDataSetChanged()
+                    inboxAdapter.submitList(state.inboxList)
 
                     if (!state.isLoggedIn || (state.inboxList.isEmpty() && !state.isLoading)) {
                         binding.recyclerViewInbox.visibility = View.GONE

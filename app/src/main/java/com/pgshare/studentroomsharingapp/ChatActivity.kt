@@ -7,10 +7,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.pgshare.studentroomsharingapp.Adapter.MessageAdapter
 import com.pgshare.studentroomsharingapp.databinding.ActivityChatBinding
-import com.pgshare.studentroomsharingapp.model.Message
 import com.pgshare.studentroomsharingapp.viewmodel.ChatViewModel
 import kotlinx.coroutines.launch
 
@@ -18,7 +18,6 @@ class ChatActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChatBinding
     private lateinit var chatAdapter: MessageAdapter
-    private lateinit var messageList: ArrayList<Message>
 
     private val viewModel = ChatViewModel()
 
@@ -39,7 +38,6 @@ class ChatActivity : AppCompatActivity() {
         }
 
         setupRecyclerView()
-        chatAdapter.setReceiverId(receiverId)
         observeUiState()
 
         viewModel.initialize(senderId, receiverId, roomId)
@@ -58,10 +56,10 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        messageList = ArrayList()
-        chatAdapter = MessageAdapter(messageList, FirebaseAuth.getInstance().currentUser?.uid ?: "")
+        chatAdapter = MessageAdapter(FirebaseAuth.getInstance().currentUser?.uid ?: "")
         binding.messageList.apply {
             layoutManager = LinearLayoutManager(this@ChatActivity)
+            setHasFixedSize(true)
             adapter = chatAdapter
         }
     }
@@ -70,14 +68,18 @@ class ChatActivity : AppCompatActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { state ->
-                    messageList.clear()
-                    messageList.addAll(state.messages)
-                    chatAdapter.notifyDataSetChanged()
+                    chatAdapter.submitList(state.messages)
                     chatAdapter.setReceiverName(state.receiverName)
+                    chatAdapter.receiverProfileImageUrl = state.receiverProfileImageUrl
                     binding.tvChatName.text = state.receiverName
 
-                    if (messageList.isNotEmpty()) {
-                        binding.messageList.scrollToPosition(messageList.size - 1)
+                    if (state.messages.isNotEmpty()) {
+                        binding.messageList.scrollToPosition(state.messages.size - 1)
+                    }
+
+                    state.error?.let { error ->
+                        Snackbar.make(binding.root, error, Snackbar.LENGTH_SHORT).show()
+                        viewModel.clearError()
                     }
                 }
             }

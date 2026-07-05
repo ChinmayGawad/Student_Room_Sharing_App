@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.pgshare.studentroomsharingapp.ChatActivity
@@ -19,15 +21,12 @@ data class InboxUserInfo(
     val profileImageUrl: String?
 )
 
-class InboxAdapter(
-    private val inboxList: ArrayList<RecentChat>
-) : RecyclerView.Adapter<InboxAdapter.InboxViewHolder>() {
+class InboxAdapter : ListAdapter<RecentChat, InboxAdapter.InboxViewHolder>(InboxDiffCallback()) {
 
     private var userProfiles: Map<String, InboxUserInfo> = emptyMap()
 
     fun setUserProfiles(profiles: Map<String, InboxUserInfo>) {
         userProfiles = profiles
-        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InboxViewHolder {
@@ -36,11 +35,8 @@ class InboxAdapter(
     }
 
     override fun onBindViewHolder(holder: InboxViewHolder, position: Int) {
-        val recentChat = inboxList[position]
-        holder.bind(recentChat, userProfiles)
+        holder.bind(getItem(position), userProfiles)
     }
-
-    override fun getItemCount(): Int = inboxList.size
 
     class InboxViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val tvUserName: TextView = itemView.findViewById(R.id.tvUserName)
@@ -76,7 +72,7 @@ class InboxAdapter(
                         else "?"
                 }
             } else {
-                tvUserName.text = "Loading..."
+                tvUserName.text = itemView.context.getString(R.string.loading_placeholder)
                 tvAvatarInitial.text = "?"
                 tvAvatarInitial.visibility = View.VISIBLE
                 ivAvatar.visibility = View.GONE
@@ -89,6 +85,17 @@ class InboxAdapter(
                 }
                 itemView.context.startActivity(intent)
             }
+        }
+    }
+
+    private class InboxDiffCallback : DiffUtil.ItemCallback<RecentChat>() {
+        override fun areItemsTheSame(oldItem: RecentChat, newItem: RecentChat): Boolean {
+            return oldItem.chatRoomId == newItem.chatRoomId
+        }
+
+        override fun areContentsTheSame(oldItem: RecentChat, newItem: RecentChat): Boolean {
+            return oldItem.lastMessage == newItem.lastMessage &&
+                    oldItem.timestamp == newItem.timestamp
         }
     }
 }
