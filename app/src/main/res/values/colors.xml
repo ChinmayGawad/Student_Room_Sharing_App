@@ -79,6 +79,10 @@
     <color name="bg_chat_received">#F1F5F9</color>
     <color name="bg_chat_sent">#2563EB</color>
 
+    <!-- Shimmer -->
+    <color name="shimmer_color">#E2E8F0</color>
+    <color name="shimmer_highlight">#F1F5F9</color>
+
     <!-- Launcher -->
     <color name="launcher_background">#2563EB</color>
     <color name="launcher_foreground">#FFFFFF</color>

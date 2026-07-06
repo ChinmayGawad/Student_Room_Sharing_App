@@ -2,7 +2,7 @@ package com.pgshare.studentroomsharingapp.Authentication
 
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Patterns
+import androidx.core.util.PatternsCompat
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -31,7 +31,7 @@ class ForgotPassword : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            if (!PatternsCompat.EMAIL_ADDRESS.matcher(email).matches()) {
                 emailEditText?.error = "Invalid email address"
                 return@setOnClickListener
             }

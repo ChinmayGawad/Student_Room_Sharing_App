@@ -5,49 +5,27 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.pgshare.studentroomsharingapp.R
 import com.pgshare.studentroomsharingapp.model.Message
 import java.util.Locale
 
 class MessageAdapter(
-    private val messages: ArrayList<Message>,
     private val currentUserId: String
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : ListAdapter<Message, RecyclerView.ViewHolder>(MessageDiffCallback()) {
 
     private var receiverName: String = "Unknown"
-    private var receiverProfileImageUrl: String? = null
-    private var receiverId: String? = null
+    var receiverProfileImageUrl: String? = null
+        set(value) {
+            field = value
+            notifyItemRangeChanged(0, itemCount)
+        }
 
     fun setReceiverName(name: String) {
-        this.receiverName = name
-        notifyDataSetChanged()
-    }
-
-    fun setReceiverId(id: String) {
-        this.receiverId = id
-        fetchReceiverProfileImage()
-    }
-
-    private fun fetchReceiverProfileImage() {
-        receiverId?.let { uid ->
-            FirebaseDatabase.getInstance().getReference("Users").child(uid)
-                .addListenerForSingleValueEvent(object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        if (snapshot.exists()) {
-                            receiverProfileImageUrl = snapshot.child("profileImageUrl").getValue(String::class.java)
-                            notifyDataSetChanged()
-                        }
-                    }
-
-                    override fun onCancelled(error: DatabaseError) {}
-                })
-        }
+        receiverName = name
     }
 
     companion object {
@@ -56,7 +34,7 @@ class MessageAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        val message = messages[position]
+        val message = getItem(position)
         return if (message.senderId == currentUserId) {
             VIEW_TYPE_SENT
         } else {
@@ -76,15 +54,13 @@ class MessageAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val message = messages[position]
+        val message = getItem(position)
         if (holder is SentMessageViewHolder) {
             holder.bind(message)
         } else if (holder is ReceivedMessageViewHolder) {
             holder.bind(message)
         }
     }
-
-    override fun getItemCount(): Int = messages.size
 
     class SentMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val messageTextView: TextView = itemView.findViewById(R.id.messageTextView)
@@ -112,7 +88,6 @@ class MessageAdapter(
                 textViewUserInitial.text = "?"
             }
 
-            // Load profile image or show initial
             if (!receiverProfileImageUrl.isNullOrEmpty()) {
                 cardAvatarInitial.visibility = View.GONE
                 ivMessageAvatar.visibility = View.VISIBLE
@@ -126,6 +101,17 @@ class MessageAdapter(
                 cardAvatarInitial.visibility = View.VISIBLE
                 ivMessageAvatar.visibility = View.GONE
             }
+        }
+    }
+
+    private class MessageDiffCallback : DiffUtil.ItemCallback<Message>() {
+        override fun areItemsTheSame(oldItem: Message, newItem: Message): Boolean {
+            return oldItem.messageId == newItem.messageId
+        }
+
+        override fun areContentsTheSame(oldItem: Message, newItem: Message): Boolean {
+            return oldItem.message == newItem.message &&
+                    oldItem.timestamp == newItem.timestamp
         }
     }
 }

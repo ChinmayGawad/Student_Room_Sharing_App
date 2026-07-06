@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
+import com.google.android.material.snackbar.Snackbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -61,29 +61,29 @@ class SettingsFragment : Fragment() {
         }
 
         binding.rowNotifications.setOnClickListener {
-            Toast.makeText(context, "Notifications settings", Toast.LENGTH_SHORT).show()
+            Snackbar.make(binding.root, "Notifications settings", Snackbar.LENGTH_SHORT).show()
         }
 
         binding.rowLanguage.setOnClickListener {
-            Toast.makeText(context, "Language selection", Toast.LENGTH_SHORT).show()
+            Snackbar.make(binding.root, "Language selection", Snackbar.LENGTH_SHORT).show()
         }
 
         binding.rowPersonalInfo.setOnClickListener {
-            Toast.makeText(context, "Personal Information", Toast.LENGTH_SHORT).show()
+            Snackbar.make(binding.root, "Personal Information", Snackbar.LENGTH_SHORT).show()
         }
 
         binding.rowPrivacy.setOnClickListener {
-            Toast.makeText(context, "Privacy settings", Toast.LENGTH_SHORT).show()
+            Snackbar.make(binding.root, "Privacy settings", Snackbar.LENGTH_SHORT).show()
         }
 
         binding.rowSecurity.setOnClickListener {
-            Toast.makeText(context, "Security settings", Toast.LENGTH_SHORT).show()
+            Snackbar.make(binding.root, "Security settings", Snackbar.LENGTH_SHORT).show()
         }
 
         binding.rowListProperty.setOnClickListener { handleListProperty() }
 
         binding.rowHelpCenter.setOnClickListener {
-            Toast.makeText(context, "Help Center", Toast.LENGTH_SHORT).show()
+            Snackbar.make(binding.root, "Help Center", Snackbar.LENGTH_SHORT).show()
         }
 
         binding.rowSendFeedback.setOnClickListener {
@@ -95,12 +95,12 @@ class SettingsFragment : Fragment() {
             if (intent.resolveActivity(requireContext().packageManager) != null) {
                 startActivity(intent)
             } else {
-                Toast.makeText(context, "No email app found", Toast.LENGTH_SHORT).show()
+                Snackbar.make(binding.root, R.string.no_email_app, Snackbar.LENGTH_SHORT).show()
             }
         }
 
         binding.rowRateApp.setOnClickListener {
-            Toast.makeText(context, "Rate the App", Toast.LENGTH_SHORT).show()
+            Snackbar.make(binding.root, "Rate the App", Snackbar.LENGTH_SHORT).show()
         }
     }
 
@@ -121,7 +121,7 @@ class SettingsFragment : Fragment() {
         lifecycleScope.launch {
             val role = repository.getUserRole(user.uid)
             if (role != "owner") {
-                Toast.makeText(context, "Only property owners can list rooms", Toast.LENGTH_SHORT).show()
+                Snackbar.make(binding.root, "Only property owners can list rooms", Snackbar.LENGTH_SHORT).show()
                 return@launch
             }
             showAdminPasswordDialog(user.email ?: "")
@@ -146,7 +146,7 @@ class SettingsFragment : Fragment() {
             .setPositiveButton(R.string.verify) { _, _ ->
                 val password = input.text.toString().trim()
                 if (password.isEmpty()) {
-                    Toast.makeText(context, "Password is required", Toast.LENGTH_SHORT).show()
+                    Snackbar.make(binding.root, "Password is required", Snackbar.LENGTH_SHORT).show()
                     return@setPositiveButton
                 }
                 verifyPassword(email, password)
@@ -164,7 +164,7 @@ class SettingsFragment : Fragment() {
                 if (task.isSuccessful) {
                     startActivity(Intent(requireContext(), Add_Room::class.java))
                 } else {
-                    Toast.makeText(context, "Incorrect password", Toast.LENGTH_SHORT).show()
+                    Snackbar.make(binding.root, "Incorrect password", Snackbar.LENGTH_SHORT).show()
                 }
             }
     }

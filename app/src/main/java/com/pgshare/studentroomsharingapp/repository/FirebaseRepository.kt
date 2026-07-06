@@ -205,6 +205,15 @@ class FirebaseRepository {
         }
     }
 
+    suspend fun addFavorite(userId: String, room: Room) {
+        val key = room.id ?: return
+        database.getReference("Users").child(userId).child("favorites").child(key).setValue(room).await()
+    }
+
+    suspend fun removeFavorite(userId: String, roomId: String) {
+        database.getReference("Users").child(userId).child("favorites").child(roomId).removeValue().await()
+    }
+
     suspend fun getUserRole(uid: String): String? {
         return try {
             val snapshot = database.getReference("Users").child(uid).get().await()

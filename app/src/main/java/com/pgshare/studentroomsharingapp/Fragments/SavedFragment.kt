@@ -26,7 +26,6 @@ class SavedFragment : Fragment() {
     private val viewModel: SavedViewModel by viewModels { SavedViewModel.Factory() }
 
     private lateinit var roomAdapter: RoomListAdapter
-    private val savedRoomList = ArrayList<Room>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,8 +44,9 @@ class SavedFragment : Fragment() {
 
     private fun setupRecyclerView() {
         binding.rvSavedRooms.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvSavedRooms.setHasFixedSize(true)
 
-        roomAdapter = RoomListAdapter(savedRoomList, object : RoomListAdapter.OnRoomClickListener {
+        roomAdapter = RoomListAdapter(object : RoomListAdapter.OnRoomClickListener {
             override fun onRoomClick(room: Room) {
                 val intent = Intent(requireContext(), RoomDetailsActivity::class.java).apply {
                     putExtra("Rooms", room)
@@ -55,7 +55,7 @@ class SavedFragment : Fragment() {
             }
 
             override fun onSaveClick(room: Room) {
-                // handled by adapter
+                viewModel.toggleFavorite(room)
             }
         })
 
@@ -68,10 +68,8 @@ class SavedFragment : Fragment() {
                 viewModel.uiState.collect { state ->
                     binding.progressBar.visibility = if (state.isLoading) View.VISIBLE else View.GONE
 
-                    savedRoomList.clear()
-                    savedRoomList.addAll(state.savedRooms)
                     roomAdapter.setOwnerNames(state.ownerNames)
-                    roomAdapter.updateData(savedRoomList)
+                    roomAdapter.submitList(state.savedRooms)
                     val keys = state.savedRooms.mapNotNull { room ->
                         room.roomName?.replace(Regex("[.#$\\[\\]]"), "")
                     }.toSet()

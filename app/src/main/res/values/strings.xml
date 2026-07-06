@@ -314,4 +314,6 @@
     <string name="admin_password_title">Admin Access</string>
     <string name="admin_password_message">Enter your password to access this feature</string>
     <string name="verify">Verify</string>
+    <string name="no_email_app">No email app found</string>
+    <string name="loading_placeholder">Loading…</string>
 </resources>

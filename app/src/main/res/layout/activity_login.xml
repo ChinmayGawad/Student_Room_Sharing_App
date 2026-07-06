@@ -120,6 +120,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnForgotPassword" />
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/btnSignIn"
+        app:layout_constraintStart_toStartOf="@id/btnSignIn"
+        app:layout_constraintTop_toBottomOf="@id/btnSignIn" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/dividerLayout"
         android:layout_width="0dp"
