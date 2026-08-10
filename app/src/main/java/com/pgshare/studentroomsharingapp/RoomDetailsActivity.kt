@@ -51,6 +51,9 @@ class RoomDetailsActivity : AppCompatActivity() {
             binding.btnChatBottom.setOnClickListener {
                 startChat(room)
             }
+            binding.btnBookNow.setOnClickListener {
+                startPayment(room)
+            }
 
             setupImagePager(room.imageUrls)
         }
@@ -166,8 +169,18 @@ class RoomDetailsActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    private fun startPayment(room: Room) {
+        val intent = Intent(this, PaymentActivity::class.java).apply {
+            putExtra("ROOM_ID", room.id)
+            putExtra("ROOM_NAME", room.roomName)
+            putExtra("ROOM_PRICE", room.price)
+            putExtra("ROOM_DEPOSIT", room.deposit)
+        }
+        startActivity(intent)
+    }
+
     private fun setupImagePager(imageUrls: List<String?>?) {
-        val images = imageUrls?.filter { !it.isNullOrEmpty() } ?: emptyList()
+        val images = imageUrls?.filterNotNull()?.filter { it.isNotEmpty() } ?: emptyList()
 
         if (images.isEmpty()) {
             binding.viewpagerRoomImages.visibility = View.GONE
@@ -175,24 +188,8 @@ class RoomDetailsActivity : AppCompatActivity() {
             return
         }
 
-        val decodedBitmaps = images.mapNotNull { base64 ->
-            try {
-                val imageBytes = Base64.decode(base64, Base64.DEFAULT)
-                BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-            } catch (e: Exception) {
-                e.printStackTrace()
-                null
-            }
-        }
-
-        if (decodedBitmaps.isEmpty()) {
-            binding.viewpagerRoomImages.visibility = View.GONE
-            binding.tabLayoutImageIndicator.visibility = View.GONE
-            return
-        }
-
         binding.viewpagerRoomImages.adapter = object : PagerAdapter() {
-            override fun getCount() = decodedBitmaps.size
+            override fun getCount() = images.size
 
             override fun isViewFromObject(view: View, `object`: Any) = view === `object`
 
@@ -203,8 +200,24 @@ class RoomDetailsActivity : AppCompatActivity() {
                         ViewGroup.LayoutParams.MATCH_PARENT
                     )
                     scaleType = ImageView.ScaleType.CENTER_CROP
-                    setImageBitmap(decodedBitmaps[position])
                 }
+
+                val item = images[position]
+                if (item.startsWith("http://") || item.startsWith("https://")) {
+                    com.bumptech.glide.Glide.with(this@RoomDetailsActivity)
+                        .load(item)
+                        .placeholder(R.drawable.placeholder_room)
+                        .into(imageView)
+                } else {
+                    try {
+                        val bytes = Base64.decode(item, Base64.DEFAULT)
+                        val bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                        imageView.setImageBitmap(bmp)
+                    } catch (e: Exception) {
+                        imageView.setImageResource(R.drawable.placeholder_room)
+                    }
+                }
+
                 container.addView(imageView)
                 return imageView
             }

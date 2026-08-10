@@ -40,14 +40,35 @@ class RoomListAdapter(
 
             binding.roomPrice.text = room.formatPrice
 
-            val base64 = room.imageUrls?.firstOrNull()
-            if (!base64.isNullOrEmpty()) {
-                try {
-                    val imageBytes = Base64.decode(base64, Base64.DEFAULT)
-                    val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-                    binding.roomImage.setImageBitmap(bitmap)
-                } catch (e: Exception) {
-                    binding.roomImage.setImageResource(R.drawable.placeholder_room)
+            if (room.isRoomBooked) {
+                binding.chipRoomStatus.text = "BOOKED"
+                binding.chipRoomStatus.chipBackgroundColor = android.content.res.ColorStateList.valueOf(android.graphics.Color.parseColor("#EF4444"))
+            } else {
+                binding.chipRoomStatus.text = "AVAILABLE"
+                binding.chipRoomStatus.chipBackgroundColor = android.content.res.ColorStateList.valueOf(android.graphics.Color.parseColor("#10B981"))
+            }
+
+            val firstImg = room.imageUrls?.firstOrNull()
+            if (!firstImg.isNullOrEmpty()) {
+                if (firstImg.startsWith("http://") || firstImg.startsWith("https://")) {
+                    com.bumptech.glide.Glide.with(binding.roomImage.context)
+                        .load(firstImg)
+                        .placeholder(R.drawable.placeholder_room)
+                        .error(R.drawable.placeholder_room)
+                        .into(binding.roomImage)
+                } else {
+                    try {
+                        val cleanBase64 = if (firstImg.contains(",")) firstImg.substringAfter(",") else firstImg
+                        val imageBytes = Base64.decode(cleanBase64, Base64.DEFAULT)
+                        val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+                        if (bitmap != null) {
+                            binding.roomImage.setImageBitmap(bitmap)
+                        } else {
+                            binding.roomImage.setImageResource(R.drawable.placeholder_room)
+                        }
+                    } catch (e: Exception) {
+                        binding.roomImage.setImageResource(R.drawable.placeholder_room)
+                    }
                 }
             } else {
                 binding.roomImage.setImageResource(R.drawable.placeholder_room)

@@ -47,15 +47,18 @@ class ExploreViewModel(
     private fun observeRooms() {
         viewModelScope.launch {
             repository.observeRooms().collect { rooms ->
+                if (rooms.isEmpty()) {
+                    repository.seedDemoRooms()
+                }
                 val ownerIds = rooms.mapNotNull { it.userId }.distinct()
                 val names = if (ownerIds.isNotEmpty()) fetchOwnerNames(ownerIds) else emptyMap()
                 _uiState.value = _uiState.value.copy(
                     allRooms = rooms,
-                    displayRooms = if (_uiState.value.displayRooms.isEmpty() || _uiState.value.displayRooms === _uiState.value.allRooms) rooms else _uiState.value.displayRooms,
                     isLoading = false,
                     isRefreshing = false,
                     ownerNames = names
                 )
+                filterAndSearch()
             }
         }
     }
