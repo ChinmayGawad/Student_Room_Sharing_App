@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Primary Colors (Dark) -->
-    <color name="colorPrimary">#60A5FA</color>
-    <color name="onPrimary">#001B3D</color>
-    <color name="primaryContainer">#003366</color>
-    <color name="onPrimaryContainer">#DBEAFE</color>
+    <color name="colorPrimary">#818CF8</color>
+    <color name="onPrimary">#1E1B4B</color>
+    <color name="primaryContainer">#312E81</color>
+    <color name="onPrimaryContainer">#E0E7FF</color>
     <color name="onPrimary_20">#33FFFFFF</color>
 
     <!-- Secondary Colors (Dark) -->
