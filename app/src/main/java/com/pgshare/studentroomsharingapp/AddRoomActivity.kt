@@ -9,19 +9,19 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.chip.Chip
+import com.google.firebase.auth.FirebaseAuth
 import com.pgshare.studentroomsharingapp.Adapter.WizardPagerAdapter
+import com.pgshare.studentroomsharingapp.Authentication.Login
 import com.pgshare.studentroomsharingapp.Fragments.AddRoomStep1Fragment
 import com.pgshare.studentroomsharingapp.Fragments.AddRoomStep2Fragment
 import com.pgshare.studentroomsharingapp.Fragments.AddRoomStep3Fragment
 import com.pgshare.studentroomsharingapp.Fragments.ValidatableFragment
-import com.google.firebase.auth.FirebaseAuth
-import com.pgshare.studentroomsharingapp.Authentication.Login
 import com.pgshare.studentroomsharingapp.databinding.ActivityAddRoomBinding
 import com.pgshare.studentroomsharingapp.viewmodel.AddRoomEvent
 import com.pgshare.studentroomsharingapp.viewmodel.AddRoomViewModel
 import kotlinx.coroutines.launch
 
-class Add_Room : AppCompatActivity() {
+class AddRoomActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddRoomBinding
     private lateinit var wizardAdapter: WizardPagerAdapter
@@ -81,11 +81,11 @@ class Add_Room : AppCompatActivity() {
                 viewModel.events.collect { event ->
                     when (event) {
                         is AddRoomEvent.Success -> {
-                            Toast.makeText(this@Add_Room, "Room Published Successfully!", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@AddRoomActivity, "Room Published Successfully!", Toast.LENGTH_SHORT).show()
                             finish()
                         }
                         is AddRoomEvent.Error -> {
-                            Toast.makeText(this@Add_Room, "Failed to publish: ${event.message}", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this@AddRoomActivity, "Failed to publish: ${event.message}", Toast.LENGTH_LONG).show()
                         }
                     }
                 }
