@@ -58,5 +58,8 @@ Thumbs.db
 .shelf/
 .sapient/
 build_output.txt
+server/service-account.json
+server/node_modules/
+.env
 
 .codebuddy
