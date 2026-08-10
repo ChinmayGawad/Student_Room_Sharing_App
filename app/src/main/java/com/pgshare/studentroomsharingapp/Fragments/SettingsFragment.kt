@@ -13,7 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
-import com.pgshare.studentroomsharingapp.Add_Room
+import com.pgshare.studentroomsharingapp.AddRoomActivity
 import com.pgshare.studentroomsharingapp.Authentication.Login
 import com.pgshare.studentroomsharingapp.BuildConfig
 import com.pgshare.studentroomsharingapp.R
@@ -162,7 +162,7 @@ class SettingsFragment : Fragment() {
         user.reauthenticate(credential)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    startActivity(Intent(requireContext(), Add_Room::class.java))
+                    startActivity(Intent(requireContext(), AddRoomActivity::class.java))
                 } else {
                     Snackbar.make(binding.root, "Incorrect password", Snackbar.LENGTH_SHORT).show()
                 }

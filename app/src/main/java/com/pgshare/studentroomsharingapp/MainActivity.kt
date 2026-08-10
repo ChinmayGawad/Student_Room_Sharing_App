@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             lifecycleScope.launch {
                 val role = repository.getUserRole(user.uid)
                 if (role == "owner") {
-                    val intent = Intent(this@MainActivity, Add_Room::class.java)
+                    val intent = Intent(this@MainActivity, AddRoomActivity::class.java)
                     startActivity(intent)
                 } else {
                     Toast.makeText(this@MainActivity, "Only property owners can list rooms", Toast.LENGTH_SHORT).show()
