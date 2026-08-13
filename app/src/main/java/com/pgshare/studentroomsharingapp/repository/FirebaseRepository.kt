@@ -120,7 +120,9 @@ class FirebaseRepository {
 
     suspend fun getUserName(uid: String): String? {
         return try {
-            val snapshot = database.getReference("Users").child(uid).get().await()
+            val snapshot = kotlinx.coroutines.withTimeoutOrNull(2500) {
+                database.getReference("Users").child(uid).get().await()
+            } ?: return null
             val username = snapshot.child("username").getValue(String::class.java)
             val email = snapshot.child("email").getValue(String::class.java)
             when {
@@ -252,7 +254,9 @@ class FirebaseRepository {
 
     suspend fun getUserProfile(uid: String): UserProfile? {
         return try {
-            val snapshot = database.getReference("Users").child(uid).get().await()
+            val snapshot = kotlinx.coroutines.withTimeoutOrNull(2500) {
+                database.getReference("Users").child(uid).get().await()
+            } ?: return null
             if (!snapshot.exists()) return null
             val username = snapshot.child("username").getValue(String::class.java)
             val email = snapshot.child("email").getValue(String::class.java)

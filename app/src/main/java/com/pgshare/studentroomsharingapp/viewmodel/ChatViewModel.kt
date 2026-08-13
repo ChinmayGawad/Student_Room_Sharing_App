@@ -50,7 +50,9 @@ class ChatViewModel(
     private fun loadReceiverName() {
         viewModelScope.launch {
             val profile = repository.getUserProfile(receiverId)
-            val name = profile?.username ?: profile?.email?.substringBefore("@") ?: "Unknown"
+            val name = profile?.username?.takeIf { it.isNotBlank() }
+                ?: profile?.email?.substringBefore("@")?.takeIf { it.isNotBlank() }
+                ?: if (receiverId.contains("owner", ignoreCase = true)) "Property Owner" else "Room Owner"
             _uiState.value = _uiState.value.copy(
                 receiverName = name,
                 receiverProfileImageUrl = profile?.profileImageUrl

@@ -25,7 +25,10 @@ class MessageAdapter(
         }
 
     fun setReceiverName(name: String) {
-        receiverName = name
+        if (receiverName != name) {
+            receiverName = name
+            notifyDataSetChanged()
+        }
     }
 
     companion object {

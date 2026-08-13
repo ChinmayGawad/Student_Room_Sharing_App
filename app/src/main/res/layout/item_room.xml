@@ -6,9 +6,10 @@
     android:layout_height="wrap_content"
     app:cardBackgroundColor="?attr/colorSurface"
     app:cardCornerRadius="@dimen/corner_large"
-    app:cardElevation="@dimen/elevation_card"
+    app:cardElevation="0dp"
     app:contentPadding="@dimen/elevation_none"
-    app:strokeWidth="@dimen/elevation_none">
+    app:strokeColor="?attr/colorOutlineVariant"
+    app:strokeWidth="1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -81,7 +82,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/TextAppearance.TitleMedium"
-                android:textColor="@color/colorPrimary"
+                android:textColor="?attr/colorPrimary"
+                android:textStyle="bold"
                 android:text="$450/mo"
                 tools:text="$450/mo" />
 
@@ -92,8 +94,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_4"
                 android:ellipsize="end"
-                android:maxLines="2"
-                android:textAppearance="@style/TextAppearance.TitleLarge"
+                android:maxLines="1"
+                android:textAppearance="@style/TextAppearance.TitleMedium"
                 android:textColor="?attr/colorOnSurface"
                 android:text="Modern Studio Near Campus"
                 tools:text="Modern Studio Near Campus" />

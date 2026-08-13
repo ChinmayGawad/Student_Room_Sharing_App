@@ -27,6 +27,7 @@ class InboxAdapter : ListAdapter<RecentChat, InboxAdapter.InboxViewHolder>(Inbox
 
     fun setUserProfiles(profiles: Map<String, InboxUserInfo>) {
         userProfiles = profiles
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InboxViewHolder {
