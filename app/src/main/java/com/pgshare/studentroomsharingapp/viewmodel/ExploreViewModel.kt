@@ -42,20 +42,45 @@ class ExploreViewModel(
 
     fun refresh() {
         _uiState.value = _uiState.value.copy(isRefreshing = true)
+        viewModelScope.launch {
+            try {
+                if (_uiState.value.allRooms.isEmpty()) {
+                    repository.seedDemoRooms()
+                }
+                val ownerIds = _uiState.value.allRooms.mapNotNull { it.userId }.distinct()
+                if (ownerIds.isNotEmpty()) {
+                    val names = fetchOwnerNames(ownerIds)
+                    _uiState.value = _uiState.value.copy(ownerNames = names)
+                }
+                kotlinx.coroutines.delay(600)
+            } catch (e: Exception) {
+                android.util.Log.w("ExploreViewModel", "Refresh error: ${e.message}")
+            } finally {
+                _uiState.value = _uiState.value.copy(isRefreshing = false)
+            }
+        }
     }
 
     private fun observeRooms() {
         viewModelScope.launch {
             repository.observeRooms().collect { rooms ->
-                val ownerIds = rooms.mapNotNull { it.userId }.distinct()
-                val names = if (ownerIds.isNotEmpty()) fetchOwnerNames(ownerIds) else emptyMap()
+                if (rooms.isEmpty()) {
+                    viewModelScope.launch { repository.seedDemoRooms() }
+                }
                 _uiState.value = _uiState.value.copy(
                     allRooms = rooms,
-                    displayRooms = if (_uiState.value.displayRooms.isEmpty() || _uiState.value.displayRooms === _uiState.value.allRooms) rooms else _uiState.value.displayRooms,
                     isLoading = false,
-                    isRefreshing = false,
-                    ownerNames = names
+                    isRefreshing = false
                 )
+                filterAndSearch()
+
+                val ownerIds = rooms.mapNotNull { it.userId }.distinct()
+                if (ownerIds.isNotEmpty()) {
+                    viewModelScope.launch {
+                        val names = fetchOwnerNames(ownerIds)
+                        _uiState.value = _uiState.value.copy(ownerNames = names)
+                    }
+                }
             }
         }
     }

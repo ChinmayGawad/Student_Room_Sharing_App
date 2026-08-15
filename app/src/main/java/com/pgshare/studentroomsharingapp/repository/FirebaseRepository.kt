@@ -51,16 +51,78 @@ class FirebaseRepository {
 
     suspend fun publishRoom(room: Room): Result<Unit> = runCatching {
         val ref = database.getReference("Rooms")
-        val id = ref.push().key ?: throw Exception("Failed to generate room key")
+        val id = if (room.id.isNullOrEmpty()) ref.push().key ?: throw Exception("Failed to generate room key") else room.id!!
         room.id = id
         ref.child(id).setValue(room).await()
+    }
+
+    suspend fun seedDemoRooms(): Result<Unit> = runCatching {
+        val roomsRef = database.getReference("Rooms")
+        roomsRef.removeValue().await()
+
+        val demoListings = listOf(
+            Room(
+                id = "demo_room_1",
+                userId = "demo_owner_1",
+                roomName = "Luxury Student Studio Near Campus",
+                location = "University North Gate",
+                description = "Type: Private Room\n\nSpacious studio apartment with high-speed WiFi, study desk, and 24/7 security. Perfect for university students.",
+                price = "8500",
+                deposit = "17000",
+                imageUrls = arrayListOf("https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=800&q=80"),
+                amenities = arrayListOf("High-Speed WiFi", "Air Conditioning", "Fully Furnished", "Attached Bath"),
+                isRoomBooked = false
+            ),
+            Room(
+                id = "demo_room_2",
+                userId = "demo_owner_2",
+                roomName = "Cozy Shared PG for Students",
+                location = "Metro Station West",
+                description = "Type: PG\n\nClean and affordable shared room with mess facility, daily housekeeping, and laundry service included.",
+                price = "6000",
+                deposit = "12000",
+                imageUrls = arrayListOf("https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=80"),
+                amenities = arrayListOf("High-Speed WiFi", "Washing Machine", "Attached Bath"),
+                isRoomBooked = false
+            ),
+            Room(
+                id = "demo_room_3",
+                userId = "demo_owner_3",
+                roomName = "Premium Private Single Room",
+                location = "Tech Park Sector 5",
+                description = "Type: Flat\n\nFully furnished single room in a modern 3BHK flat with balcony view, power backup, and modular kitchen access.",
+                price = "12500",
+                deposit = "25000",
+                imageUrls = arrayListOf("https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80"),
+                amenities = arrayListOf("High-Speed WiFi", "Air Conditioning", "Balcony", "Fully Furnished"),
+                isRoomBooked = false
+            ),
+            Room(
+                id = "demo_room_4",
+                userId = "demo_owner_4",
+                roomName = "Modern Female Student Flat",
+                location = "College Green Avenue",
+                description = "Type: Flat\n\nSafe and peaceful environment for female students with gym access, power backup, and close proximity to public transit.",
+                price = "9000",
+                deposit = "18000",
+                imageUrls = arrayListOf("https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80"),
+                amenities = arrayListOf("High-Speed WiFi", "Air Conditioning", "Fully Furnished"),
+                isRoomBooked = true
+            )
+        )
+
+        for (room in demoListings) {
+            roomsRef.child(room.id!!).setValue(room).await()
+        }
     }
 
     // ─── Users ────────────────────────────────────────────
 
     suspend fun getUserName(uid: String): String? {
         return try {
-            val snapshot = database.getReference("Users").child(uid).get().await()
+            val snapshot = kotlinx.coroutines.withTimeoutOrNull(2500) {
+                database.getReference("Users").child(uid).get().await()
+            } ?: return null
             val username = snapshot.child("username").getValue(String::class.java)
             val email = snapshot.child("email").getValue(String::class.java)
             when {
@@ -192,7 +254,9 @@ class FirebaseRepository {
 
     suspend fun getUserProfile(uid: String): UserProfile? {
         return try {
-            val snapshot = database.getReference("Users").child(uid).get().await()
+            val snapshot = kotlinx.coroutines.withTimeoutOrNull(2500) {
+                database.getReference("Users").child(uid).get().await()
+            } ?: return null
             if (!snapshot.exists()) return null
             val username = snapshot.child("username").getValue(String::class.java)
             val email = snapshot.child("email").getValue(String::class.java)
@@ -233,24 +297,81 @@ class FirebaseRepository {
         database.getReference("Users").child(userId).setValue(userData).await()
     }
 
-    // ─── Image ────────────────────────────────────────────
+    // ─── Image (100% Free Storage: Imgur Free API / WebP) ────────────────
+
+    suspend fun uploadImageToFreeStorage(uri: Uri, contentResolver: android.content.ContentResolver): String? {
+        return kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+            // First attempt free Imgur anonymous API upload for clean HTTPS URL
+            val imgurUrl = uploadToImgur(uri, contentResolver)
+            if (!imgurUrl.isNullOrEmpty()) {
+                return@withContext imgurUrl
+            }
+            // Fallback to local ultra-compressed WebP string
+            compressAndEncodeImage(uri, contentResolver)
+        }
+    }
+
+    private fun uploadToImgur(uri: Uri, contentResolver: android.content.ContentResolver): String? {
+        return try {
+            val inputStream = contentResolver.openInputStream(uri) ?: return null
+            val bytes = inputStream.readBytes()
+            inputStream.close()
+
+            val base64Image = Base64.encodeToString(bytes, Base64.NO_WRAP)
+            val url = java.net.URL("https://api.imgur.com/3/image")
+            val conn = url.openConnection() as java.net.HttpURLConnection
+            conn.requestMethod = "POST"
+            conn.setRequestProperty("Authorization", "Client-ID c66212e3e57f201") // Free Imgur Client-ID
+            conn.doOutput = true
+            conn.connectTimeout = 8000
+            conn.readTimeout = 8000
+
+            val os = conn.outputStream
+            val postData = "image=" + java.net.URLEncoder.encode(base64Image, "UTF-8")
+            os.write(postData.toByteArray())
+            os.flush()
+            os.close()
+
+            if (conn.responseCode == 200) {
+                val response = conn.inputStream.bufferedReader().readText()
+                val json = org.json.JSONObject(response)
+                if (json.optBoolean("success")) {
+                    return json.getJSONObject("data").getString("link")
+                }
+            }
+            null
+        } catch (e: Exception) {
+            android.util.Log.w("FirebaseRepository", "Free Imgur upload fallback: ${e.message}")
+            null
+        }
+    }
 
     fun compressAndEncodeImage(uri: Uri, contentResolver: android.content.ContentResolver): String? {
         return try {
             val inputStream = contentResolver.openInputStream(uri)
-            val originalBitmap = BitmapFactory.decodeStream(inputStream)
+            val originalBitmap = BitmapFactory.decodeStream(inputStream) ?: run {
+                inputStream?.close()
+                return null
+            }
             inputStream?.close()
 
-            val ratio = Math.min(600.0 / originalBitmap.width, 600.0 / originalBitmap.height)
-            val width = Math.round(ratio * originalBitmap.width).toInt()
-            val height = Math.round(ratio * originalBitmap.height).toInt()
+            val maxDimension = 480.0
+            val ratio = Math.min(maxDimension / originalBitmap.width, maxDimension / originalBitmap.height)
+            val width = Math.max(1, Math.round(ratio * originalBitmap.width).toInt())
+            val height = Math.max(1, Math.round(ratio * originalBitmap.height).toInt())
             val resizedBitmap = Bitmap.createScaledBitmap(originalBitmap, width, height, true)
 
             val outputStream = ByteArrayOutputStream()
-            resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 40, outputStream)
-            Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT)
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+                resizedBitmap.compress(Bitmap.CompressFormat.WEBP_LOSSY, 75, outputStream)
+            } else {
+                @Suppress("DEPRECATION")
+                resizedBitmap.compress(Bitmap.CompressFormat.WEBP, 75, outputStream)
+            }
+            val bytes = outputStream.toByteArray()
+            Base64.encodeToString(bytes, Base64.NO_WRAP)
         } catch (e: Exception) {
-            e.printStackTrace()
+            android.util.Log.w("FirebaseRepository", "compressAndEncodeImage failed: ${e.message}")
             null
         }
     }

@@ -50,10 +50,8 @@ class AddRoomViewModel(
         viewModelScope.launch {
             _uiState.value = AddRoomUiState(isLoading = true)
 
-            val base64Images = withContext(Dispatchers.IO) {
-                imageUris.mapNotNull { uri ->
-                    repository.compressAndEncodeImage(uri, contentResolver)
-                }
+            val uploadedImages = imageUris.mapNotNull { uri ->
+                repository.uploadImageToFreeStorage(uri, contentResolver)
             }
 
             val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
@@ -79,7 +77,7 @@ class AddRoomViewModel(
                 description = if (description.isNotEmpty()) "Type: $roomType\n\n$description" else "Type: $roomType",
                 price = rent,
                 deposit = deposit,
-                imageUrls = ArrayList(base64Images),
+                imageUrls = ArrayList(uploadedImages),
                 imageResourceId = 0,
                 amenities = ArrayList(amenities),
                 isRoomBooked = false

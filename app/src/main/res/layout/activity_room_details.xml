@@ -422,11 +422,21 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_chat_bottom"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginEnd="@dimen/spacing_8"
+                android:text="@string/btn_chat"
+                app:icon="@drawable/ic_chat"
+                app:iconGravity="start" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_book_now"
                 style="@style/Widget.StudentRoomSharing.Button.Filled"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/button_height"
-                android:text="@string/btn_chat"
-                app:icon="@drawable/ic_chat"
+                android:text="Book Now"
+                app:icon="@drawable/baseline_check_circle_24"
                 app:iconGravity="start" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 data class ChatUiState(
     val messages: List<Message> = emptyList(),
     val receiverName: String = "Unknown",
+    val receiverProfileImageUrl: String? = null,
     val isLoading: Boolean = true,
     val error: String? = null
 )
@@ -48,9 +49,19 @@ class ChatViewModel(
 
     private fun loadReceiverName() {
         viewModelScope.launch {
-            val name = repository.getUserName(receiverId)
-            _uiState.value = _uiState.value.copy(receiverName = name ?: "Unknown")
+            val profile = repository.getUserProfile(receiverId)
+            val name = profile?.username?.takeIf { it.isNotBlank() }
+                ?: profile?.email?.substringBefore("@")?.takeIf { it.isNotBlank() }
+                ?: if (receiverId.contains("owner", ignoreCase = true)) "Property Owner" else "Room Owner"
+            _uiState.value = _uiState.value.copy(
+                receiverName = name,
+                receiverProfileImageUrl = profile?.profileImageUrl
+            )
         }
+    }
+
+    fun clearError() {
+        _uiState.value = _uiState.value.copy(error = null)
     }
 
     fun sendMessage(text: String) {

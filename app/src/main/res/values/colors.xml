@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Primary Colors -->
-    <color name="colorPrimary">#2563EB</color>
+    <color name="colorPrimary">#4F46E5</color>
     <color name="onPrimary">#FFFFFF</color>
-    <color name="primaryContainer">#DBEAFE</color>
-    <color name="onPrimaryContainer">#001B3D</color>
+    <color name="primaryContainer">#EEF2FF</color>
+    <color name="onPrimaryContainer">#1E1B4B</color>
     <color name="onPrimary_20">#33FFFFFF</color>
 
     <!-- Secondary Colors -->

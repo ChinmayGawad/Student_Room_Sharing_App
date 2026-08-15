@@ -58,11 +58,11 @@ class InboxViewModel(
         val profiles = coroutineScope {
             targetIds.map { uid ->
                 async {
-                    val profile = repository.getUserProfile(uid) ?: return@async (uid to InboxUserInfo("Unknown User", null))
-                    val displayName = profile.username?.takeIf { it.isNotBlank() }
-                        ?: profile.email?.substringBefore("@")
-                        ?: "Unknown User"
-                    uid to InboxUserInfo(displayName, profile.profileImageUrl)
+                    val profile = repository.getUserProfile(uid)
+                    val displayName = profile?.username?.takeIf { it.isNotBlank() }
+                        ?: profile?.email?.substringBefore("@")?.takeIf { it.isNotBlank() }
+                        ?: if (uid.contains("owner", ignoreCase = true)) "Property Owner" else "Room Owner"
+                    uid to InboxUserInfo(displayName, profile?.profileImageUrl)
                 }
             }.associate { it.await() }
         }

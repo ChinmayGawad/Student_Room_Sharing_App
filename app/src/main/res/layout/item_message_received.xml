@@ -62,7 +62,7 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/item_message_received"
+            app:cardBackgroundColor="?attr/colorSurfaceVariant"
             app:cardCornerRadius="@dimen/shapeCornerLarge"
             app:cardElevation="0dp"
             app:strokeWidth="0dp">

@@ -75,4 +75,6 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.8.5")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
+    // Razorpay Payment SDK
+    implementation("com.razorpay:checkout:1.6.38")
 }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.pgshare.studentroomsharingapp">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -9,8 +8,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
+        android:name=".StudentRoomApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -34,7 +35,7 @@
             android:name=".RoomDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".Add_Room"
+            android:name=".AddRoomActivity"
             android:exported="false" />
         <activity
             android:name=".Authentication.SignUp"
@@ -55,6 +56,14 @@
         <activity
             android:name=".MainActivity"
             android:exported="false" />
+
+        <service
+            android:name=".FCMService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
