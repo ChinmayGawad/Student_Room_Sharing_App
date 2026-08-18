@@ -1,5 +1,7 @@
 ✨ Student Room Sharing App
 
+Currently Redesigning The Application
+
 A refined living experience for students.
 Designed with intention. Built with precision. 🧩
 
