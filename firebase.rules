@@ -2,10 +2,16 @@
   "rules": {
     "Rooms": {
       ".read": true,
-      ".indexOn": ["userId", "price"],
+      ".indexOn": ["userId", "price", "roomBooked"],
       "$roomId": {
-        ".write": "auth != null && (data.child('userId').val() === auth.uid || !data.exists())",
-        ".validate": "newData.hasChildren(['roomName', 'price', 'userId'])"
+        ".write": "auth != null && (!data.exists() || data.child('userId').val() === auth.uid || (data.exists() && newData.child('roomBooked').val() === true && data.child('roomBooked').val() === false && newData.child('bookedBy').val() === auth.uid))",
+        ".validate": "newData.hasChildren(['roomName', 'price', 'userId'])",
+        "roomName": {
+          ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 150"
+        },
+        "price": {
+          ".validate": "newData.isString() || newData.isNumber()"
+        }
       }
     },
     "Users": {
@@ -13,20 +19,24 @@
         ".read": "auth != null",
         ".write": "$userId === auth.uid",
         "favorites": {
-          "$favoriteId": {
+          "$roomId": {
             ".read": "$userId === auth.uid",
             ".write": "$userId === auth.uid"
           }
+        },
+        "fcmToken": {
+          ".read": "$userId === auth.uid",
+          ".write": "$userId === auth.uid"
         }
       }
     },
     "chats": {
       "$chatId": {
-        ".read": "auth != null",
-        ".write": "auth != null",
+        ".read": "auth != null && $chatId.contains(auth.uid)",
+        ".write": "auth != null && $chatId.contains(auth.uid)",
         "messages": {
           "$messageId": {
-            ".validate": "newData.hasChildren(['message', 'senderId', 'timestamp']) && newData.child('senderId').val() === auth.uid"
+            ".validate": "newData.hasChildren(['message', 'senderId', 'timestamp']) && newData.child('senderId').val() === auth.uid && newData.child('message').isString() && newData.child('message').val().length <= 2000"
           }
         }
       }
@@ -34,7 +44,9 @@
     "inbox": {
       "$userId": {
         ".read": "$userId === auth.uid",
-        ".write": "auth != null"
+        "$chatRoomId": {
+          ".write": "auth != null && ($userId === auth.uid || (newData.child('targetUserId').val() === auth.uid && $chatRoomId.contains(auth.uid)))"
+        }
       }
     }
   }

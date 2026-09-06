@@ -125,4 +125,91 @@ roomsRef.once("value", () => {
     console.log("Listening for new rooms...");
 });
 
-console.log("Notification server started.");
+// ─── HTTP API Server (Payment Verification & Health) ────
+const http = require("http");
+const crypto = require("crypto");
+
+const server = http.createServer(async (req, res) => {
+    // CORS headers
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+    if (req.method === "OPTIONS") {
+        res.writeHead(204);
+        res.end();
+        return;
+    }
+
+    const url = new URL(req.url, `http://${req.headers.host}`);
+
+    if (req.method === "GET" && url.pathname === "/health") {
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ status: "ok", uptime: process.uptime(), timestamp: Date.now() }));
+        return;
+    }
+
+    if (req.method === "POST" && url.pathname === "/api/verify-payment") {
+        let body = "";
+        req.on("data", (chunk) => { body += chunk; });
+        req.on("end", async () => {
+            try {
+                const data = JSON.parse(body || "{}");
+                const { roomId, paymentId, orderId, signature, studentUid } = data;
+
+                if (!roomId || !paymentId || !studentUid) {
+                    res.writeHead(400, { "Content-Type": "application/json" });
+                    res.end(JSON.stringify({ success: false, error: "Missing required fields: roomId, paymentId, studentUid" }));
+                    return;
+                }
+
+                // Verify cryptographic signature if secret is present in environment
+                const keySecret = process.env.RAZORPAY_KEY_SECRET;
+                if (keySecret && orderId && signature) {
+                    const expectedSignature = crypto
+                        .createHmac("sha256", keySecret)
+                        .update(`${orderId}|${paymentId}`)
+                        .digest("hex");
+
+                    if (expectedSignature !== signature) {
+                        res.writeHead(400, { "Content-Type": "application/json" });
+                        res.end(JSON.stringify({ success: false, error: "Invalid Razorpay payment signature" }));
+                        return;
+                    }
+                }
+
+                // Atomic booking transaction via Firebase Admin SDK
+                const roomRef = db.ref(`Rooms/${roomId}`);
+                const txResult = await roomRef.transaction((room) => {
+                    if (!room) return room;
+                    if (room.roomBooked) return; // Abort if already booked
+                    room.roomBooked = true;
+                    room.bookedBy = studentUid;
+                    room.paymentTxnId = paymentId;
+                    return room;
+                });
+
+                if (txResult.committed) {
+                    res.writeHead(200, { "Content-Type": "application/json" });
+                    res.end(JSON.stringify({ success: true, message: "Room reserved successfully", roomId, paymentId }));
+                } else {
+                    res.writeHead(409, { "Content-Type": "application/json" });
+                    res.end(JSON.stringify({ success: false, error: "Room is already booked or does not exist" }));
+                }
+            } catch (err) {
+                res.writeHead(500, { "Content-Type": "application/json" });
+                res.end(JSON.stringify({ success: false, error: err.message }));
+            }
+        });
+        return;
+    }
+
+    res.writeHead(404, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ error: "Not found" }));
+});
+
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+    console.log(`Notification & Payment server running on port ${PORT}`);
+});
+

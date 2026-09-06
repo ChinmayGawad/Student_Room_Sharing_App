@@ -18,6 +18,11 @@ android {
         versionName = "1.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        val razorpayKey = project.findProperty("RAZORPAY_KEY_ID") as? String ?: "rzp_test_YourRazorpayKey"
+        val imgurClientId = project.findProperty("IMGUR_CLIENT_ID") as? String ?: "c66212e3e57f201"
+        buildConfigField("String", "RAZORPAY_KEY_ID", "\"$razorpayKey\"")
+        buildConfigField("String", "IMGUR_CLIENT_ID", "\"$imgurClientId\"")
     }
 
     buildTypes {
