@@ -14,8 +14,8 @@ android {
         applicationId = "com.pgshare.studentroomsharingapp"
         minSdk = 28
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.2"
+        versionCode = 2
+        versionName = "2.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -25,6 +25,18 @@ android {
         buildConfigField("String", "IMGUR_CLIENT_ID", "\"$imgurClientId\"")
     }
 
+    signingConfigs {
+        create("release") {
+            val keystoreFile = file("release.keystore")
+            if (keystoreFile.exists()) {
+                storeFile = keystoreFile
+                storePassword = project.findProperty("KEYSTORE_PASSWORD") as? String ?: "studentroomshare2026"
+                keyAlias = project.findProperty("KEY_ALIAS") as? String ?: "roomshare_release"
+                keyPassword = project.findProperty("KEY_PASSWORD") as? String ?: "studentroomshare2026"
+            }
+        }
+    }
+
     buildTypes {
         debug {
             isMinifyEnabled = false
@@ -32,6 +44,7 @@ android {
         release {
             isMinifyEnabled = true
             isShrinkResources = true
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
