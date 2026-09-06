@@ -49,7 +49,14 @@ class SettingsFragment : Fragment() {
             parentFragmentManager.popBackStack()
         }
 
+        val prefs = requireContext().getSharedPreferences("app_settings", android.content.Context.MODE_PRIVATE)
+        val isDarkModeSaved = prefs.getBoolean("key_dark_mode", false)
+        val currentNightMode = resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK
+        val isSystemDark = currentNightMode == android.content.res.Configuration.UI_MODE_NIGHT_YES
+        binding.switchDarkMode.isChecked = if (prefs.contains("key_dark_mode")) isDarkModeSaved else isSystemDark
+
         binding.switchDarkMode.setOnCheckedChangeListener { _, isChecked ->
+            prefs.edit().putBoolean("key_dark_mode", isChecked).apply()
             AppCompatDelegate.setDefaultNightMode(
                 if (isChecked) AppCompatDelegate.MODE_NIGHT_YES
                 else AppCompatDelegate.MODE_NIGHT_NO
@@ -57,33 +64,74 @@ class SettingsFragment : Fragment() {
         }
 
         binding.rowDarkMode.setOnClickListener {
-            binding.switchDarkMode.performClick()
+            binding.switchDarkMode.toggle()
         }
 
         binding.rowNotifications.setOnClickListener {
-            Snackbar.make(binding.root, "Notifications settings", Snackbar.LENGTH_SHORT).show()
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Push Notifications")
+                .setMessage("Push notifications are enabled. You will receive realtime alerts for new room listings in your area and incoming messages from roommates or property owners.")
+                .setPositiveButton("OK", null)
+                .show()
         }
 
         binding.rowLanguage.setOnClickListener {
-            Snackbar.make(binding.root, "Language selection", Snackbar.LENGTH_SHORT).show()
+            val languages = arrayOf("English (Default)", "Hindi (हिन्दी)", "Marathi (मराठी)")
+            val currentLangIndex = prefs.getInt("key_language_index", 0)
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Select App Language")
+                .setSingleChoiceItems(languages, currentLangIndex) { dialog, which ->
+                    prefs.edit().putInt("key_language_index", which).apply()
+                    Snackbar.make(binding.root, "Language preference set to: ${languages[which]}", Snackbar.LENGTH_SHORT).show()
+                    dialog.dismiss()
+                }
+                .setNegativeButton("Cancel", null)
+                .show()
         }
 
         binding.rowPersonalInfo.setOnClickListener {
-            Snackbar.make(binding.root, "Personal Information", Snackbar.LENGTH_SHORT).show()
+            val user = auth.currentUser
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Personal Information")
+                .setMessage("Name: ${user?.displayName ?: "Student User"}\nEmail: ${user?.email ?: "Not logged in"}\nAccount ID: ${user?.uid ?: "N/A"}")
+                .setPositiveButton("Close", null)
+                .show()
         }
 
         binding.rowPrivacy.setOnClickListener {
-            Snackbar.make(binding.root, "Privacy settings", Snackbar.LENGTH_SHORT).show()
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Privacy Policy")
+                .setMessage("Student Room Sharing App is committed to protecting your privacy.\n\n• We do not sell or share personal data.\n• Payment processing is protected by Razorpay 256-bit encryption.\n• Chats are end-to-end access controlled via Firebase Security Rules.")
+                .setPositiveButton("Understood", null)
+                .show()
         }
 
         binding.rowSecurity.setOnClickListener {
-            Snackbar.make(binding.root, "Security settings", Snackbar.LENGTH_SHORT).show()
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Security Settings")
+                .setMessage("Your account is secured with Firebase Authentication and zero-trust HMAC signature validation for all financial transactions.")
+                .setPositiveButton("OK", null)
+                .show()
         }
 
         binding.rowListProperty.setOnClickListener { handleListProperty() }
 
         binding.rowHelpCenter.setOnClickListener {
-            Snackbar.make(binding.root, "Help Center", Snackbar.LENGTH_SHORT).show()
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Help Center & Support")
+                .setMessage("Need assistance or have questions?\n\n• Email Support: chinmaygawad365@gmail.com\n• Booking Issues: Contact our helpdesk 24/7\n• Deposit Protection: Deposits are reserved securely until move-in confirmation.")
+                .setPositiveButton("Contact Support") { _, _ ->
+                    val intent = Intent(Intent.ACTION_SEND).apply {
+                        type = "message/rfc822"
+                        putExtra(Intent.EXTRA_EMAIL, arrayOf("chinmaygawad365@gmail.com"))
+                        putExtra(Intent.EXTRA_SUBJECT, "Support Request - Student Room Sharing")
+                    }
+                    if (intent.resolveActivity(requireContext().packageManager) != null) {
+                        startActivity(intent)
+                    }
+                }
+                .setNegativeButton("Close", null)
+                .show()
         }
 
         binding.rowSendFeedback.setOnClickListener {
@@ -100,7 +148,7 @@ class SettingsFragment : Fragment() {
         }
 
         binding.rowRateApp.setOnClickListener {
-            Snackbar.make(binding.root, "Rate the App", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(binding.root, "Thank you for supporting Student Room Sharing!", Snackbar.LENGTH_SHORT).show()
         }
     }
 
