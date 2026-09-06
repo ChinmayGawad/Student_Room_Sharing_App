@@ -36,6 +36,51 @@ class AddRoomViewModel(
     private val _events = MutableSharedFlow<AddRoomEvent>()
     val events: SharedFlow<AddRoomEvent> = _events.asSharedFlow()
 
+    // Wizard Form State (persists across rotations and page changes)
+    var title: String = ""
+    var location: String = ""
+    var roomType: String = "Private Room"
+    var description: String = ""
+
+    val selectedImageUris = mutableListOf<Uri>()
+
+    var rent: String = ""
+    var deposit: String = ""
+    val selectedAmenities = mutableListOf<String>()
+
+    fun setStep1Data(title: String, location: String, roomType: String, description: String) {
+        this.title = title
+        this.location = location
+        this.roomType = roomType
+        this.description = description
+    }
+
+    fun setImageUris(uris: List<Uri>) {
+        selectedImageUris.clear()
+        selectedImageUris.addAll(uris)
+    }
+
+    fun setStep3Data(rent: String, deposit: String, amenities: List<String>) {
+        this.rent = rent
+        this.deposit = deposit
+        selectedAmenities.clear()
+        selectedAmenities.addAll(amenities)
+    }
+
+    fun publishCurrentRoom(contentResolver: android.content.ContentResolver) {
+        publishRoom(
+            title = title,
+            location = location,
+            roomType = roomType,
+            rent = rent,
+            deposit = deposit,
+            imageUris = selectedImageUris,
+            contentResolver = contentResolver,
+            amenities = selectedAmenities,
+            description = description
+        )
+    }
+
     fun publishRoom(
         title: String,
         location: String,

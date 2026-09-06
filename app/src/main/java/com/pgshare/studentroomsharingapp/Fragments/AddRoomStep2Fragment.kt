@@ -8,31 +8,32 @@ import android.view.ViewGroup
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pgshare.studentroomsharingapp.Adapter.PhotoPreviewAdapter
 import com.pgshare.studentroomsharingapp.databinding.FragmentAddRoomStep2Binding
+import com.pgshare.studentroomsharingapp.viewmodel.AddRoomViewModel
 
 class AddRoomStep2Fragment : Fragment(), ValidatableFragment {
 
-    // Public binding so AddRoomActivity can access it if needed
     var _binding: FragmentAddRoomStep2Binding? = null
     val binding get() = _binding!!
 
-    // We store the URIs publicly so the host AddRoomActivity can grab them
-    // to compress and Base64 encode them when the user hits "Publish" on Step 3
+    private val viewModel: AddRoomViewModel by activityViewModels()
+
     val selectedImageUris = mutableListOf<Uri>()
     private lateinit var previewAdapter: PhotoPreviewAdapter
 
     // Modern Android Photo Picker Launcher (No legacy storage permissions required!)
     private val pickMultipleMedia = registerForActivityResult(
-        ActivityResultContracts.PickMultipleVisualMedia(6) // Limit to 6 photos to prevent massive payload sizes
+        ActivityResultContracts.PickMultipleVisualMedia(6)
     ) { uris ->
         if (uris.isNotEmpty()) {
             selectedImageUris.clear()
             selectedImageUris.addAll(uris)
+            viewModel.setImageUris(uris)
             previewAdapter.notifyDataSetChanged()
 
-            // Show the RecyclerView, hide the empty state placeholder text (if you have one)
             binding.recyclerSelectedPhotos.visibility = View.VISIBLE
         }
     }
@@ -49,11 +50,19 @@ class AddRoomStep2Fragment : Fragment(), ValidatableFragment {
         super.onViewCreated(view, savedInstanceState)
 
         setupRecyclerView()
+        restorePhotosFromViewModel()
 
-        // Ensure this ID matches the large "Tap to Upload" card in fragment_add_room_step2.xml
         binding.cardUploadPhotos.setOnClickListener {
-            // Launch the picker filtering for images only
             pickMultipleMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        }
+    }
+
+    private fun restorePhotosFromViewModel() {
+        if (viewModel.selectedImageUris.isNotEmpty()) {
+            selectedImageUris.clear()
+            selectedImageUris.addAll(viewModel.selectedImageUris)
+            previewAdapter.notifyDataSetChanged()
+            binding.recyclerSelectedPhotos.visibility = View.VISIBLE
         }
     }
 

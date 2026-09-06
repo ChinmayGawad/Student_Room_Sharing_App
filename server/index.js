@@ -97,27 +97,20 @@ roomsRef.on("child_added", (snapshot) => {
     const roomId = snapshot.key;
     console.log(`New room: ${roomId} - ${room.roomName || ""}`);
 
-    db.ref("Users")
-        .once("value")
-        .then((usersSnap) => {
-            const promises = [];
-            usersSnap.forEach((userSnap) => {
-                const token = userSnap.child("fcmToken").val();
-                if (token && userSnap.key !== room.userId) {
-                    promises.push(
-                        sendNotification(
-                            token,
-                            "New Room Available",
-                            `${room.roomName || "A new room"} - ${room.price || ""}`,
-                            { roomId }
-                        )
-                    );
-                }
-            });
-            return Promise.allSettled(promises);
-        })
-        .then(() => console.log(`Room notifications sent`))
-        .catch((err) => console.error("Room notify error:", err.message));
+    const message = {
+        topic: "rooms_all",
+        notification: {
+            title: "New Room Available",
+            body: `${room.roomName || "A new room"} - ₹${room.price || ""}`
+        },
+        data: {
+            roomId: roomId || ""
+        }
+    };
+
+    admin.messaging().send(message)
+        .then(() => console.log(`Room notification sent to topic: rooms_all for ${roomId}`))
+        .catch((err) => console.error("Room topic notify error:", err.message));
 });
 
 roomsRef.once("value", () => {

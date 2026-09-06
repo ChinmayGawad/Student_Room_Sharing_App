@@ -23,7 +23,10 @@ class RoomListAdapter(
     }
 
     fun setSavedRoomKeys(keys: Set<String>) {
-        savedRoomKeys = keys
+        if (savedRoomKeys != keys) {
+            savedRoomKeys = keys
+            notifyDataSetChanged()
+        }
     }
 
     interface OnRoomClickListener {
@@ -35,8 +38,14 @@ class RoomListAdapter(
         fun bind(room: Room) {
             binding.roomTitle.text = room.roomName
 
-            val type = room.description?.replace("Type: ", "")?.uppercase() ?: "ROOM"
-            binding.roomDistance.text = "$type \u2022 ${room.location?.uppercase()}"
+            val rawDesc = room.description ?: ""
+            val type = if (rawDesc.startsWith("Type:")) {
+                rawDesc.substringAfter("Type:").substringBefore("\n").trim().uppercase()
+            } else {
+                "ROOM"
+            }
+            val loc = room.location?.trim()?.uppercase() ?: "LOCATION NOT SPECIFIED"
+            binding.roomDistance.text = "$type \u2022 $loc"
 
             binding.roomPrice.text = room.formatPrice
 
@@ -90,8 +99,12 @@ class RoomListAdapter(
         private fun updateHeartIcon(isSaved: Boolean) {
             if (isSaved) {
                 binding.btnBookmark.setImageResource(R.drawable.baseline_favorite_24)
+                binding.btnBookmark.setColorFilter(
+                    androidx.core.content.ContextCompat.getColor(binding.root.context, R.color.colorError)
+                )
             } else {
                 binding.btnBookmark.setImageResource(R.drawable.baseline_favorite_border_24)
+                binding.btnBookmark.setColorFilter(android.graphics.Color.WHITE)
             }
         }
     }

@@ -70,9 +70,7 @@ class SavedFragment : Fragment() {
 
                     roomAdapter.setOwnerNames(state.ownerNames)
                     roomAdapter.submitList(state.savedRooms)
-                    val keys = state.savedRooms.mapNotNull { room ->
-                        room.roomName?.replace(Regex("[.#$\\[\\]]"), "")
-                    }.toSet()
+                    val keys = state.savedRooms.mapNotNull { it.id }.toSet()
                     roomAdapter.setSavedRoomKeys(keys)
 
                     if (!state.isLoggedIn || (state.savedRooms.isEmpty() && !state.isLoading)) {

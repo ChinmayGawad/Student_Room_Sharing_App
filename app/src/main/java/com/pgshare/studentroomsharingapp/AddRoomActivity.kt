@@ -6,15 +6,12 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.google.android.material.chip.Chip
 import com.google.firebase.auth.FirebaseAuth
 import com.pgshare.studentroomsharingapp.Adapter.WizardPagerAdapter
 import com.pgshare.studentroomsharingapp.Authentication.Login
-import com.pgshare.studentroomsharingapp.Fragments.AddRoomStep1Fragment
-import com.pgshare.studentroomsharingapp.Fragments.AddRoomStep2Fragment
-import com.pgshare.studentroomsharingapp.Fragments.AddRoomStep3Fragment
 import com.pgshare.studentroomsharingapp.Fragments.ValidatableFragment
 import com.pgshare.studentroomsharingapp.databinding.ActivityAddRoomBinding
 import com.pgshare.studentroomsharingapp.viewmodel.AddRoomEvent
@@ -40,7 +37,7 @@ class AddRoomActivity : AppCompatActivity() {
             return
         }
 
-        viewModel = AddRoomViewModel()
+        viewModel = ViewModelProvider(this)[AddRoomViewModel::class.java]
 
         wizardAdapter = WizardPagerAdapter(this)
         binding.viewpagerAddRoomSteps.adapter = wizardAdapter
@@ -78,14 +75,28 @@ class AddRoomActivity : AppCompatActivity() {
     private fun observeEvents() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.events.collect { event ->
-                    when (event) {
-                        is AddRoomEvent.Success -> {
-                            Toast.makeText(this@AddRoomActivity, "Room Published Successfully!", Toast.LENGTH_SHORT).show()
-                            finish()
+                launch {
+                    viewModel.uiState.collect { state ->
+                        binding.btnWizardNext.isEnabled = !state.isLoading
+                        binding.btnWizardBack.isEnabled = !state.isLoading
+                        if (state.isLoading) {
+                            binding.btnWizardNext.text = "Publishing..."
+                        } else {
+                            val currentStep = binding.viewpagerAddRoomSteps.currentItem
+                            binding.btnWizardNext.text = if (currentStep == wizardAdapter.itemCount - 1) "Publish" else "Next"
                         }
-                        is AddRoomEvent.Error -> {
-                            Toast.makeText(this@AddRoomActivity, "Failed to publish: ${event.message}", Toast.LENGTH_LONG).show()
+                    }
+                }
+                launch {
+                    viewModel.events.collect { event ->
+                        when (event) {
+                            is AddRoomEvent.Success -> {
+                                Toast.makeText(this@AddRoomActivity, "Room Published Successfully!", Toast.LENGTH_SHORT).show()
+                                finish()
+                            }
+                            is AddRoomEvent.Error -> {
+                                Toast.makeText(this@AddRoomActivity, "Failed to publish: ${event.message}", Toast.LENGTH_LONG).show()
+                            }
                         }
                     }
                 }
@@ -128,27 +139,6 @@ class AddRoomActivity : AppCompatActivity() {
 
     private fun submitRoomData() {
         Toast.makeText(this, "Compressing photos and publishing...", Toast.LENGTH_LONG).show()
-
-        val step1 = supportFragmentManager.findFragmentByTag("f0") as? AddRoomStep1Fragment
-        val step2 = supportFragmentManager.findFragmentByTag("f1") as? AddRoomStep2Fragment
-        val step3 = supportFragmentManager.findFragmentByTag("f2") as? AddRoomStep3Fragment
-
-        val title = step1?.binding?.etRoomTitle?.text.toString().trim()
-        val location = step1?.binding?.etRoomLocation?.text.toString().trim()
-        val description = step1?.binding?.etDescription?.text.toString().trim()
-        val rent = step3?.binding?.etMonthlyRent?.text.toString().trim()
-        val imageUris = step2?.selectedImageUris ?: emptyList()
-        val deposit = step3?.binding?.etSecurityDeposit?.text.toString().trim()
-
-        val checkedChipId = step1?.binding?.chipGroupRoomType?.checkedChipId ?: View.NO_ID
-        val roomType = if (checkedChipId != View.NO_ID && step1 != null) {
-            step1.binding.root.findViewById<Chip>(checkedChipId).text.toString()
-        } else {
-            "Room"
-        }
-
-        val amenities = step3?.getSelectedAmenities() ?: emptyList()
-
-        viewModel.publishRoom(title, location, roomType, rent, deposit, imageUris, contentResolver, amenities, description)
+        viewModel.publishCurrentRoom(contentResolver)
     }
 }
