@@ -58,9 +58,18 @@ class ChatActivity : AppCompatActivity() {
     private fun setupRecyclerView() {
         chatAdapter = MessageAdapter(FirebaseAuth.getInstance().currentUser?.uid ?: "")
         binding.messageList.apply {
-            layoutManager = LinearLayoutManager(this@ChatActivity)
+            val llm = LinearLayoutManager(this@ChatActivity)
+            llm.stackFromEnd = true
+            layoutManager = llm
             setHasFixedSize(true)
             adapter = chatAdapter
+            addOnLayoutChangeListener { _, _, _, _, bottom, _, _, _, oldBottom ->
+                if (bottom < oldBottom && chatAdapter.itemCount > 0) {
+                    postDelayed({
+                        smoothScrollToPosition(chatAdapter.itemCount - 1)
+                    }, 100)
+                }
+            }
         }
     }
 

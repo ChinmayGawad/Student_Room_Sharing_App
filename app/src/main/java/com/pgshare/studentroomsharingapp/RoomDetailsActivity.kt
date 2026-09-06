@@ -55,6 +55,19 @@ class RoomDetailsActivity : AppCompatActivity() {
                 startPayment(room)
             }
 
+            binding.tvLocation.setOnClickListener {
+                val loc = room.location
+                if (!loc.isNullOrBlank()) {
+                    val gmmIntentUri = android.net.Uri.parse("geo:0,0?q=${android.net.Uri.encode(loc)}")
+                    val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+                    try {
+                        startActivity(Intent.createChooser(mapIntent, "Open location with"))
+                    } catch (e: Exception) {
+                        android.widget.Toast.makeText(this, "Could not open map", android.widget.Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+
             setupImagePager(room.imageUrls)
         }
     }
@@ -188,46 +201,49 @@ class RoomDetailsActivity : AppCompatActivity() {
             return
         }
 
-        binding.viewpagerRoomImages.adapter = object : PagerAdapter() {
-            override fun getCount() = images.size
+        binding.viewpagerRoomImages.adapter = object : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
+            override fun getItemCount() = images.size
 
-            override fun isViewFromObject(view: View, `object`: Any) = view === `object`
-
-            override fun instantiateItem(container: ViewGroup, position: Int): Any {
-                val imageView = ImageView(this@RoomDetailsActivity).apply {
+            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
+                val imageView = ImageView(parent.context).apply {
                     layoutParams = ViewGroup.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT
                     )
                     scaleType = ImageView.ScaleType.CENTER_CROP
                 }
+                return object : androidx.recyclerview.widget.RecyclerView.ViewHolder(imageView) {}
+            }
 
+            override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
+                val imageView = holder.itemView as ImageView
                 val item = images[position]
                 if (item.startsWith("http://") || item.startsWith("https://")) {
-                    com.bumptech.glide.Glide.with(this@RoomDetailsActivity)
+                    com.bumptech.glide.Glide.with(imageView.context)
                         .load(item)
                         .placeholder(R.drawable.placeholder_room)
                         .into(imageView)
                 } else {
                     try {
-                        val bytes = Base64.decode(item, Base64.DEFAULT)
+                        val cleanBase64 = if (item.contains(",")) item.substringAfter(",") else item
+                        val bytes = Base64.decode(cleanBase64, Base64.DEFAULT)
                         val bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-                        imageView.setImageBitmap(bmp)
+                        if (bmp != null) {
+                            imageView.setImageBitmap(bmp)
+                        } else {
+                            imageView.setImageResource(R.drawable.placeholder_room)
+                        }
                     } catch (e: Exception) {
                         imageView.setImageResource(R.drawable.placeholder_room)
                     }
                 }
-
-                container.addView(imageView)
-                return imageView
-            }
-
-            override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-                container.removeView(`object` as View)
             }
         }
 
-        binding.tabLayoutImageIndicator.setupWithViewPager(binding.viewpagerRoomImages, true)
+        com.google.android.material.tabs.TabLayoutMediator(
+            binding.tabLayoutImageIndicator,
+            binding.viewpagerRoomImages
+        ) { _, _ -> }.attach()
     }
 
     private fun observeOwnerName() {

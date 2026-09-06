@@ -22,7 +22,7 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:titleCollapseMode="fade">
 
-            <androidx.viewpager.widget.ViewPager
+            <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/viewpager_room_images"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

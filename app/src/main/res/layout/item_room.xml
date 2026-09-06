@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -157,63 +158,12 @@
 
             <!-- Amenities Row -->
             <LinearLayout
+                android:id="@+id/layoutAmenitiesContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_12"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="@dimen/icon_size_medium"
-                    android:layout_height="@dimen/icon_size_medium"
-                    android:contentDescription="@null"
-                    android:importantForAccessibility="no"
-                    android:src="@drawable/baseline_wifi_24"
-                    app:tint="@color/onSurfaceVariant" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_4"
-                    android:layout_marginEnd="@dimen/spacing_12"
-                    android:text="WiFi"
-                    android:textAppearance="@style/TextAppearance.BodySmall"
-                    android:textColor="?attr/colorOnSurfaceVariant" />
-
-                <ImageView
-                    android:layout_width="@dimen/icon_size_medium"
-                    android:layout_height="@dimen/icon_size_medium"
-                    android:contentDescription="@null"
-                    android:importantForAccessibility="no"
-                    android:src="@drawable/baseline_ac_unit_24"
-                    app:tint="@color/onSurfaceVariant" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_4"
-                    android:layout_marginEnd="@dimen/spacing_12"
-                    android:text="AC"
-                    android:textAppearance="@style/TextAppearance.BodySmall"
-                    android:textColor="?attr/colorOnSurfaceVariant" />
-
-                <ImageView
-                    android:layout_width="@dimen/icon_size_medium"
-                    android:layout_height="@dimen/icon_size_medium"
-                    android:contentDescription="@null"
-                    android:importantForAccessibility="no"
-                    android:src="@drawable/baseline_kitchen_24"
-                    app:tint="@color/onSurfaceVariant" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_4"
-                    android:layout_marginEnd="@dimen/spacing_12"
-                    android:text="Kitchen"
-                    android:textAppearance="@style/TextAppearance.BodySmall"
-                    android:textColor="?attr/colorOnSurfaceVariant" />
-            </LinearLayout>
+                android:orientation="horizontal" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

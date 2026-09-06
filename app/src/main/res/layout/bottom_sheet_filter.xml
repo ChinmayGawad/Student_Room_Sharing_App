@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/colorSurface"
     android:orientation="vertical"
     android:paddingHorizontal="@dimen/screen_margin_horizontal"
     android:paddingTop="@dimen/spacing_8"
-    android:paddingBottom="@dimen/spacing_24"
->
+    android:paddingBottom="@dimen/spacing_24">
 
     <!-- Drag Handle -->
     <View
@@ -47,19 +45,17 @@
             app:iconTint="?attr/colorOnSurfaceVariant" />
     </LinearLayout>
 
-    <!-- Divider -->
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginVertical="@dimen/spacing_12"
         android:background="?attr/colorOutlineVariant" />
 
-    <!-- Scrollable Content -->
+    <!-- Scrollable Filter Options -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:clipToPadding="false"
         android:fillViewport="true">
 
         <LinearLayout
@@ -67,11 +63,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- ===== Section 1: Price Range ===== -->
+            <!-- Section 1: Monthly Rent Range -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/price_range"
+                android:text="Monthly Rent (₹)"
                 android:textAppearance="?attr/textAppearanceTitleSmall"
                 android:textColor="?attr/colorOnSurface" />
 
@@ -80,8 +76,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_8"
-                android:valueFrom="200"
-                android:valueTo="1500"
+                android:valueFrom="2000"
+                android:valueTo="30000"
+                android:stepSize="1000"
                 app:labelBehavior="floating" />
 
             <LinearLayout
@@ -95,7 +92,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="$200"
+                    android:text="₹2,000"
                     android:textAppearance="?attr/textAppearanceBodySmall"
                     android:textColor="?attr/colorOnSurfaceVariant" />
 
@@ -105,7 +102,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:text="$1,500"
+                    android:text="₹30,000"
                     android:textAppearance="?attr/textAppearanceBodySmall"
                     android:textColor="?attr/colorOnSurfaceVariant" />
             </LinearLayout>
@@ -116,65 +113,11 @@
                 android:layout_marginVertical="@dimen/spacing_16"
                 android:background="?attr/colorOutlineVariant" />
 
-            <!-- ===== Section 2: Gender Preference ===== -->
+            <!-- Section 2: Room Type -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/gender_preference"
-                android:textAppearance="?attr/textAppearanceTitleSmall"
-                android:textColor="?attr/colorOnSurface" />
-
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/chipGroupGender"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_8"
-                app:chipSpacingHorizontal="@dimen/spacing_8"
-                app:singleSelection="true">
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipGenderAny"
-                    style="@style/Widget.StudentRoomSharing.Chip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/chip_height"
-                    android:checked="true"
-                    android:text="@string/filter_all"
-                    app:chipStrokeColor="@color/chip_stroke_selector"
-                    app:chipStrokeWidth="1dp"
-                    android:textColor="@color/chip_text_selector" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipGenderMale"
-                    style="@style/Widget.StudentRoomSharing.Chip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/chip_height"
-                    android:text="@string/male"
-                    app:chipStrokeColor="@color/chip_stroke_selector"
-                    app:chipStrokeWidth="1dp"
-                    android:textColor="@color/chip_text_selector" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipGenderFemale"
-                    style="@style/Widget.StudentRoomSharing.Chip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/chip_height"
-                    android:text="@string/female"
-                    app:chipStrokeColor="@color/chip_stroke_selector"
-                    app:chipStrokeWidth="1dp"
-                    android:textColor="@color/chip_text_selector" />
-            </com.google.android.material.chip.ChipGroup>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginVertical="@dimen/spacing_16"
-                android:background="?attr/colorOutlineVariant" />
-
-            <!-- ===== Section 3: Room Type ===== -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/room_type"
+                android:text="Room Type"
                 android:textAppearance="?attr/textAppearanceTitleSmall"
                 android:textColor="?attr/colorOnSurface" />
 
@@ -184,44 +127,36 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_8"
                 app:chipSpacingHorizontal="@dimen/spacing_8"
-                app:singleSelection="false">
+                app:singleSelection="true"
+                app:selectionRequired="true">
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chipTypeStudio"
+                    android:id="@+id/chipTypeAny"
                     style="@style/Widget.StudentRoomSharing.Chip"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/chip_height"
-                    android:text="@string/studio"
+                    android:checked="true"
+                    android:text="Any"
                     app:chipStrokeColor="@color/chip_stroke_selector"
                     app:chipStrokeWidth="1dp"
                     android:textColor="@color/chip_text_selector" />
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chipType1BHK"
+                    android:id="@+id/chipTypePrivate"
                     style="@style/Widget.StudentRoomSharing.Chip"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/chip_height"
-                    android:text="@string/bhk_1"
+                    android:text="Private Room"
                     app:chipStrokeColor="@color/chip_stroke_selector"
                     app:chipStrokeWidth="1dp"
                     android:textColor="@color/chip_text_selector" />
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chipType2BHK"
+                    android:id="@+id/chipTypeShared"
                     style="@style/Widget.StudentRoomSharing.Chip"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/chip_height"
-                    android:text="@string/bhk_2"
-                    app:chipStrokeColor="@color/chip_stroke_selector"
-                    app:chipStrokeWidth="1dp"
-                    android:textColor="@color/chip_text_selector" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipType3BHK"
-                    style="@style/Widget.StudentRoomSharing.Chip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/chip_height"
-                    android:text="@string/bhk_3"
+                    android:text="Shared Room"
                     app:chipStrokeColor="@color/chip_stroke_selector"
                     app:chipStrokeWidth="1dp"
                     android:textColor="@color/chip_text_selector" />
@@ -231,17 +166,17 @@
                     style="@style/Widget.StudentRoomSharing.Chip"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/chip_height"
-                    android:text="@string/categories_pg"
+                    android:text="PG"
                     app:chipStrokeColor="@color/chip_stroke_selector"
                     app:chipStrokeWidth="1dp"
                     android:textColor="@color/chip_text_selector" />
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chipTypeHostel"
+                    android:id="@+id/chipTypeFlat"
                     style="@style/Widget.StudentRoomSharing.Chip"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/chip_height"
-                    android:text="@string/hostel"
+                    android:text="Flat"
                     app:chipStrokeColor="@color/chip_stroke_selector"
                     app:chipStrokeWidth="1dp"
                     android:textColor="@color/chip_text_selector" />
@@ -253,141 +188,82 @@
                 android:layout_marginVertical="@dimen/spacing_16"
                 android:background="?attr/colorOutlineVariant" />
 
-            <!-- ===== Section 4: Amenities ===== -->
+            <!-- Section 3: Amenities Required -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/amenities"
+                android:text="Required Amenities"
                 android:textAppearance="?attr/textAppearanceTitleSmall"
                 android:textColor="?attr/colorOnSurface" />
 
-            <GridLayout
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroupAmenities"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_8"
-                android:columnCount="4"
-                android:rowCount="2">
+                app:chipSpacingHorizontal="@dimen/spacing_8"
+                app:singleSelection="false">
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chipAmenityWiFi"
+                    android:id="@+id/chipAmenityWifi"
                     style="@style/Widget.StudentRoomSharing.Chip"
-                    android:layout_width="@dimen/amenity_chip_size"
-                    android:layout_height="@dimen/amenity_chip_size"
-                    android:gravity="center"
-                    android:text="@string/amenity_wifi"
-                    android:textAlignment="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/chip_height"
+                    android:text="High-Speed WiFi"
                     app:chipStrokeColor="@color/chip_stroke_selector"
                     app:chipStrokeWidth="1dp"
-                    android:textColor="@color/chip_text_selector"
-                    app:chipIcon="@drawable/baseline_wifi_24"
-                    app:chipIconTint="@color/chip_text_selector"
-                    app:iconSize="@dimen/icon_size_medium" />
+                    android:textColor="@color/chip_text_selector" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipAmenityAC"
                     style="@style/Widget.StudentRoomSharing.Chip"
-                    android:layout_width="@dimen/amenity_chip_size"
-                    android:layout_height="@dimen/amenity_chip_size"
-                    android:gravity="center"
-                    android:text="@string/amenity_ac"
-                    android:textAlignment="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/chip_height"
+                    android:text="Air Conditioning"
                     app:chipStrokeColor="@color/chip_stroke_selector"
                     app:chipStrokeWidth="1dp"
-                    android:textColor="@color/chip_text_selector"
-                    app:chipIcon="@drawable/baseline_ac_unit_24"
-                    app:chipIconTint="@color/chip_text_selector"
-                    app:iconSize="@dimen/icon_size_medium" />
+                    android:textColor="@color/chip_text_selector" />
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chipAmenityKitchen"
+                    android:id="@+id/chipAmenityBath"
                     style="@style/Widget.StudentRoomSharing.Chip"
-                    android:layout_width="@dimen/amenity_chip_size"
-                    android:layout_height="@dimen/amenity_chip_size"
-                    android:gravity="center"
-                    android:text="@string/amenity_kitchen"
-                    android:textAlignment="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/chip_height"
+                    android:text="Attached Bath"
                     app:chipStrokeColor="@color/chip_stroke_selector"
                     app:chipStrokeWidth="1dp"
-                    android:textColor="@color/chip_text_selector"
-                    app:chipIcon="@drawable/baseline_kitchen_24"
-                    app:chipIconTint="@color/chip_text_selector"
-                    app:iconSize="@dimen/icon_size_medium" />
+                    android:textColor="@color/chip_text_selector" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipAmenityFurnished"
+                    style="@style/Widget.StudentRoomSharing.Chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/chip_height"
+                    android:text="Fully Furnished"
+                    app:chipStrokeColor="@color/chip_stroke_selector"
+                    app:chipStrokeWidth="1dp"
+                    android:textColor="@color/chip_text_selector" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipAmenityLaundry"
                     style="@style/Widget.StudentRoomSharing.Chip"
-                    android:layout_width="@dimen/amenity_chip_size"
-                    android:layout_height="@dimen/amenity_chip_size"
-                    android:gravity="center"
-                    android:text="@string/amenity_laundry"
-                    android:textAlignment="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/chip_height"
+                    android:text="Washing Machine"
                     app:chipStrokeColor="@color/chip_stroke_selector"
                     app:chipStrokeWidth="1dp"
-                    android:textColor="@color/chip_text_selector"
-                    app:chipIcon="@drawable/baseline_local_laundry_service_24"
-                    app:chipIconTint="@color/chip_text_selector"
-                    app:iconSize="@dimen/icon_size_medium" />
+                    android:textColor="@color/chip_text_selector" />
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chipAmenityParking"
+                    android:id="@+id/chipAmenityBalcony"
                     style="@style/Widget.StudentRoomSharing.Chip"
-                    android:layout_width="@dimen/amenity_chip_size"
-                    android:layout_height="@dimen/amenity_chip_size"
-                    android:gravity="center"
-                    android:text="@string/amenity_parking"
-                    android:textAlignment="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/chip_height"
+                    android:text="Balcony"
                     app:chipStrokeColor="@color/chip_stroke_selector"
                     app:chipStrokeWidth="1dp"
-                    android:textColor="@color/chip_text_selector"
-                    app:chipIcon="@drawable/baseline_local_parking_24"
-                    app:chipIconTint="@color/chip_text_selector"
-                    app:iconSize="@dimen/icon_size_medium" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipAmenityGym"
-                    style="@style/Widget.StudentRoomSharing.Chip"
-                    android:layout_width="@dimen/amenity_chip_size"
-                    android:layout_height="@dimen/amenity_chip_size"
-                    android:gravity="center"
-                    android:text="@string/amenity_gym"
-                    android:textAlignment="center"
-                    app:chipStrokeColor="@color/chip_stroke_selector"
-                    app:chipStrokeWidth="1dp"
-                    android:textColor="@color/chip_text_selector"
-                    app:chipIcon="@drawable/baseline_fitness_center_24"
-                    app:chipIconTint="@color/chip_text_selector"
-                    app:iconSize="@dimen/icon_size_medium" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipAmenityPool"
-                    style="@style/Widget.StudentRoomSharing.Chip"
-                    android:layout_width="@dimen/amenity_chip_size"
-                    android:layout_height="@dimen/amenity_chip_size"
-                    android:gravity="center"
-                    android:text="@string/pool"
-                    android:textAlignment="center"
-                    app:chipStrokeColor="@color/chip_stroke_selector"
-                    app:chipStrokeWidth="1dp"
-                    android:textColor="@color/chip_text_selector"
-                    app:chipIcon="@drawable/baseline_pool_24"
-                    app:chipIconTint="@color/chip_text_selector"
-                    app:iconSize="@dimen/icon_size_medium" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipAmenitySecurity"
-                    style="@style/Widget.StudentRoomSharing.Chip"
-                    android:layout_width="@dimen/amenity_chip_size"
-                    android:layout_height="@dimen/amenity_chip_size"
-                    android:gravity="center"
-                    android:text="@string/amenity_security"
-                    android:textAlignment="center"
-                    app:chipStrokeColor="@color/chip_stroke_selector"
-                    app:chipStrokeWidth="1dp"
-                    android:textColor="@color/chip_text_selector"
-                    app:chipIcon="@drawable/baseline_security_24"
-                    app:chipIconTint="@color/chip_text_selector"
-                    app:iconSize="@dimen/icon_size_medium" />
-            </GridLayout>
+                    android:textColor="@color/chip_text_selector" />
+            </com.google.android.material.chip.ChipGroup>
 
             <View
                 android:layout_width="match_parent"
@@ -395,82 +271,19 @@
                 android:layout_marginVertical="@dimen/spacing_16"
                 android:background="?attr/colorOutlineVariant" />
 
-            <!-- ===== Section 5: Distance from Campus ===== -->
-            <TextView
-                android:layout_width="wrap_content"
+            <!-- Section 4: Availability -->
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/checkOnlyAvailable"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/distance_from_campus"
-                android:textAppearance="?attr/textAppearanceTitleSmall"
+                android:text="Hide booked rooms (Only Available)"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
                 android:textColor="?attr/colorOnSurface" />
 
-            <com.google.android.material.slider.Slider
-                android:id="@+id/distanceSlider"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_8"
-                android:value="5"
-                android:valueFrom="0"
-                android:valueTo="10"
-                app:labelBehavior="floating" />
-
-            <TextView
-                android:id="@+id/tvDistanceValue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/within_km"
-                android:textAppearance="?attr/textAppearanceBodySmall"
-                android:textColor="?attr/colorOnSurfaceVariant" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginVertical="@dimen/spacing_16"
-                android:background="?attr/colorOutlineVariant" />
-
-            <!-- ===== Section 6: Availability ===== -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/availability"
-                android:textAppearance="?attr/textAppearanceTitleSmall"
-                android:textColor="?attr/colorOnSurface" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_8"
-                android:orientation="vertical">
-
-                <com.google.android.material.checkbox.MaterialCheckBox
-                    android:id="@+id/checkAvailableNow"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/spacing_4"
-                    android:text="@string/available_now"
-                    android:textAppearance="?attr/textAppearanceBodyLarge"
-                    android:textColor="?attr/colorOnSurface" />
-
-                <com.google.android.material.checkbox.MaterialCheckBox
-                    android:id="@+id/checkMoveInReady"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/spacing_4"
-                    android:text="@string/move_in_ready"
-                    android:textAppearance="?attr/textAppearanceBodyLarge"
-                    android:textColor="?attr/colorOnSurface" />
-
-                <com.google.android.material.checkbox.MaterialCheckBox
-                    android:id="@+id/checkFurnished"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/furnished"
-                    android:textAppearance="?attr/textAppearanceBodyLarge"
-                    android:textColor="?attr/colorOnSurface" />
-            </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <!-- Bottom Buttons Row -->
+    <!-- Bottom Actions -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -491,6 +304,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnApply"
+            style="@style/Widget.StudentRoomSharing.Button.Filled"
             android:layout_width="0dp"
             android:layout_height="@dimen/button_height"
             android:layout_marginStart="@dimen/spacing_8"
@@ -499,4 +313,5 @@
             android:textAppearance="?attr/textAppearanceLabelLarge"
             app:cornerRadius="@dimen/corner_medium" />
     </LinearLayout>
+
 </LinearLayout>
