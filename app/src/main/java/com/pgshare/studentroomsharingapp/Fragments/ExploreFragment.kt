@@ -80,6 +80,15 @@ class ExploreFragment : Fragment() {
     }
 
     private fun setupFilters() {
+        binding.btnOpenFilter.setOnClickListener {
+            val dialog = FilterBottomSheetDialog(
+                initialOptions = viewModel.uiState.value.filterOptions
+            ) { selectedOptions ->
+                viewModel.applyFilterOptions(selectedOptions)
+            }
+            dialog.show(parentFragmentManager, FilterBottomSheetDialog.TAG)
+        }
+
         binding.chipAny.isChecked = true
         binding.chipGroupFilters.setOnCheckedStateChangeListener { group, checkedIds ->
             if (checkedIds.isEmpty()) {

@@ -67,22 +67,39 @@ class MessageAdapter(
 
     class SentMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val messageTextView: TextView = itemView.findViewById(R.id.messageTextView)
+        private val tvSentTime: TextView? = itemView.findViewById(R.id.tvSentTime)
+        private val timeFormat = java.text.SimpleDateFormat("h:mm a", Locale.getDefault())
 
         fun bind(message: Message) {
             messageTextView.text = message.message ?: ""
+            if (message.timestamp > 0) {
+                tvSentTime?.text = timeFormat.format(java.util.Date(message.timestamp))
+                tvSentTime?.visibility = View.VISIBLE
+            } else {
+                tvSentTime?.visibility = View.GONE
+            }
         }
     }
 
     inner class ReceivedMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val messageTextView: TextView = itemView.findViewById(R.id.messageTextView)
+        private val tvReceivedTime: TextView? = itemView.findViewById(R.id.tvReceivedTime)
         private val textViewUserInitial: TextView = itemView.findViewById(R.id.textViewUserInitial)
         private val textViewUserName: TextView = itemView.findViewById(R.id.textViewUserName)
         private val cardAvatarInitial: View = itemView.findViewById(R.id.cardAvatarInitial)
         private val ivMessageAvatar: ImageView = itemView.findViewById(R.id.ivMessageAvatar)
+        private val timeFormat = java.text.SimpleDateFormat("h:mm a", Locale.getDefault())
 
         fun bind(message: Message) {
             messageTextView.text = message.message ?: ""
             textViewUserName.text = receiverName
+
+            if (message.timestamp > 0) {
+                tvReceivedTime?.text = timeFormat.format(java.util.Date(message.timestamp))
+                tvReceivedTime?.visibility = View.VISIBLE
+            } else {
+                tvReceivedTime?.visibility = View.GONE
+            }
 
             if (receiverName.isNotEmpty() && receiverName != "Unknown") {
                 val initial = receiverName.substring(0, 1).uppercase(Locale.getDefault())

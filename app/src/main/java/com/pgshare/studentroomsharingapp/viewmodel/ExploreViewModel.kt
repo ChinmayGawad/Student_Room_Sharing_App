@@ -12,6 +12,17 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
+data class FilterOptions(
+    val minPrice: Int = 2000,
+    val maxPrice: Int = 30000,
+    val roomType: String = "Any",
+    val amenities: Set<String> = emptySet(),
+    val onlyAvailable: Boolean = false
+) {
+    val isDefault: Boolean
+        get() = minPrice <= 2000 && maxPrice >= 30000 && (roomType == "Any" || roomType.isEmpty()) && amenities.isEmpty() && !onlyAvailable
+}
+
 data class ExploreUiState(
     val allRooms: List<Room> = emptyList(),
     val displayRooms: List<Room> = emptyList(),
@@ -21,7 +32,8 @@ data class ExploreUiState(
     val ownerNames: Map<String, String> = emptyMap(),
     val savedRoomKeys: Set<String> = emptySet(),
     val searchQuery: String = "",
-    val filterCriteria: String? = null
+    val filterCriteria: String? = null,
+    val filterOptions: FilterOptions = FilterOptions()
 )
 
 class ExploreViewModel(
@@ -126,16 +138,20 @@ class ExploreViewModel(
 
     private fun filterAndSearch() {
         val all = _uiState.value.allRooms
-        val query = _uiState.value.searchQuery.lowercase()
+        val query = _uiState.value.searchQuery.lowercase().trim()
         val criteria = _uiState.value.filterCriteria
+        val options = _uiState.value.filterOptions
 
         var filtered = all.filter { room ->
+            if (query.isEmpty()) return@filter true
             val matchesSearch = room.location?.lowercase()?.contains(query) == true ||
                     room.roomName?.lowercase()?.contains(query) == true ||
-                    room.description?.lowercase()?.contains(query) == true
+                    room.description?.lowercase()?.contains(query) == true ||
+                    room.amenities?.any { it.lowercase().contains(query) } == true
             matchesSearch
         }
 
+        // Quick chip criteria (e.g. from the horizontal scrolling chip bar)
         if (criteria != null) {
             filtered = when (criteria) {
                 "Under ₹8,000" -> filtered.filter {
@@ -146,6 +162,7 @@ class ExploreViewModel(
                     it.description?.contains("Private Room", ignoreCase = true) == true
                 }
                 "AC" -> filtered.filter {
+                    it.amenities?.any { a -> a.contains("AC", ignoreCase = true) || a.contains("Air Conditioning", ignoreCase = true) } == true ||
                     it.description?.contains("AC", ignoreCase = true) == true
                 }
                 "Student Friendly" -> filtered.filter {
@@ -163,7 +180,50 @@ class ExploreViewModel(
                 else -> filtered
             }
         }
+
+        // Detailed Filter Sheet options
+        if (!options.isDefault) {
+            filtered = filtered.filter { room ->
+                // Price filter
+                val roomPrice = room.price?.replace("[^0-9]".toRegex(), "")?.toIntOrNull() ?: 0
+                if (roomPrice !in options.minPrice..options.maxPrice) {
+                    return@filter false
+                }
+
+                // Room Type filter
+                if (options.roomType != "Any" && options.roomType.isNotBlank()) {
+                    val matchesType = room.description?.contains(options.roomType, ignoreCase = true) == true ||
+                            room.roomName?.contains(options.roomType, ignoreCase = true) == true
+                    if (!matchesType) return@filter false
+                }
+
+                // Availability filter
+                if (options.onlyAvailable && room.isRoomBooked) {
+                    return@filter false
+                }
+
+                // Required Amenities filter
+                if (options.amenities.isNotEmpty()) {
+                    val roomAmenities = room.amenities?.map { it.lowercase() } ?: emptyList()
+                    val roomDesc = room.description?.lowercase() ?: ""
+                    for (required in options.amenities) {
+                        val reqLower = required.lowercase()
+                        val hasAmenity = roomAmenities.any { it.contains(reqLower) } ||
+                                roomDesc.contains(reqLower)
+                        if (!hasAmenity) return@filter false
+                    }
+                }
+
+                true
+            }
+        }
+
         _uiState.value = _uiState.value.copy(displayRooms = filtered)
+    }
+
+    fun applyFilterOptions(options: FilterOptions) {
+        _uiState.value = _uiState.value.copy(filterOptions = options)
+        filterAndSearch()
     }
 
     fun applyFilter(criteria: String) {
@@ -177,7 +237,7 @@ class ExploreViewModel(
     }
 
     fun clearFilter() {
-        _uiState.value = _uiState.value.copy(filterCriteria = null)
+        _uiState.value = _uiState.value.copy(filterCriteria = null, filterOptions = FilterOptions())
         filterAndSearch()
     }
 
