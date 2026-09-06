@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.google.firebase.messaging.FirebaseMessaging
 import com.pgshare.studentroomsharingapp.Fragments.ExploreFragment
 import com.pgshare.studentroomsharingapp.Fragments.InboxFragment
 import com.pgshare.studentroomsharingapp.Fragments.ProfileFragment
@@ -25,6 +26,9 @@ class StudentDashboardActivity : AppCompatActivity() {
         supportActionBar?.hide()
         binding = ActivityStudentDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        FCMService.createNotificationChannels(this)
+        FirebaseMessaging.getInstance().subscribeToTopic("rooms_all")
 
         requestNotificationPermission()
 
