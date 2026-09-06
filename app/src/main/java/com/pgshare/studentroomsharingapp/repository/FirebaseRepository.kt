@@ -321,7 +321,8 @@ class FirebaseRepository {
             val url = java.net.URL("https://api.imgur.com/3/image")
             val conn = url.openConnection() as java.net.HttpURLConnection
             conn.requestMethod = "POST"
-            conn.setRequestProperty("Authorization", "Client-ID c66212e3e57f201") // Free Imgur Client-ID
+            val imgurClientId = com.pgshare.studentroomsharingapp.BuildConfig.IMGUR_CLIENT_ID
+            conn.setRequestProperty("Authorization", "Client-ID $imgurClientId")
             conn.doOutput = true
             conn.connectTimeout = 8000
             conn.readTimeout = 8000

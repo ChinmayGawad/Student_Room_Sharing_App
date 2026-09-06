@@ -67,3 +67,7 @@ server/node_modules/
 .agents/
 
 GEMINI.md
+
+# Device test captures
+app_screen.png
+*.apk
